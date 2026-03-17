@@ -1,0 +1,64 @@
+# 🎲 Monopoly GO! Tracker
+
+[![Démo en direct](https://img.shields.io/badge/D%C3%A9mo%20en%20direct-Jouer%20maintenant-success?style=for-the-badge)](https://kevinr99089.github.io/Mgo-Tracker/)
+
+Une application web élégante, rapide et fonctionnant entièrement côté navigateur, conçue pour aider les joueurs de Monopoly GO! à suivre leurs albums d'autocollants, gérer plusieurs comptes et organiser leurs échanges sans effort.
+
+👉 **[Accéder au Tracker Ici](https://kevinr99089.github.io/Mgo-Tracker/)**
+
+---
+
+## ✨ Fonctionnalités
+
+* **Support Multijoueur :** Suivez les albums de votre compte principal et de vos comptes secondaires (ou de vos amis) au même endroit.
+* **Système de Tableau Intelligent :** Basculez entre un suivi d'état visuel et un mode permettant de compter exactement le nombre de doublons.
+* **Configuration des Cartes en Or :** Définissez quelles sont les cartes en Or (Gold) de la saison en cours.
+* **Registre d'Échanges Or :** Gardez une trace écrite de vos échanges prévus pour les événements "Échange en Or" (Golden Blitz).
+* **Interface Bilingue :** S'adapte automatiquement en anglais ou en français selon la langue de votre système ou de votre navigateur.
+* **Ambiance Personnalisable :** Choisissez parmi différents fonds animés pour personnaliser votre expérience.
+* **Prêt pour l'Impression :** Mise en page épurée permettant d'imprimer facilement la liste des autocollants manquants sur papier.
+
+---
+
+## 📖 Comment ça marche : Le Tableau
+
+L'application s'articule autour de "Cartes en verre" (Glass Cards) pour chaque joueur, contenant des grilles qui représentent les albums du jeu (1 à 24+).
+
+### États des cartes
+En cliquant sur une case, vous pouvez alterner entre 3 états pour suivre votre collection :
+1. **Vide / Sombre :** Vous n'avez pas cet autocollant.
+2. **Bleu (Plein) :** Vous possédez exactement un exemplaire de cet autocollant.
+3. **Rouge (Croix) :** Vous avez des doublons de cet autocollant et pouvez l'échanger.
+
+### Joueur Principal vs Joueurs Secondaires
+* **Joueur Principal (1er de la liste) :** Le premier joueur de votre liste bénéficie de fonctionnalités premium. Il a accès à un **"Mode Chiffres"** (activable via le bouton '123') qui permet de taper le *nombre exact* de doublons possédés au lieu d'une simple croix rouge. Il dispose également d'un champ **Note** dédié.
+* **Joueurs Secondaires :** Disposent d'un suivi visuel standard (Manquant / Possédé / Doublon) pour voir d'un simple coup d'œil ce dont les comptes secondaires ou amis ont besoin.
+* *Note : Vous pouvez réorganiser les joueurs dynamiquement dans le menu "Gérer les joueurs". Si vous changez le joueur principal, les chiffres exacts seront effacés pour éviter les erreurs, mais les croix rouges resteront intactes.*
+
+### Cartes en Or
+Les cartes en Or sont indiquées par une bordure dorée brillante. Vous pouvez configurer les cartes en Or de votre saison lors de l'assistant de configuration initial, ou à tout moment via le bouton "Configurer Or" situé dans le dock en bas de l'écran.
+
+---
+
+## 💾 Comment les données sont stockées (Confidentialité)
+
+**Vos données sont 100% privées et restent sur votre appareil.** Cette application utilise le **Stockage Local (Local Storage)** de votre navigateur pour sauvegarder toutes vos configurations, les noms des joueurs et l'état des tableaux. 
+* **Pas de base de données :** Il n'y a aucun serveur backend ni base de données cloud. 
+* **Pas de pistage (tracking) :** Nous ne collectons, ne traitons, ni ne voyons vos données.
+
+### Sauvegardes et Synchronisation Multi-Appareils
+Puisque les données sont stockées localement dans votre navigateur actuel, elles ne se synchroniseront pas automatiquement sur votre téléphone si vous l'utilisez sur votre ordinateur (et vice versa). Cependant, l'application inclut une fonction de **Sauvegarde & Chargement** très simple :
+1. Ouvrez le Menu et cliquez sur **Sauvegarder**. Cela téléchargera un fichier `.json` contenant toutes vos données de suivi.
+2. Envoyez ce fichier sur votre autre appareil (par e-mail, Discord, câble, etc.).
+3. Sur le nouvel appareil, ouvrez l'application, cliquez sur **Charger** dans le menu, et sélectionnez le fichier `.json` pour y restaurer votre configuration exacte.
+
+---
+
+## 🛠️ Construit avec
+* HTML5 pur
+* CSS3 (Propriétés personnalisées, Glassmorphism, Animations, Media Queries d'impression)
+* Vanilla JavaScript (Aucun framework, totalement autonome)
+
+---
+
+*Avertissement : Ce projet est un outil non officiel créé par un fan et n'est ni affilié, ni approuvé, ni sponsorisé par Scopely ou Monopoly GO!*
