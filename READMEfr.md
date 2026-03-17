@@ -1,5 +1,7 @@
 # 🎲 Monopoly GO! Tracker
 
+🇬🇧 [English](https://github.com/Kevinr99089/Mgo-Tracker/main/README.md) | 🇫🇷 [Français](https://github.com/Kevinr99089/Mgo-Tracker/edit/main/READMEfr.md)
+
 [![Démo en direct](https://img.shields.io/badge/D%C3%A9mo%20en%20direct-Jouer%20maintenant-success?style=for-the-badge)](https://kevinr99089.github.io/Mgo-Tracker/)
 
 Une application web élégante, rapide et fonctionnant entièrement côté navigateur, conçue pour aider les joueurs de Monopoly GO! à suivre leurs albums d'autocollants, gérer plusieurs comptes et organiser leurs échanges sans effort.
