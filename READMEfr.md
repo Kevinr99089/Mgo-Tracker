@@ -1,6 +1,6 @@
 # 🎲 Monopoly GO! Tracker
 
-🇬🇧 [English](https://github.com/Kevinr99089/Mgo-Tracker/main/README.md) | 🇫🇷 [Français](https://github.com/Kevinr99089/Mgo-Tracker/edit/main/READMEfr.md)
+🇬🇧 [English](https://github.com/Kevinr99089/Mgo-Tracker/blob/main/README.md) | 🇫🇷 [Français](https://github.com/Kevinr99089/Mgo-Tracker/blob/main/READMEfr.md)
 
 [![Démo en direct](https://img.shields.io/badge/D%C3%A9mo%20en%20direct-Jouer%20maintenant-success?style=for-the-badge)](https://kevinr99089.github.io/Mgo-Tracker/)
 
