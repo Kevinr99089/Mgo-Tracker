@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="utf-8"/>
@@ -252,7 +252,7 @@ body { margin:0!important; padding:0!important; background:#fff!important; color
 #gold-list { display:grid!important; grid-template-columns:1fr 1fr!important; gap:5px 15px!important; padding:4px!important; }
 .gold-row { display:flex!important; align-items:center!important; gap:8px!important; border:1px dashed #d97706!important; background:rgba(255,255,255,0.5)!important; padding:2px 6px!important; border-radius:6px!important; margin:0!important; }
 .g-inp { color:#000!important; border:none!important; border-bottom:1px solid #000!important; border-radius:0!important; font-weight:bold!important; font-size:0.85rem!important; padding:0 2px!important; height:auto!important; }
-.g-inp[data-f="album"] { width: 40px!important; text-align:center!important; flex:none!important; }
+.g-inp[data-f="alb"] { width: 40px!important; text-align:center!important; flex:none!important; }
 .g-inp[data-f="card"] { flex:1!important; text-align:left!important; white-space:nowrap!important; overflow:hidden!important; text-overflow:ellipsis!important; }
 .g-inp[data-f="date"] { width: 50px!important; text-align:right!important; flex:none!important; }
 .gold-row button { display:none!important }
@@ -271,15 +271,15 @@ body { margin:0!important; padding:0!important; background:#fff!important; color
 <div class="setup-title" data-i18n="new_season">Nouvelle Saison</div>
 <p style="text-align:center;color:var(--txt-dim);font-size:0.9rem;margin:0" data-i18n="setup_board">Configurez votre tableau pour commencer.</p>
 <div class="setup-grp">
- <button class="mini-btn" data-action="open-users" style="justify-content:center;padding:10px;font-size:0.9rem" data-i18n="manage_list">👥 Gérer la liste des joueurs</button>
+<button class="mini-btn" data-action="open-users" style="justify-content:center;padding:10px;font-size:0.9rem" data-i18n="manage_list">👥 Gérer la liste des joueurs</button>
 </div>
 <div class="setup-grp">
- <label><span data-i18n="num_albums">Nombre d'Albums:</span> <span id="s-alb-val" style="color:var(--p)">24</span></label>
- <input type="range" id="s-alb" min="21" max="26" value="24" style="width:100%;accent-color:var(--p)">
+<label><span data-i18n="num_albums">Nombre d'Albums:</span> <span id="s-alb-val" style="color:var(--p)">24</span></label>
+<input type="range" id="s-alb" min="21" max="26" value="24" style="width:100%;accent-color:var(--p)">
 </div>
 <div class="setup-grp" style="flex:1;overflow:hidden;display:flex;flex-direction:column">
- <label><span data-i18n="gold_cards">Cartes Or</span> <span style="font-weight:400;font-size:0.7rem;opacity:0.7" data-i18n="click_activate">(Cliquez pour activer)</span></label>
- <div id="setup-gold-grid" style="overflow-y:auto;padding:5px;flex:1;border:1px solid var(--glass-b);border-radius:12px;background:rgba(0,0,0,0.2)"></div>
+<label><span data-i18n="gold_cards">Cartes Or</span> <span style="font-weight:400;font-size:0.7rem;opacity:0.7" data-i18n="click_activate">(Cliquez pour activer)</span></label>
+<div id="setup-gold-grid" style="overflow-y:auto;padding:5px;flex:1;border:1px solid var(--glass-b);border-radius:12px;background:rgba(0,0,0,0.2)"></div>
 </div>
 <button class="big-btn" id="btn-start-season" data-i18n="start_season">LANCER LA SAISON</button>
 </div>
@@ -355,8 +355,8 @@ body { margin:0!important; padding:0!important; background:#fff!important; color
 <div class="glass-card gold-area anim-section" data-sec="Gold" id="sec-gold">
 <div class="card-header" style="border-bottom-color:rgba(251,191,36,.3)">
 <div class="user-info">
- <div class="user-avatar" style="background:var(--gold);color:#000;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:900">G</div>
- <div class="user-name" style="background:none; -webkit-text-fill-color:var(--gold); color:var(--gold);display:inline-block" data-i18n="gold_trades">Échanges Gold</div>
+<div class="user-avatar" style="background:var(--gold);color:#000;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:900">G</div>
+<div class="user-name" style="background:none; -webkit-text-fill-color:var(--gold); color:var(--gold);display:inline-block" data-i18n="gold_trades">Échanges Gold</div>
 </div>
 <button class="mini-btn" data-action="add-gold-row" style="background:var(--gold);color:#000;border:none" data-i18n="add_upper"><b>+</b> AJOUTER</button>
 </div>
@@ -367,51 +367,51 @@ body { margin:0!important; padding:0!important; background:#fff!important; color
 </div>
 <script>
 const i18n = {
- en: {
-   saved: "Saved!", new_season: "New Season", setup_board: "Set up your board to start.",
-   manage_list: "👥 Manage player list", num_albums: "Number of Albums:", gold_cards: "Gold Cards",
-   click_activate: "(Click to activate)", start_season: "START SEASON", menu: "Menu",
-   undo: "Undo", gold_setup: "Gold Setup", view: "View", albums: "Albums:",
-   ambiance: "Ambiance", change: "🎲 CHANGE", manage_players: "👥 Manage players",
-   print: "🖨️ Print", save_btn: "💾 Save", load_btn: "📂 Load", reset_all: "🗑️ Reset All",
-   display: "Display", gold_conf: "👑 GOLD Setup", close: "CLOSE",
-   click_gold: "Click a cell to set a GOLD card.",
-   main_player_info: "The first player in the list is the main player (Notes and Number Board). Numbers are reset if the first place changes.",
-   add_player: "+ Add a player", save_upper: "SAVE", gold_trades: "Gold Trades",
-   add_upper: "<b>+</b> ADD", album: "Album", card: "Card", date: "Date", player: "Player",
-   note_ph: "Note...", undone: "Undone", reset_done: "Reset done",
-   reset_warn1: "⚠ DO YOU REALLY WANT TO RESET EVERYTHING?\n\nThis will erase all data and start the new season wizard.",
-   reset_warn2: "Do you want to keep the current player list?\n\n[OK] = Keep player list (Boards reset to zero)\n[Cancel] = Create a new list",
-   delete_q: "Delete?", print_upper: "PRINT", file_dl: "File downloaded", file_invalid: "Invalid file",
-   file_err: "File read error", good_season: "Have a great season!", shiny_season: "✨ SHINY SEASON! ✨",
-   players_updated: "Players updated", amb_0: "Cosmic Orbs", amb_1: "Floating Cards",
-   amb_2: "Neon Frames", amb_3: "✨ SPECIAL ✨", reset_board_q: "Reset this player's board?"
- },
- fr: {
-   saved: "Sauvegardé !", new_season: "Nouvelle Saison", setup_board: "Configurez votre tableau pour commencer.",
-   manage_list: "👥 Gérer la liste des joueurs", num_albums: "Nombre d'Albums:", gold_cards: "Cartes Or",
-   click_activate: "(Cliquez pour activer)", start_season: "LANCER LA SAISON", menu: "Menu",
-   undo: "Annuler", gold_setup: "Configurer Or", view: "Afficher", albums: "Albums:",
-   ambiance: "Ambiance", change: "🎲 CHANGER", manage_players: "👥 Gérer les joueurs",
-   print: "🖨️ Impression", save_btn: "💾 Sauvegarder", load_btn: "📂 Charger", reset_all: "🗑️ Tout Réinitialiser",
-   display: "Affichage", gold_conf: "👑 Configuration OR", close: "FERMER",
-   click_gold: "Cliquez sur une case pour définir une carte en OR.",
-   main_player_info: "Le premier joueur de la liste est le joueur principal (Notes et Tableau à chiffres). Les chiffres sont réinitialisés en cas de changement de première place.",
-   add_player: "+ Ajouter un joueur", save_upper: "ENREGISTRER", gold_trades: "Échanges Gold",
-   add_upper: "<b>+</b> AJOUTER", album: "Album", card: "Carte", date: "Date", player: "Joueur",
-   note_ph: "Note...", undone: "Annulé", reset_done: "Reset effectué",
-   reset_warn1: "⚠ VOULEZ-VOUS VRAIMENT TOUT RÉINITIALISER ?\n\nCela va effacer toutes les données et démarrer l'assistant de nouvelle saison.",
-   reset_warn2: "Voulez-vous conserver la liste actuelle des joueurs ?\n\n[OK] = Conserver la liste des joueurs (Tableaux remis à zéro)\n[Annuler] = Créer une nouvelle liste",
-   delete_q: "Supprimer ?", print_upper: "IMPRIMER", file_dl: "Fichier téléchargé", file_invalid: "Fichier invalide",
-   file_err: "Erreur lecture fichier", good_season: "Bonne saison !", shiny_season: "✨ SAISON SHINY ! ✨",
-   players_updated: "Joueurs mis à jour", amb_0: "Orbes Cosmiques", amb_1: "Cartes Flottantes",
-   amb_2: "Cadres Néons", amb_3: "✨ SPÉCIAL ✨", reset_board_q: "Réinitialiser le tableau de ce joueur ?"
- }
+en: {
+  saved: "Saved!", new_season: "New Season", setup_board: "Set up your board to start.",
+  manage_list: "👥 Manage player list", num_albums: "Number of Albums:", gold_cards: "Gold Cards",
+  click_activate: "(Click to activate)", start_season: "START SEASON", menu: "Menu",
+  undo: "Undo", gold_setup: "Gold Setup", view: "View", albums: "Albums:",
+  ambiance: "Ambiance", change: "🎲 CHANGE", manage_players: "👥 Manage players",
+  print: "🖨️ Print", save_btn: "💾 Save", load_btn: "📂 Load", reset_all: "🗑️ Reset All",
+  display: "Display", gold_conf: "👑 GOLD Setup", close: "CLOSE",
+  click_gold: "Click a cell to set a GOLD card.",
+  main_player_info: "The first player in the list is the main player (Notes and Number Board). Numbers are reset if the first place changes.",
+  add_player: "+ Add a player", save_upper: "SAVE", gold_trades: "Gold Trades",
+  add_upper: "<b>+</b> ADD", album: "Album", card: "Card", date: "Date", player: "Player",
+  note_ph: "Note...", undone: "Undone", reset_done: "Reset done",
+  reset_warn1: "⚠ DO YOU REALLY WANT TO RESET EVERYTHING?\n\nThis will erase all data and start the new season wizard.",
+  reset_warn2: "Do you want to keep the current player list?\n\n[OK] = Keep player list (Boards reset to zero)\n[Cancel] = Create a new list",
+  delete_q: "Delete?", print_upper: "PRINT", file_dl: "File downloaded", file_invalid: "Invalid file",
+  file_err: "File read error", good_season: "Have a great season!", shiny_season: "✨ SHINY SEASON! ✨",
+  players_updated: "Players updated", amb_0: "Cosmic Orbs", amb_1: "Floating Cards",
+  amb_2: "Neon Frames", amb_3: "✨ SPECIAL ✨", reset_board_q: "Reset this player's board?"
+},
+fr: {
+  saved: "Sauvegardé !", new_season: "Nouvelle Saison", setup_board: "Configurez votre tableau pour commencer.",
+  manage_list: "👥 Gérer la liste des joueurs", num_albums: "Nombre d'Albums:", gold_cards: "Cartes Or",
+  click_activate: "(Cliquez pour activer)", start_season: "LANCER LA SAISON", menu: "Menu",
+  undo: "Annuler", gold_setup: "Configurer Or", view: "Afficher", albums: "Albums:",
+  ambiance: "Ambiance", change: "🎲 CHANGER", manage_players: "👥 Gérer les joueurs",
+  print: "🖨️ Impression", save_btn: "💾 Sauvegarder", load_btn: "📂 Charger", reset_all: "🗑️ Tout Réinitialiser",
+  display: "Affichage", gold_conf: "👑 Configuration OR", close: "FERMER",
+  click_gold: "Cliquez sur une case pour définir une carte en OR.",
+  main_player_info: "Le premier joueur de la liste est le joueur principal (Notes et Tableau à chiffres). Les chiffres sont réinitialisés en cas de changement de première place.",
+  add_player: "+ Ajouter un joueur", save_upper: "ENREGISTRER", gold_trades: "Échanges Gold",
+  add_upper: "<b>+</b> AJOUTER", album: "Album", card: "Carte", date: "Date", player: "Joueur",
+  note_ph: "Note...", undone: "Annulé", reset_done: "Reset effectué",
+  reset_warn1: "⚠ VOULEZ-VOUS VRAIMENT TOUT RÉINITIALISER ?\n\nCela va effacer toutes les données et démarrer l'assistant de nouvelle saison.",
+  reset_warn2: "Voulez-vous conserver la liste actuelle des joueurs ?\n\n[OK] = Conserver la liste des joueurs (Tableaux remis à zéro)\n[Annuler] = Créer une nouvelle liste",
+  delete_q: "Supprimer ?", print_upper: "IMPRIMER", file_dl: "Fichier téléchargé", file_invalid: "Fichier invalide",
+  file_err: "Erreur lecture fichier", good_season: "Bonne saison !", shiny_season: "✨ SAISON SHINY ! ✨",
+  players_updated: "Joueurs mis à jour", amb_0: "Orbes Cosmiques", amb_1: "Cartes Flottantes",
+  amb_2: "Cadres Néons", amb_3: "✨ SPÉCIAL ✨", reset_board_q: "Réinitialiser le tableau de ce joueur ?"
+}
 };
 const LANG = (navigator.language || navigator.userLanguage || 'en').startsWith('fr') ? 'fr' : 'en';
 const T = (key) => i18n[LANG][key] || key;
 function applyTranslations() {
- document.querySelectorAll('[data-i18n]').forEach(el => { el.innerHTML = T(el.dataset.i18n); });
+document.querySelectorAll('[data-i18n]').forEach(el => { el.innerHTML = T(el.dataset.i18n); });
 }
 const CONST = {
 VERSION: "5.62",
@@ -420,10 +420,10 @@ KEYS: { CFG: "mgo_cfg", USR: "mgo_u_" }
 let HIST = [];
 function Mulberry32(a) {
 return function() {
- var t = a += 0x6D2B79F5;
- t = Math.imul(t ^ (t >>> 15), t | 1);
- t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
- return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+var t = a += 0x6D2B79F5;
+t = Math.imul(t ^ (t >>> 15), t | 1);
+t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 }
 }
 const State = {
@@ -439,7 +439,7 @@ if(!this.cfg.seed) this.cfg.seed = Date.now();
 } catch(e){ console.error("Config corrupt", e); }
 }
 if(!this.cfg.usersList || this.cfg.usersList.length === 0) {
-   this.cfg.usersList = [`${T('player')} 1`];
+  this.cfg.usersList = [`${T('player')} 1`];
 }
 this.cfg.usersList.forEach(s => {
 const id = s.replace(/\s/g, "");
@@ -471,72 +471,72 @@ resetUser(u) { if(this.usr[u]) { this.usr[u].state = {}; this.usr[u].nums = {}; 
 window.UserManager = {
 tempUsers: [],
 open() {
-   this.tempUsers = [...State.cfg.usersList];
-   this.render();
-   document.getElementById('mod-users').classList.add('open');
+  this.tempUsers = [...State.cfg.usersList];
+  this.render();
+  document.getElementById('mod-users').classList.add('open');
 },
 close() {
-   document.getElementById('mod-users').classList.remove('open');
+  document.getElementById('mod-users').classList.remove('open');
 },
 render() {
-   const c = document.getElementById('users-edit-list');
-   c.innerHTML = "";
-   this.tempUsers.forEach((u, i) => {
-       const row = document.createElement('div');
-       row.style.display = "flex"; row.style.gap = "5px";
-       row.innerHTML = `
-           <button class="mini-btn" onclick="window.UserManager.move(${i}, -1)" ${i===0?'disabled':''}>▲</button>
-           <button class="mini-btn" onclick="window.UserManager.move(${i}, 1)" ${i===this.tempUsers.length-1?'disabled':''}>▼</button>
-           <input type="text" class="g-inp" style="flex:1;border:1px solid var(--glass-b);border-radius:6px;padding:8px;color:#fff" value="${u}" onchange="window.UserManager.update(${i}, this.value)">
-           <button class="mini-btn danger" onclick="window.UserManager.remove(${i})" ${this.tempUsers.length<=1?'disabled':''}>×</button>
-       `;
-       c.appendChild(row);
-   });
+  const c = document.getElementById('users-edit-list');
+  c.innerHTML = "";
+  this.tempUsers.forEach((u, i) => {
+      const row = document.createElement('div');
+      row.style.display = "flex"; row.style.gap = "5px";
+      row.innerHTML = `
+          <button class="mini-btn" onclick="window.UserManager.move(${i}, -1)" ${i===0?'disabled':''}>▲</button>
+          <button class="mini-btn" onclick="window.UserManager.move(${i}, 1)" ${i===this.tempUsers.length-1?'disabled':''}>▼</button>
+          <input type="text" class="g-inp" style="flex:1;border:1px solid var(--glass-b);border-radius:6px;padding:8px;color:#fff" value="${u}" onchange="window.UserManager.update(${i}, this.value)">
+          <button class="mini-btn danger" onclick="window.UserManager.remove(${i})" ${this.tempUsers.length<=1?'disabled':''}>×</button>
+      `;
+      c.appendChild(row);
+  });
 },
 move(idx, dir) {
-   const target = idx + dir;
-   if(target < 0 || target >= this.tempUsers.length) return;
-   const temp = this.tempUsers[idx];
-   this.tempUsers[idx] = this.tempUsers[target];
-   this.tempUsers[target] = temp;
-   this.render();
+  const target = idx + dir;
+  if(target < 0 || target >= this.tempUsers.length) return;
+  const temp = this.tempUsers[idx];
+  this.tempUsers[idx] = this.tempUsers[target];
+  this.tempUsers[target] = temp;
+  this.render();
 },
 update(idx, val) {
-   this.tempUsers[idx] = val.trim() || `${T('player')} ${idx+1}`;
+  this.tempUsers[idx] = val.trim() || `${T('player')} ${idx+1}`;
 },
 add() {
-   this.tempUsers.push(`${T('player')} ${this.tempUsers.length + 1}`);
-   this.render();
+  this.tempUsers.push(`${T('player')} ${this.tempUsers.length + 1}`);
+  this.render();
 },
 remove(idx) {
-   if(this.tempUsers.length > 1) {
-       this.tempUsers.splice(idx, 1);
-       this.render();
-   }
+  if(this.tempUsers.length > 1) {
+      this.tempUsers.splice(idx, 1);
+      this.render();
+  }
 },
 save() {
-   const oldPrimaryUid = State.cfg.usersList[0] ? State.cfg.usersList[0].replace(/\s/g, "") : null;
-   const newPrimaryUid = this.tempUsers[0] ? this.tempUsers[0].replace(/\s/g, "") : null;
-   if (oldPrimaryUid && oldPrimaryUid !== newPrimaryUid && State.usr[oldPrimaryUid]) {
-       State.usr[oldPrimaryUid].nums = {};
-       State.saveU(oldPrimaryUid);
-   }
-   this.tempUsers.forEach((name, idx) => {
-       const uid = name.replace(/\s/g, "");
-       if(idx > 0 && State.usr[uid]) {
-           State.usr[uid].nums = {};
-           State.saveU(uid);
-       }
-       if(!State.usr[uid]) {
-           State.usr[uid] = { state: {}, nums: {} };
-       }
-   });
-   State.cfg.usersList = [...this.tempUsers];
-   State.saveC();
-   this.close();
-   UI.renderMenus();
-   UI.renderMain();
-   UI.showToast(T('players_updated'));
+  const oldPrimaryUid = State.cfg.usersList[0] ? State.cfg.usersList[0].replace(/\s/g, "") : null;
+  const newPrimaryUid = this.tempUsers[0] ? this.tempUsers[0].replace(/\s/g, "") : null;
+  if (oldPrimaryUid && oldPrimaryUid !== newPrimaryUid && State.usr[oldPrimaryUid]) {
+      State.usr[oldPrimaryUid].nums = {};
+      State.saveU(oldPrimaryUid);
+  }
+  this.tempUsers.forEach((name, idx) => {
+      const uid = name.replace(/\s/g, "");
+      if(idx > 0 && State.usr[uid]) {
+          State.usr[uid].nums = {};
+          State.saveU(uid);
+      }
+      if(!State.usr[uid]) {
+          State.usr[uid] = { state: {}, nums: {} };
+      }
+  });
+  State.cfg.usersList = [...this.tempUsers];
+  State.saveC();
+  this.close();
+  UI.renderMenus();
+  UI.renderMain();
+  UI.showToast(T('players_updated'));
 }
 };
 const UI = {
@@ -553,49 +553,49 @@ const mode = State.cfg.ambiance || 0;
 const colors = ['#4f46e5', '#c026d3', '#06b6d4', '#f472b6', '#fbbf24'];
 if(mode === 3) {
 this.els.bg.innerHTML = `
- <div class="shiny-bg-wrap">
-   <div class="deck"><div class="card c1"></div><div class="card c2"></div><div class="card c3">★</div></div>
-   <div class="logo">Monopoly GO Tracker<span>.</span></div>
- </div>`;
+<div class="shiny-bg-wrap">
+  <div class="deck"><div class="card c1"></div><div class="card c2"></div><div class="card c3">★</div></div>
+  <div class="logo">Monopoly GO Tracker<span>.</span></div>
+</div>`;
 return;
 }
 if(mode === 0 || mode === 1) {
 const count = 6;
 for(let i=0; i<count; i++) {
-   const d = document.createElement('div');
-   d.className = `f-obj ${mode===0 ? 'f-orb' : 'f-card'}`;
-   const w = 30 + Math.floor(rand() * 25);
-   const h = mode === 0 ? w : w * 1.4;
-   d.style.width = w + 'vw';
-   d.style.height = h + 'vw';
-   d.style.background = colors[Math.floor(rand() * colors.length)];
-   d.style.top = (rand() * 80 - 10) + '%';
-   d.style.left = (rand() * 80 - 10) + '%';
-   d.style.setProperty('--d', (20 + rand() * 15) + 's');
-   d.style.setProperty('--tx', (rand() * 20 - 10) + 'vw');
-   d.style.setProperty('--ty', (rand() * 20 - 10) + 'vh');
-   if(mode === 1) d.style.setProperty('--r2', (rand() * 360) + 'deg');
-   this.els.bg.appendChild(d);
+  const d = document.createElement('div');
+  d.className = `f-obj ${mode===0 ? 'f-orb' : 'f-card'}`;
+  const w = 30 + Math.floor(rand() * 25);
+  const h = mode === 0 ? w : w * 1.4;
+  d.style.width = w + 'vw';
+  d.style.height = h + 'vw';
+  d.style.background = colors[Math.floor(rand() * colors.length)];
+  d.style.top = (rand() * 80 - 10) + '%';
+  d.style.left = (rand() * 80 - 10) + '%';
+  d.style.setProperty('--d', (20 + rand() * 15) + 's');
+  d.style.setProperty('--tx', (rand() * 20 - 10) + 'vw');
+  d.style.setProperty('--ty', (rand() * 20 - 10) + 'vh');
+  if(mode === 1) d.style.setProperty('--r2', (rand() * 360) + 'deg');
+  this.els.bg.appendChild(d);
 }
 } else if(mode === 2) {
 const count = 12;
 for(let i=0; i<count; i++) {
-   const d = document.createElement('div');
-   d.className = 'f-obj f-neon';
-   const s = 10 + Math.floor(rand() * 20);
-   const col = colors[Math.floor(rand() * colors.length)];
-   d.style.width = s + 'vw';
-   d.style.height = s + 'vw';
-   d.style.borderColor = col;
-   d.style.setProperty('--glow', col);
-   d.style.top = (rand() * 90) + '%';
-   d.style.left = (rand() * 90) + '%';
-   if(rand() > 0.5) d.style.transform = 'rotate(45deg)';
-   d.style.setProperty('--d', (15 + rand() * 20) + 's');
-   d.style.setProperty('--tx', (rand() * 30 - 15) + 'vw');
-   d.style.setProperty('--ty', (rand() * 30 - 15) + 'vh');
-   d.style.setProperty('--r2', (rand() * 90 - 45) + 'deg');
-   this.els.bg.appendChild(d);
+  const d = document.createElement('div');
+  d.className = 'f-obj f-neon';
+  const s = 10 + Math.floor(rand() * 20);
+  const col = colors[Math.floor(rand() * colors.length)];
+  d.style.width = s + 'vw';
+  d.style.height = s + 'vw';
+  d.style.borderColor = col;
+  d.style.setProperty('--glow', col);
+  d.style.top = (rand() * 90) + '%';
+  d.style.left = (rand() * 90) + '%';
+  if(rand() > 0.5) d.style.transform = 'rotate(45deg)';
+  d.style.setProperty('--d', (15 + rand() * 20) + 's');
+  d.style.setProperty('--tx', (rand() * 30 - 15) + 'vw');
+  d.style.setProperty('--ty', (rand() * 30 - 15) + 'vh');
+  d.style.setProperty('--r2', (rand() * 90 - 45) + 'deg');
+  this.els.bg.appendChild(d);
 }
 }
 },
@@ -608,43 +608,43 @@ const isPrimary = (idx === 0);
 const btnTxt = State.cfg.mode === 'number' ? '123' : 'XXX';
 let modeBtn = "";
 if(isPrimary) {
-  modeBtn = `<button class="mini-btn" data-action="mode-toggle" style="margin-right:8px;height:24px">${btnTxt}</button>`;
+ modeBtn = `<button class="mini-btn" data-action="mode-toggle" style="margin-right:8px;height:24px">${btnTxt}</button>`;
 }
 let noteHtml = "";
 if(isPrimary) {
-  const savedNote = State.usr[uid].note || "";
-  noteHtml = `<input type="text" class="user-note" placeholder="${T('note_ph')}" value="${savedNote}" data-uid="${uid}" onclick="event.stopPropagation()" ondblclick="event.stopPropagation()">`;
+ const savedNote = State.usr[uid].note || "";
+ noteHtml = `<input type="text" class="user-note" placeholder="${T('note_ph')}" value="${savedNote}" data-uid="${uid}" onclick="event.stopPropagation()" ondblclick="event.stopPropagation()">`;
 }
 const primaryClass = isPrimary ? "is-primary" : "";
 const numModeClass = (isPrimary && State.cfg.mode === 'number') ? "mode-num" : "";
 const html = `
 <div class="glass-card anim-section ${primaryClass} ${numModeClass}" data-sec="${uid}">
-   <div class="card-header">
-       <div class="user-info">
-           <div class="user-avatar">
-              <div class="ua-inner">
-                  <div class="ua-left">
-                      <div class="ua-name">${name}</div>
-                      <div class="ua-percent">0%</div>
-                  </div>
-                  <div class="ua-stats-col">
-                      <div class="ua-top"></div>
-                      <div class="ua-bot"></div>
-                  </div>
-              </div>
-           </div>
-           <div class="user-name">${name}</div>
-           ${modeBtn}
-           ${noteHtml}
-       </div>
-       <div class="card-tools"><button class="mini-btn danger" data-action="reset-u">↺</button></div>
-   </div>
-   <div style="padding:0" data-u="${uid}">
-      <div class="grid-scroll">
-         <div class="track-row">${this._genRow(1, half, w)}</div>
-         <div class="track-row">${this._genRow(half+1, alb-half, w)}</div>
+  <div class="card-header">
+      <div class="user-info">
+          <div class="user-avatar">
+             <div class="ua-inner">
+                 <div class="ua-left">
+                     <div class="ua-name">${name}</div>
+                     <div class="ua-percent">0%</div>
+                 </div>
+                 <div class="ua-stats-col">
+                     <div class="ua-top"></div>
+                     <div class="ua-bot"></div>
+                 </div>
+             </div>
+          </div>
+          <div class="user-name">${name}</div>
+          ${modeBtn}
+          ${noteHtml}
       </div>
-   </div>
+      <div class="card-tools"><button class="mini-btn danger" data-action="reset-u">↺</button></div>
+  </div>
+  <div style="padding:0" data-u="${uid}">
+     <div class="grid-scroll">
+        <div class="track-row">${this._genRow(1, half, w)}</div>
+        <div class="track-row">${this._genRow(half+1, alb-half, w)}</div>
+     </div>
+  </div>
 </div>`;
 this.els.app.insertAdjacentHTML('beforeend', html);
 });
@@ -660,8 +660,8 @@ let g = "";
 for(let k=0; k<9; k++) {
 const cid = ((num-1)*9)+k;
 g += `<div class="cell-wrap" data-uid="${cid}" data-st="0">
-   <div class="i-dot i-dupe"></div><div class="i-dot i-gold"></div>
-   <div class="cell-inner"><span class="t-x">X</span><span class="t-num"></span></div>
+  <div class="i-dot i-dupe"></div><div class="i-dot i-gold"></div>
+  <div class="cell-inner"><span class="t-x">X</span><span class="t-num"></span></div>
 </div>`;
 }
 return `<div class="alb-col" style="width:${w}%"><div class="alb-head">${T('album')} ${num}</div><div class="alb-grid">${g}</div></div>`;
@@ -692,8 +692,8 @@ if(numSpan.textContent !== numStr) numSpan.textContent = numStr;
 if(isGold) el.dataset.bg = "1"; else delete el.dataset.bg;
 el.classList.remove('show-gold', 'show-dupe');
 if(st === 0) {
- if(isGold) el.classList.add('show-gold');
- if(isDupe) el.classList.add('show-dupe');
+if(isGold) el.classList.add('show-gold');
+if(isDupe) el.classList.add('show-dupe');
 }
 },
 updateStats() {
@@ -702,9 +702,9 @@ document.querySelectorAll('.glass-card[data-sec]').forEach(card => {
 if(card.id === 'sec-gold') return;
 let n=0, g=0, gt=0;
 card.querySelectorAll('.cell-wrap').forEach(c => {
-   const st = +c.dataset.st, isG = c.dataset.bg==="1";
-   if(st > 0) n++;
-   if(isG) { gt++; if(st>0) g++; }
+  const st = +c.dataset.st, isG = c.dataset.bg==="1";
+  if(st > 0) n++;
+  if(isG) { gt++; if(st>0) g++; }
 });
 const pct = Math.round(n/tot*100);
 const av = card.querySelector('.user-avatar');
@@ -714,8 +714,8 @@ const perc = card.querySelector('.ua-percent');
 if(top) top.innerHTML = `${n}/${tot}`;
 if(bot) bot.textContent = `${g}/${gt}`;
 if(perc) {
-  perc.textContent = `${pct}%`;
-  perc.style.color = pct === 100 ? 'var(--gold)' : 'var(--ok)';
+ perc.textContent = `${pct}%`;
+ perc.style.color = pct === 100 ? 'var(--gold)' : 'var(--ok)';
 }
 if(av) av.style.background = `conic-gradient(var(--ok) ${pct}%, var(--p) 0)`;
 });
@@ -726,9 +726,9 @@ c.innerHTML = "";
 State.cfg.gold_ex.forEach((item, idx) => {
 const row = document.createElement('div');
 row.className = 'gold-row';
-row.innerHTML = `<input class="g-inp" data-f="album" placeholder="${T('album')}" value="${item.alb}"><input class="g-inp" data-f="card" placeholder="${T('card')}" value="${item.card}"><input class="g-inp" data-f="date" placeholder="${T('date')}" value="${item.date}"><button style="background:0 0;border:none;color:var(--err);font-weight:700;cursor:pointer" data-action="del-gold" data-idx="${idx}">×</button>`;
+row.innerHTML = `<input class="g-inp" data-f="alb" placeholder="${T('album')}" value="${item.alb || ''}"><input class="g-inp" data-f="card" placeholder="${T('card')}" value="${item.card || ''}"><input class="g-inp" data-f="date" placeholder="${T('date')}" value="${item.date || ''}"><button style="background:0 0;border:none;color:var(--err);font-weight:700;cursor:pointer" data-action="del-gold" data-idx="${idx}">×</button>`;
 row.querySelectorAll('input').forEach(i => i.oninput = e => {
-   State.cfg.gold_ex[idx][e.target.dataset.f] = e.target.value; State.saveC();
+  State.cfg.gold_ex[idx][e.target.dataset.f] = e.target.value; State.saveC();
 });
 c.appendChild(row);
 });
@@ -742,8 +742,8 @@ const d = document.createElement('div');
 d.className="menu-item";
 d.innerHTML = `<span>${s}</span><label style="cursor:pointer;display:flex"><input type="checkbox" ${!hide?'checked':''} style="display:none"><div class="switch"></div></label>`;
 d.querySelector('input').onchange = e => {
-   State.cfg.hidden = e.target.checked ? State.cfg.hidden.filter(x=>x!==id) : [...State.cfg.hidden, id];
-   State.saveC(); this.updateVis();
+  State.cfg.hidden = e.target.checked ? State.cfg.hidden.filter(x=>x!==id) : [...State.cfg.hidden, id];
+  State.saveC(); this.updateVis();
 };
 vList.appendChild(d);
 });
@@ -752,11 +752,11 @@ const pList = document.getElementById('sub-print'); pList.innerHTML = "";
 const id = s==="Gold" ? "Gold" : s.replace(/\s/g, "");
 pList.insertAdjacentHTML('beforeend', `
 <div class="menu-item" style="padding:5px 8px;font-size:0.8rem">
-   <span>${s}</span>
-   <label style="cursor:pointer;display:flex;align-items:center">
-       <input type="checkbox" class="print-chk" value="${id}" checked style="display:none">
-       <div class="switch" style="transform:scale(0.7);transform-origin:right center"></div>
-   </label>
+  <span>${s}</span>
+  <label style="cursor:pointer;display:flex;align-items:center">
+      <input type="checkbox" class="print-chk" value="${id}" checked style="display:none">
+      <div class="switch" style="transform:scale(0.7);transform-origin:right center"></div>
+  </label>
 </div>`);
 });
 pList.insertAdjacentHTML('beforeend', `<button class="mini-btn" data-action="do-print" style="justify-content:center;background:var(--p);color:#fff;margin-top:5px;width:100%">${T('print_upper')}</button>`);
@@ -774,9 +774,9 @@ const alb = State.cfg.albums;
 for(let i=1; i<=alb; i++) {
 let cells = "";
 for(let k=0; k<9; k++) {
-   const uid = ((i-1)*9)+k;
-   const active = State.cfg.gold_ids.includes(uid) ? 'active' : '';
-   cells += `<div class="g-cell ${active}" data-uid="${uid}"></div>`;
+  const uid = ((i-1)*9)+k;
+  const active = State.cfg.gold_ids.includes(uid) ? 'active' : '';
+  cells += `<div class="g-cell ${active}" data-uid="${uid}"></div>`;
 }
 const row = document.createElement('div'); row.className = "g-conf-col";
 row.innerHTML = `<span style="font-size:9px;font-weight:700;margin-bottom:2px">${T('album')} ${i}</span><div class="g-conf-grid">${cells}</div>`;
@@ -787,10 +787,10 @@ rowDiv.className = "g-conf-row";
 rowDiv.onclick = (e) => {
 const t = e.target;
 if(t.classList.contains('g-cell')) {
-    const uid = +t.dataset.uid;
-    const wasActive = t.classList.contains('active');
-    State.setGold(uid, !wasActive);
-    t.classList.toggle('active');
+   const uid = +t.dataset.uid;
+   const wasActive = t.classList.contains('active');
+   State.setGold(uid, !wasActive);
+   t.classList.toggle('active');
 }
 };
 while(c.firstChild) rowDiv.appendChild(c.firstChild);
@@ -811,18 +811,18 @@ const isPrimary = glassCard && glassCard.classList.contains('is-primary');
 const uid = cell.closest('[data-u]')?.dataset.u;
 const cid = +cell.dataset.uid;
 if(State.cfg.mode === 'number' && isPrimary) {
-   e.stopPropagation();
-   const inner = cell.querySelector('.cell-inner'); inner.innerHTML = "";
-   const inp = document.createElement('input'); 
-   inp.className = "cell-input"; inp.type="tel";
-   inp.value = State.usr[uid].nums[cid] || "";
-   inp.onblur = () => {
-       State.updateCell(uid, cid, inp.value, true);
-       UI.hydrate();
-   };
-   inp.onkeydown = x => { if(x.key==='Enter') inp.blur() };
-   inner.appendChild(inp); inp.focus();
-   return;
+  e.stopPropagation();
+  const inner = cell.querySelector('.cell-inner'); inner.innerHTML = "";
+  const inp = document.createElement('input'); 
+  inp.className = "cell-input"; inp.type="tel";
+  inp.value = State.usr[uid].nums[cid] || "";
+  inp.onblur = () => {
+      State.updateCell(uid, cid, inp.value, true);
+      UI.hydrate();
+  };
+  inp.onkeydown = x => { if(x.key==='Enter') inp.blur() };
+  inner.appendChild(inp); inp.focus();
+  return;
 }
 const cur = State.usr[uid].state[cid] || 0;
 const nxt = (cur + 1) % 3;
@@ -846,42 +846,42 @@ const actionMap = {
 'add-user-row': () => window.UserManager.add(),
 'save-users': () => window.UserManager.save(),
 'undo': () => {
-   const last = HIST.pop();
-   if(last) { State.updateCell(last.u, last.c, last.v); UI.hydrate(); UI.showToast(T('undone')); }
+  const last = HIST.pop();
+  if(last) { State.updateCell(last.u, last.c, last.v); UI.hydrate(); UI.showToast(T('undone')); }
 },
 'mode-toggle': () => {
-   State.cfg.mode = State.cfg.mode === 'number' ? 'cross' : 'number';
-   State.saveC(); 
-   UI.renderMain();
+  State.cfg.mode = State.cfg.mode === 'number' ? 'cross' : 'number';
+  State.saveC(); 
+  UI.renderMain();
 },
 'cycle-ambiance': () => {
-   const rng = Mulberry32(State.cfg.seed);
-   const isShiny = rng() < 0.01;
-   const maxModes = isShiny ? 4 : 3;
-   State.cfg.ambiance = (State.cfg.ambiance + 1) % maxModes;
-   State.saveC();
-   UI.renderAmbiance();
-   const names = [T('amb_0'), T('amb_1'), T('amb_2'), T('amb_3')];
-   UI.showToast(names[State.cfg.ambiance]);
+  const rng = Mulberry32(State.cfg.seed);
+  const isShiny = rng() < 0.01;
+  const maxModes = isShiny ? 4 : 3;
+  State.cfg.ambiance = (State.cfg.ambiance + 1) % maxModes;
+  State.saveC();
+  UI.renderAmbiance();
+  const names = [T('amb_0'), T('amb_1'), T('amb_2'), T('amb_3')];
+  UI.showToast(names[State.cfg.ambiance]);
 },
 'reset-u': () => {
-   const u = btn.closest('.glass-card').dataset.sec;
-   if(confirm(T('reset_board_q'))) { State.resetUser(u); UI.hydrate(); UI.showToast(T('reset_done')); }
+  const u = btn.closest('.glass-card').dataset.sec;
+  if(confirm(T('reset_board_q'))) { State.resetUser(u); UI.hydrate(); UI.showToast(T('reset_done')); }
 },
 'reset-all': () => { 
-   if(confirm(T('reset_warn1'))) {
-       const keepUsers = confirm(T('reset_warn2'));
-       let oldUsers = keepUsers ? [...State.cfg.usersList] : [`${T('player')} 1`];
-       let startAmb = State.cfg.ambiance;
-       localStorage.clear();
-       const newSeed = Date.now();
-       const freshConfig = { 
-           albums: 24, mode: "cross", gold_ids: [], gold_ex: [], hidden: [], printHidden: [],
-           setup_done: false, ambiance: startAmb, seed: newSeed, usersList: oldUsers
-       };
-       localStorage.setItem(CONST.KEYS.CFG, JSON.stringify(freshConfig));
-       location.reload(); 
-   }
+  if(confirm(T('reset_warn1'))) {
+      const keepUsers = confirm(T('reset_warn2'));
+      let oldUsers = keepUsers ? [...State.cfg.usersList] : [`${T('player')} 1`];
+      let startAmb = State.cfg.ambiance;
+      localStorage.clear();
+      const newSeed = Date.now();
+      const freshConfig = { 
+          albums: 24, mode: "cross", gold_ids: [], gold_ex: [], hidden: [], printHidden: [],
+          setup_done: false, ambiance: startAmb, seed: newSeed, usersList: oldUsers
+      };
+      localStorage.setItem(CONST.KEYS.CFG, JSON.stringify(freshConfig));
+      location.reload(); 
+  }
 },
 'open-gold-mod': () => { UI.renderGoldGrid('gold-grid-ctn'); document.getElementById('mod-gold').classList.add('open'); },
 'close-gold': () => { document.getElementById('mod-gold').classList.remove('open'); UI.hydrate(); },
@@ -889,47 +889,47 @@ const actionMap = {
 'del-gold': () => { if(confirm(T('delete_q'))) { State.cfg.gold_ex.splice(+btn.dataset.idx, 1); State.saveC(); UI.renderGoldEx(); } },
 'toggle-print-sub': () => { const s = document.getElementById('sub-print'); s.style.display = s.style.display==='none'?'flex':'none'; },
 'do-print': () => {
-   document.querySelectorAll('.glass-card').forEach(c => c.classList.remove('print-hidden'));
-   const vals = Array.from(document.querySelectorAll('.print-chk:checked')).map(x=>x.value);
-   document.querySelectorAll('.glass-card').forEach(c => { if(!vals.includes(c.dataset.sec)) c.classList.add('print-hidden'); });
-   window.print();
+  document.querySelectorAll('.glass-card').forEach(c => c.classList.remove('print-hidden'));
+  const vals = Array.from(document.querySelectorAll('.print-chk:checked')).map(x=>x.value);
+  document.querySelectorAll('.glass-card').forEach(c => { if(!vals.includes(c.dataset.sec)) c.classList.add('print-hidden'); });
+  window.print();
 },
 'save': () => {
-   const blob = new Blob([JSON.stringify({version: CONST.VERSION, config:State.cfg, users:State.usr})], {type:"application/json"});
-   const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-   a.download = `MGO_Backup_V4.03.json`; 
-   a.click();
-   UI.showToast(T('file_dl'));
+  const blob = new Blob([JSON.stringify({version: CONST.VERSION, config:State.cfg, users:State.usr})], {type:"application/json"});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = `MGO_Backup_V4.03.json`; 
+  a.click();
+  UI.showToast(T('file_dl'));
 },
 'load': () => {
-   const fi = document.createElement('input'); fi.type="file"; fi.accept=".json";
-   fi.onchange = ev => {
-       const r = new FileReader();
-       r.onload = le => {
-           try { 
-              const d = JSON.parse(le.target.result); 
-              if(d.config && d.users) {
-                  State.cfg = d.config; 
-                  if(!State.cfg.usersList) {
-                      State.cfg.usersList = Object.keys(d.users);
-                  }
-                  State.usr = d.users; 
-                  State.cfg.usersList.forEach((name, idx) => {
-                      const uid = name.replace(/\s/g, "");
-                      if(idx > 0 && State.usr[uid]) {
-                          State.usr[uid].nums = {};
-                      }
-                  });
-                  if(State.cfg.setup_done === undefined) State.cfg.setup_done = true;
-                  State.saveC(); 
-                  Object.keys(d.users).forEach(k=>State.saveU(k)); 
-                  location.reload(); 
-              } else { alert(T('file_invalid')); }
-           } catch(x){ alert(T('file_err')); }
-       };
-       r.readAsText(ev.target.files[0]);
-   };
-   fi.click();
+  const fi = document.createElement('input'); fi.type="file"; fi.accept=".json";
+  fi.onchange = ev => {
+      const r = new FileReader();
+      r.onload = le => {
+          try { 
+             const d = JSON.parse(le.target.result); 
+             if(d.config && d.users) {
+                 State.cfg = d.config; 
+                 if(!State.cfg.usersList) {
+                     State.cfg.usersList = Object.keys(d.users);
+                 }
+                 State.usr = d.users; 
+                 State.cfg.usersList.forEach((name, idx) => {
+                     const uid = name.replace(/\s/g, "");
+                     if(idx > 0 && State.usr[uid]) {
+                         State.usr[uid].nums = {};
+                     }
+                 });
+                 if(State.cfg.setup_done === undefined) State.cfg.setup_done = true;
+                 State.saveC(); 
+                 Object.keys(d.users).forEach(k=>State.saveU(k)); 
+                 location.reload(); 
+             } else { alert(T('file_invalid')); }
+          } catch(x){ alert(T('file_err')); }
+      };
+      r.readAsText(ev.target.files[0]);
+  };
+  fi.click();
 }
 };
 if(actionMap[act]) actionMap[act]();
@@ -941,18 +941,18 @@ const sAlb = document.getElementById('s-alb');
 const sVal = document.getElementById('s-alb-val');
 UI.renderGoldGrid('setup-gold-grid');
 sAlb.oninput = (e) => {
-   sVal.textContent = e.target.value;
-   State.cfg.albums = +e.target.value;
-   State.saveC();
-   UI.renderGoldGrid('setup-gold-grid');
+  sVal.textContent = e.target.value;
+  State.cfg.albums = +e.target.value;
+  State.saveC();
+  UI.renderGoldGrid('setup-gold-grid');
 };
 document.getElementById('btn-start-season').onclick = () => {
-   State.cfg.setup_done = true;
-   State.saveC();
-   document.getElementById('setup-mod').classList.remove('open');
-   UI.renderMenus();
-   UI.renderMain(); 
-   UI.showToast(T('good_season'));
+  State.cfg.setup_done = true;
+  State.saveC();
+  document.getElementById('setup-mod').classList.remove('open');
+  UI.renderMenus();
+  UI.renderMain(); 
+  UI.showToast(T('good_season'));
 };
 }
 };
@@ -967,9 +967,9 @@ sl.oninput = e => {
 document.getElementById('lbl-alb').textContent = e.target.value; 
 clearTimeout(deb);
 deb = setTimeout(() => {
- State.cfg.albums = +e.target.value; 
- State.saveC(); 
- UI.renderMain();
+State.cfg.albums = +e.target.value; 
+State.saveC(); 
+UI.renderMain();
 }, 300);
 };
 UI.renderMain();
@@ -983,10 +983,10 @@ document.body.addEventListener('input', (e) => {
 if(e.target.classList.contains('user-note')) {
 const uid = e.target.dataset.uid;
 if(State.usr[uid]) {
-    const val = e.target.value;
-    if(!val) delete State.usr[uid].note;
-    else State.usr[uid].note = val;
-    State.saveU(uid);
+   const val = e.target.value;
+   if(!val) delete State.usr[uid].note;
+   else State.usr[uid].note = val;
+   State.saveU(uid);
 }
 }
 });
@@ -994,10 +994,10 @@ SetupWizard.init();
 setTimeout(() => {
 document.body.classList.add('app-ready');
 setTimeout(() => {
-   document.getElementById('splash').remove();
-   if(!State.cfg.setup_done) {
-       document.getElementById('setup-mod').classList.add('open');
-   }
+  document.getElementById('splash').remove();
+  if(!State.cfg.setup_done) {
+      document.getElementById('setup-mod').classList.add('open');
+  }
 }, 600);
 }, 1200);
 });
