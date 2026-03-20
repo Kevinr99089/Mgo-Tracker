@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="utf-8"/>
@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0f172a">
 <meta name="description" content="MGO Tracker">
 <title>MGO Tracker</title>
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" href="favicon.ico">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
 <div class="deck"><div class="card c1"></div><div class="card c2"></div><div class="card c3">★</div></div>
 <div class="logo">Monopoly GO Tracker<span>.</span></div>
 </div>
-<div id="toast" data-i18n="saved">Sauvegardé !</div>
+<div id="toast">Sauvegardé !</div>
 <div id="setup-mod">
 <div class="setup-card">
 <div class="setup-title" data-i18n="new_season">Nouvelle Saison</div>
@@ -46,7 +46,7 @@
 <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span class="dock-label" data-i18n="gold_setup">Configurer Or</span>
 </button>
 <button class="dock-btn" data-action="toggle-view">
-<svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3 3-1.34 3-3-1.34-3-3-1.34-3-3-3z"/></svg><span class="dock-label" data-i18n="view">Afficher</span>
+<svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg><span class="dock-label" data-i18n="view">Afficher</span>
 </button>
 </div>
 </div>
@@ -70,7 +70,7 @@
 <div class="menu-item" data-action="load"><span data-i18n="load_btn">📂 Charger</span></div>
 <div class="menu-item" data-action="reset-all" style="color:var(--err)"><span data-i18n="reset_all">🗑️ Tout Réinitialiser</span></div>
 </div>
-<div id="pop-view" class="popover" style="left:70%">
+<div id="pop-view" class="popover" style="left:min(70%, calc(100vw - 290px))">
 <div style="padding:10px;font-size:0.8rem;opacity:0.6;text-transform:uppercase;font-weight:700" data-i18n="display">Affichage</div>
 <div id="view-list"></div>
 </div>
