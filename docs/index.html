@@ -2,118 +2,123 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
 <meta name="description" content="MGO Tracker">
 <title>MGO Tracker</title>
-<link rel="icon" href="favicon.ico">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="ambient-bg" id="ambient-bg"></div>
 <div id="splash">
-<div class="deck"><div class="card c1"></div><div class="card c2"></div><div class="card c3">★</div></div>
-<div class="logo">Monopoly GO Tracker<span>.</span></div>
+  <div class="deck"><div class="card c1"></div><div class="card c2"></div><div class="card c3">★</div></div>
+  <div class="logo">Monopoly GO Tracker<span>.</span></div>
 </div>
-<div id="toast">Sauvegardé !</div>
+<div id="toast"></div>
 <div id="setup-mod">
-<div class="setup-card">
-<div class="setup-title" data-i18n="new_season">Nouvelle Saison</div>
-<p style="text-align:center;color:var(--txt-dim);font-size:0.9rem;margin:0" data-i18n="setup_board">Configurez votre tableau pour commencer.</p>
-<div class="setup-grp">
-<button class="mini-btn" data-action="open-users" style="justify-content:center;padding:10px;font-size:0.9rem" data-i18n="manage_list">👥 Gérer la liste des joueurs</button>
-</div>
-<div class="setup-grp">
-<label><span data-i18n="num_albums">Nombre d'Albums:</span> <span id="s-alb-val" style="color:var(--p)">24</span></label>
-<input type="range" id="s-alb" min="21" max="26" value="24" style="width:100%;accent-color:var(--p)">
-</div>
-<div class="setup-grp" style="flex:1;overflow:hidden;display:flex;flex-direction:column">
-<label><span data-i18n="gold_cards">Cartes Or</span> <span style="font-weight:400;font-size:0.7rem;opacity:0.7" data-i18n="click_activate">(Cliquez pour activer)</span></label>
-<div id="setup-gold-grid" style="overflow-y:auto;padding:5px;flex:1;border:1px solid var(--glass-b);border-radius:12px;background:rgba(0,0,0,0.2)"></div>
-</div>
-<button class="big-btn" id="btn-start-season" data-i18n="start_season">LANCER LA SAISON</button>
-</div>
+  <div class="setup-card">
+    <div class="setup-title" data-i18n="new_season">Nouvelle Saison</div>
+    <p style="text-align:center;color:var(--txt-dim);font-size:0.9rem;margin:0" data-i18n="setup_board">Configurez votre tableau pour commencer.</p>
+    <div class="setup-grp">
+      <button class="mini-btn" data-action="open-users" style="justify-content:center;padding:10px;font-size:0.9rem" data-i18n="manage_list">👥 Gérer la liste des joueurs</button>
+    </div>
+    <div class="setup-grp">
+      <label><span data-i18n="num_albums">Nombre d'Albums:</span> <span id="s-alb-val" style="color:var(--p)">24</span></label>
+      <input type="range" id="s-alb" min="21" max="26" value="24" style="width:100%;accent-color:var(--p)">
+    </div>
+    <div class="setup-grp" style="flex:1;overflow:hidden;display:flex;flex-direction:column">
+      <label><span data-i18n="gold_cards">Cartes Or</span> <span style="font-weight:400;font-size:0.7rem;opacity:0.7" data-i18n="click_activate">(Cliquez pour activer)</span></label>
+      <div id="setup-gold-grid" style="overflow-y:auto;padding:5px;flex:1;border:1px solid var(--glass-b);border-radius:12px;background:rgba(0,0,0,0.2)"></div>
+    </div>
+    <button class="big-btn" id="btn-start-season" data-i18n="start_season">LANCER LA SAISON</button>
+  </div>
 </div>
 <div class="dock-wrap">
-<div class="dock">
-<button class="dock-btn" data-action="toggle-menu">
-<svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg><span class="dock-label" data-i18n="menu">Menu</span>
-</button>
-<button class="dock-btn" data-action="undo">
-<svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg><span class="dock-label" data-i18n="undo">Annuler</span>
-</button>
-<button class="dock-btn" data-action="open-gold-mod" style="color:var(--gold)">
-<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span class="dock-label" data-i18n="gold_setup">Configurer Or</span>
-</button>
-<button class="dock-btn" data-action="toggle-view">
-<svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg><span class="dock-label" data-i18n="view">Afficher</span>
-</button>
-</div>
+  <div class="dock">
+    <button class="dock-btn" data-action="toggle-menu">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+      <span class="dock-label" data-i18n="menu">Menu</span>
+    </button>
+    <button class="dock-btn" data-action="undo">
+      <svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
+      <span class="dock-label" data-i18n="undo">Annuler</span>
+    </button>
+    <button class="dock-btn" data-action="open-gold-mod" style="color:var(--gold)">
+      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span class="dock-label" data-i18n="gold_setup">Configurer Or</span>
+    </button>
+    <button class="dock-btn" data-action="toggle-view">
+      <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+      <span class="dock-label" data-i18n="view">Afficher</span>
+    </button>
+  </div>
 </div>
 <div id="pop-menu" class="popover">
-<div style="padding:10px;font-size:0.8rem;opacity:0.6;text-transform:uppercase;font-weight:700" data-i18n="menu">Menu</div>
-<div class="menu-item">
-<span><span data-i18n="albums">Albums:</span> <b id="lbl-alb">24</b></span>
-<input type="range" id="sl-alb" min="21" max="26" style="width:100px; accent-color:var(--p)">
-</div>
-<div class="menu-item" data-action="cycle-ambiance">
-<span data-i18n="ambiance">Ambiance</span>
-<button class="mini-btn" style="background:var(--p);color:#fff;border:none" data-i18n="change">🎲 CHANGER</button>
-</div>
-<hr style="border:0;border-top:1px solid var(--glass-b);margin:5px 0">
-<div class="menu-item" data-action="open-users"><span data-i18n="manage_players">👥 Gérer les joueurs</span></div>
-<div class="menu-item" data-action="toggle-print-sub">
-<span data-i18n="print">🖨️ Impression</span><span style="font-size:0.8rem;opacity:0.6">▼</span>
-</div>
-<div id="sub-print" style="display:none;flex-direction:column;gap:2px;background:rgba(0,0,0,0.2);padding:8px;border-radius:8px;margin-bottom:8px"></div>
-<div class="menu-item" data-action="save"><span data-i18n="save_btn">💾 Sauvegarder</span></div>
-<div class="menu-item" data-action="load"><span data-i18n="load_btn">📂 Charger</span></div>
-<div class="menu-item" data-action="reset-all" style="color:var(--err)"><span data-i18n="reset_all">🗑️ Tout Réinitialiser</span></div>
+  <div style="padding:10px;font-size:0.8rem;opacity:0.6;text-transform:uppercase;font-weight:700" data-i18n="menu">Menu</div>
+  <div class="menu-item">
+    <span><span data-i18n="albums">Albums:</span> <b id="lbl-alb">24</b></span>
+    <input type="range" id="sl-alb" min="21" max="26" style="width:100px; accent-color:var(--p)">
+  </div>
+  <div class="menu-item" data-action="cycle-ambiance">
+    <span data-i18n="ambiance">Ambiance</span>
+    <button class="mini-btn" style="background:var(--p);color:#fff;border:none" data-i18n="change">🎲 CHANGER</button>
+  </div>
+  <hr style="border:0;border-top:1px solid var(--glass-b);margin:5px 0">
+  <div class="menu-item" data-action="open-users"><span data-i18n="manage_players">👥 Gérer les joueurs</span></div>
+  <div class="menu-item" data-action="toggle-print-sub">
+    <span data-i18n="print">🖨️ Impression</span><span style="font-size:0.8rem;opacity:0.6">▼</span>
+  </div>
+  <div id="sub-print" style="display:none;flex-direction:column;gap:2px;background:rgba(0,0,0,0.2);padding:8px;border-radius:8px;margin-bottom:8px"></div>
+  <div class="menu-item" data-action="save"><span data-i18n="save_btn">💾 Sauvegarder</span></div>
+  <div class="menu-item" data-action="load"><span data-i18n="load_btn">📂 Charger</span></div>
+  <div class="menu-item" data-action="reset-all" style="color:var(--err)"><span data-i18n="reset_all">🗑️ Tout Réinitialiser</span></div>
 </div>
 <div id="pop-view" class="popover" style="left:min(70%, calc(100vw - 290px))">
-<div style="padding:10px;font-size:0.8rem;opacity:0.6;text-transform:uppercase;font-weight:700" data-i18n="display">Affichage</div>
-<div id="view-list"></div>
+  <div style="padding:10px;font-size:0.8rem;opacity:0.6;text-transform:uppercase;font-weight:700" data-i18n="display">Affichage</div>
+  <div id="view-list"></div>
 </div>
 <div class="modal-overlay" id="mod-gold">
-<div class="modal-box">
-<div class="modal-head">
-<span style="font-weight:900;font-size:1.2rem;color:var(--gold)" data-i18n="gold_conf">👑 Configuration OR</span>
-<button class="mini-btn" data-action="close-gold" data-i18n="close">FERMER</button>
-</div>
-<div class="modal-body">
-<p style="text-align:center;opacity:0.7;font-size:0.9rem" data-i18n="click_gold">Cliquez sur une case pour définir une carte en OR.</p>
-<div id="gold-grid-ctn"></div>
-</div>
-</div>
+  <div class="modal-box">
+    <div class="modal-head">
+      <span style="font-weight:900;font-size:1.2rem;color:var(--gold)" data-i18n="gold_conf">👑 Configuration OR</span>
+      <button class="mini-btn" data-action="close-gold" data-i18n="close">FERMER</button>
+    </div>
+    <div class="modal-body">
+      <p style="text-align:center;opacity:0.7;font-size:0.9rem" data-i18n="click_gold">Cliquez sur une case pour définir une carte en OR.</p>
+      <div id="gold-grid-ctn"></div>
+    </div>
+  </div>
 </div>
 <div class="modal-overlay" id="mod-users">
-<div class="modal-box">
-<div class="modal-head">
-<span style="font-weight:900;font-size:1.2rem;color:var(--p)" data-i18n="manage_players">👥 Gérer les joueurs</span>
-<button class="mini-btn" data-action="close-users" data-i18n="close">FERMER</button>
-</div>
-<div class="modal-body">
-<p style="text-align:center;opacity:0.7;font-size:0.8rem" data-i18n="main_player_info">Le premier joueur de la liste est le joueur principal (Notes et Tableau à chiffres). Les chiffres sont réinitialisés en cas de changement de première place.</p>
-<div id="users-edit-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:15px"></div>
-<button class="big-btn" style="width:100%;padding:10px;font-size:1rem;margin-top:0" data-action="add-user-row" data-i18n="add_player">+ Ajouter un joueur</button>
-<button class="big-btn" style="width:100%;background:var(--ok);margin-top:15px" data-action="save-users" data-i18n="save_upper">ENREGISTRER</button>
-</div>
-</div>
+  <div class="modal-box">
+    <div class="modal-head">
+      <span style="font-weight:900;font-size:1.2rem;color:var(--p)" data-i18n="manage_players">👥 Gérer les joueurs</span>
+      <button class="mini-btn" data-action="close-users" data-i18n="close">FERMER</button>
+    </div>
+    <div class="modal-body">
+      <p style="text-align:center;opacity:0.7;font-size:0.8rem" data-i18n="main_player_info">Le premier joueur de la liste est le joueur principal (Notes et Tableau à chiffres). Les chiffres sont réinitialisés en cas de changement de première place.</p>
+      <div id="users-edit-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:15px"></div>
+      <button class="big-btn" style="width:100%;padding:10px;font-size:1rem;margin-top:0" data-action="add-user-row" data-i18n="add_player">+ Ajouter un joueur</button>
+      <button class="big-btn" style="width:100%;background:var(--ok);margin-top:15px" data-action="save-users" data-i18n="save_upper">ENREGISTRER</button>
+    </div>
+  </div>
 </div>
 <div class="app-container" id="main-app">
-<div id="gen-cards"></div>
-<div class="glass-card gold-area anim-section" data-sec="Gold" id="sec-gold">
-<div class="card-header" style="border-bottom-color:rgba(251,191,36,.3)">
-<div class="user-info">
-<div class="user-avatar" style="background:var(--gold);color:#000;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:900">G</div>
-<div class="user-name" style="background:none; -webkit-text-fill-color:var(--gold); color:var(--gold);display:inline-block" data-i18n="gold_trades">Échanges Gold</div>
-</div>
-<button class="mini-btn" data-action="add-gold-row" style="background:var(--gold);color:#000;border:none" data-i18n="add_upper"><b>+</b> AJOUTER</button>
-</div>
-<div style="padding:15px">
-<div id="gold-list"></div>
-</div>
-</div>
+  <div id="gen-cards"></div>
+  <div class="glass-card gold-area anim-section" data-sec="Gold" id="sec-gold">
+    <div class="card-header" style="border-bottom-color:rgba(251,191,36,.3)">
+      <div class="user-info">
+        <div class="user-avatar" style="background:var(--gold);color:#000;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:900">G</div>
+        <div class="user-name" style="background:none; -webkit-text-fill-color:var(--gold); color:var(--gold);display:inline-block" data-i18n="gold_trades">Échanges Gold</div>
+      </div>
+      <button class="mini-btn" data-action="add-gold-row" style="background:var(--gold);color:#000;border:none" data-i18n="add_upper"><b>+</b> AJOUTER</button>
+    </div>
+    <div style="padding:15px">
+      <div id="gold-list"></div>
+    </div>
+  </div>
 </div>
 <script src="script.js"></script>
 </body>
