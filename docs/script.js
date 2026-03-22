@@ -35,7 +35,7 @@ function applyTranslations() {
 }
 
 const CONST = {
-  VERSION: "4.02.4",
+  VERSION: "4.07",
   KEYS: { CFG: "mgo_cfg", USR: "mgo_u_" }
 };
 
@@ -49,6 +49,7 @@ function Mulberry32(a) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   }
 }
+
 const State = {
 cfg: { albums: 24, mode: "cross", gold_ids: [], gold_ex: [], hidden: [], printHidden: [], setup_done: false, ambiance: 0, seed: Date.now(), usersList: [] },
 usr: {},
@@ -124,6 +125,7 @@ updateCell(u, c, val, isNum = false) {
 },
 resetUser(u) { if(this.usr[u]) { this.usr[u].state = {}; this.usr[u].nums = {}; this.invalidateDupes(); this.saveU(u); } }
 };
+
 window.UserManager = {
 tempUsers: [],
 _dragSrc: null,
@@ -282,51 +284,102 @@ renderAmbiance() {
   this.els.bg.innerHTML = "";
   const rand = Mulberry32(State.cfg.seed);
   const mode = State.cfg.ambiance || 0;
-  const colors = ['#4f46e5', '#c026d3', '#06b6d4', '#f472b6', '#fbbf24'];
+  const colors = ['#4f46e5','#c026d3','#06b6d4','#f472b6','#fbbf24'];
+
   if(mode === 3) {
     this.els.bg.innerHTML = `
-    <div class="shiny-bg-wrap">
-      <div class="deck"><div class="card c1"></div><div class="card c2"></div><div class="card c3">★</div></div>
-      <div class="logo">Monopoly GO Tracker<span>.</span></div>
+    <div class="shiny-screen">
+      <div class="shiny-deck">
+        <div class="shiny-c shiny-c1"></div>
+        <div class="shiny-c shiny-c2">★</div>
+        <div class="shiny-c shiny-c3"></div>
+      </div>
+      <div class="shiny-logo">MGO <em>Tracker</em><span>.</span></div>
     </div>`;
     return;
   }
-  if(mode === 0 || mode === 1) {
-    const count = 6;
-    for(let i=0; i<count; i++) {
+
+  if(mode === 0) {
+    const count = 7;
+    for(let i=0;i<count;i++) {
       const d = document.createElement('div');
-      d.className = `f-obj ${mode===0 ? 'f-orb' : 'f-card'}`;
-      const w = 30 + Math.floor(rand() * 25);
-      const h = mode === 0 ? w : w * 1.4;
-      d.style.width = w + 'vw';
-      d.style.height = h + 'vw';
-      d.style.background = colors[Math.floor(rand() * colors.length)];
-      d.style.top = (rand() * 80 - 10) + '%';
-      d.style.left = (rand() * 80 - 10) + '%';
-      d.style.setProperty('--d', (20 + rand() * 15) + 's');
-      d.style.setProperty('--tx', (rand() * 20 - 10) + 'vw');
-      d.style.setProperty('--ty', (rand() * 20 - 10) + 'vh');
-      if(mode === 1) d.style.setProperty('--r2', (rand() * 360) + 'deg');
+      d.className = 'f-obj f-orb';
+      const w = 45 + rand() * 40;
+      const col = colors[Math.floor(rand() * colors.length)];
+      d.style.cssText = `
+        width:${w}vw; height:${w}vw;
+        top:${rand()*90-5}%;
+        left:${rand()*90-5}%;
+        background:radial-gradient(circle at 50% 50%, ${col} 0%, transparent 68%);
+      `;
+      d.style.setProperty('--d',  (18 + rand()*16) + 's');
+      d.style.setProperty('--tx', (rand()*18-9)    + 'vw');
+      d.style.setProperty('--ty', (rand()*18-9)    + 'vh');
+      d.style.setProperty('--r0', (rand()*30-15)   + 'deg');
+      d.style.setProperty('--r1', (rand()*30-15)   + 'deg');
       this.els.bg.appendChild(d);
     }
-  } else if(mode === 2) {
-    const count = 12;
-    for(let i=0; i<count; i++) {
+    return;
+  }
+
+  if(mode === 1) {
+    const cardGrads = [
+      'linear-gradient(145deg,#3b41d8,#6468f5)',
+      'linear-gradient(145deg,#c77b10,#f0aa22)',
+      'linear-gradient(145deg,#b8233b,#eb3a5f)',
+      'linear-gradient(145deg,#0e766e,#14b8a6)',
+      'linear-gradient(145deg,#7c3aed,#a855f7)',
+      'linear-gradient(145deg,#065f86,#0ea5e9)',
+    ];
+    const count = 7;
+    for(let i=0;i<count;i++) {
+      const d = document.createElement('div');
+      d.className = 'f-obj f-card';
+      const w = 18 + rand()*22;
+      const ar = 0.65 + rand()*0.25;
+      const initRot = (rand()*60-30);
+      d.style.cssText = `
+        width:${w}vw; height:${w/ar}vw;
+        top:${rand()*85-5}%;
+        left:${rand()*85-5}%;
+        background:${cardGrads[Math.floor(rand()*cardGrads.length)]};
+      `;
+      d.style.setProperty('--d',  (20 + rand()*18) + 's');
+      d.style.setProperty('--tx', (rand()*20-10)   + 'vw');
+      d.style.setProperty('--ty', (rand()*20-10)   + 'vh');
+      d.style.setProperty('--r0', initRot           + 'deg');
+      d.style.setProperty('--r1', (initRot + rand()*40-20) + 'deg');
+      this.els.bg.appendChild(d);
+    }
+    return;
+  }
+
+  if(mode === 2) {
+    const count = 9;
+    for(let i=0;i<count;i++) {
       const d = document.createElement('div');
       d.className = 'f-obj f-neon';
-      const s = 10 + Math.floor(rand() * 20);
-      const col = colors[Math.floor(rand() * colors.length)];
-      d.style.width = s + 'vw';
-      d.style.height = s + 'vw';
-      d.style.borderColor = col;
+      const w = 8 + rand()*18;
+      const h = rand() > 0.5 ? w : w*(0.5+rand()*0.8);
+      const col = colors[Math.floor(rand()*colors.length)];
+      const initRot = rand()>0.5 ? 45 : (rand()*30-15);
+      d.style.cssText = `
+        width:${w}vw; height:${h}vw;
+        top:${rand()*88}%;
+        left:${rand()*88}%;
+        border-color:${col};
+      `;
       d.style.setProperty('--glow', col);
-      d.style.top = (rand() * 90) + '%';
-      d.style.left = (rand() * 90) + '%';
-      if(rand() > 0.5) d.style.transform = 'rotate(45deg)';
-      d.style.setProperty('--d', (15 + rand() * 20) + 's');
-      d.style.setProperty('--tx', (rand() * 30 - 15) + 'vw');
-      d.style.setProperty('--ty', (rand() * 30 - 15) + 'vh');
-      d.style.setProperty('--r2', (rand() * 90 - 45) + 'deg');
+      d.style.setProperty('--d',   (14 + rand()*18) + 's');
+      d.style.setProperty('--pd',  (2.5 + rand()*2) + 's');
+      d.style.setProperty('--tx',  (rand()*26-13)   + 'vw');
+      d.style.setProperty('--ty',  (rand()*26-13)   + 'vh');
+      d.style.setProperty('--r0',  initRot           + 'deg');
+      d.style.setProperty('--r1',  (initRot + rand()*60-30) + 'deg');
+      if(rand() < 0.30) {
+        d.classList.add('f-neon-dying');
+        d.style.setProperty('--fd', (3 + rand()*5) + 's');
+      }
       this.els.bg.appendChild(d);
     }
   }
@@ -491,7 +544,7 @@ renderGoldEx() {
   State.cfg.gold_ex.forEach((item, idx) => {
     const row = document.createElement('div');
     row.className = 'gold-row';
-    row.innerHTML = `<input class="g-inp" data-f="alb" placeholder="${esc(T('album'))}" value="${esc(item.alb || '')}"><input class="g-inp" data-f="card" placeholder="${esc(T('card'))}" value="${esc(item.card || '')}"><input class="g-inp" data-f="date" placeholder="${esc(T('date'))}" value="${esc(item.date || '')}"><button style="background:0 0;border:none;color:var(--err);font-weight:700;cursor:pointer" data-action="del-gold" data-idx="${idx}">×</button>`;
+    row.innerHTML = `<input class="g-inp" data-f="alb" placeholder="${esc(T('album'))}" value="${esc(item.alb || item.album || '')}"><input class="g-inp" data-f="card" placeholder="${esc(T('card'))}" value="${esc(item.card || '')}"><input class="g-inp" data-f="date" placeholder="${esc(T('date'))}" value="${esc(item.date || '')}"><button style="background:0 0;border:none;color:var(--err);font-weight:700;cursor:pointer" data-action="del-gold" data-idx="${idx}">×</button>`;
     row.querySelectorAll('input').forEach(i => i.oninput = e => {
       State.cfg.gold_ex[idx][e.target.dataset.f] = e.target.value; State.saveC();
     });
@@ -779,13 +832,54 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
   SetupWizard.init();
+
+  const ambBg  = document.getElementById('ambient-bg');
+  const splash = document.getElementById('splash');
+
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    ambBg.style.opacity = '1';
+  }));
+
   setTimeout(() => {
-    document.body.classList.add('app-ready');
+    splash.style.transition = 'opacity 0.4s ease, visibility 0.4s ease';
+    splash.style.opacity    = '0';
+    splash.style.visibility = 'hidden';
+    splash.style.pointerEvents = 'none';
+
+    const allCards     = [...document.querySelectorAll('.anim-section')];
+    const visibleCards = allCards.filter(c => !c.classList.contains('hidden'));
+
+    allCards.forEach(c => {
+      c.style.opacity    = '0';
+      c.style.transform  = 'translateY(22px)';
+      c.style.transition = 'none';
+    });
+
+    const STAGGER   = 85;
+    const ANIM_DUR  = 480;
+    const EASE_CARD = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+    visibleCards.forEach((card, i) => {
+      setTimeout(() => {
+        card.style.transition = `opacity ${ANIM_DUR}ms ${EASE_CARD}, transform ${ANIM_DUR}ms ${EASE_CARD}`;
+        card.style.opacity    = '1';
+        card.style.transform  = 'translateY(0)';
+      }, i * STAGGER);
+    });
+
+    const cleanupDelay = visibleCards.length * STAGGER + ANIM_DUR + 100;
+
     setTimeout(() => {
-      document.getElementById('splash').remove();
-      if(!State.cfg.setup_done) {
+      allCards.forEach(c => {
+        c.style.removeProperty('opacity');
+        c.style.removeProperty('transform');
+        c.style.removeProperty('transition');
+      });
+      splash.remove();
+      if (!State.cfg.setup_done) {
         document.getElementById('setup-mod').classList.add('open');
       }
-    }, 600);
-  }, 1200);
+    }, cleanupDelay);
+
+  }, 900);
 });
