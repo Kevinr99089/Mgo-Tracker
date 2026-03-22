@@ -3,6 +3,7 @@
 🇬🇧 [English](https://github.com/Kevinr99089/Mgo-Tracker/blob/main/README.md) | 🇫🇷 [Français](https://github.com/Kevinr99089/Mgo-Tracker/blob/main/READMEfr.md)
 
 [![Démo en direct](https://img.shields.io/badge/D%C3%A9mo%20en%20direct-Jouer%20maintenant-success?style=for-the-badge)](https://kevinr99089.github.io/Mgo-Tracker/)
+[![Version](https://img.shields.io/badge/Version-4.07-6366f1?style=for-the-badge)](https://github.com/Kevinr99089/Mgo-Tracker)
 
 Une application web élégante, rapide et fonctionnant entièrement côté navigateur, conçue pour aider les joueurs de Monopoly GO! à suivre leurs albums d'autocollants, gérer plusieurs comptes et organiser leurs échanges sans effort.
 
@@ -15,16 +16,17 @@ Une application web élégante, rapide et fonctionnant entièrement côté navig
 * **Support Multijoueur :** Suivez les albums de votre compte principal et de vos comptes secondaires (ou de vos amis) au même endroit.
 * **Système de Tableau Intelligent :** Basculez entre un suivi d'état visuel et un mode permettant de compter exactement le nombre de doublons.
 * **Configuration des Cartes en Or :** Définissez quelles sont les cartes en Or (Gold) de la saison en cours.
-* **Registre d'Échanges Or :** Gardez une trace écrite de vos échanges prévus pour les événements "Échange en Or" (Golden Blitz).
+* **Registre d'Échanges Or :** Gardez une trace écrite de vos échanges de cartes en Or.
 * **Interface Bilingue :** S'adapte automatiquement en anglais ou en français selon la langue de votre système ou de votre navigateur.
-* **Ambiance Personnalisable :** Choisissez parmi différents fonds animés pour personnaliser votre expérience.
-* **Prêt pour l'Impression :** Mise en page épurée permettant d'imprimer facilement la liste des autocollants manquants sur papier.
+* **Ambiance Personnalisable :** Choisissez parmi quatre fonds animés, dont un mode secret rare.
+* **Prêt pour l'Impression :** Mise en page épurée avec sélection des joueurs à inclure, pour imprimer facilement la liste des autocollants manquants.
+* **Annuler :** Revenez instantanément sur votre dernière modification via le bouton Annuler dans le dock.
 
 ---
 
 ## 📖 Comment ça marche : Le Tableau
 
-L'application s'articule autour de "Cartes en verre" (Glass Cards) pour chaque joueur, contenant des grilles qui représentent les albums du jeu (1 à 24+).
+L'application s'articule autour de "Cartes en verre" (Glass Cards) pour chaque joueur, contenant des grilles qui représentent les albums du jeu. Chaque saison peut être configurée avec **21 à 26 albums**, contenant chacun 9 autocollants (grille 3×3).
 
 ### États des cartes
 En cliquant sur une case, vous pouvez alterner entre 3 états pour suivre votre collection :
@@ -42,10 +44,23 @@ Les cartes en Or sont indiquées par une bordure dorée brillante. Vous pouvez c
 
 ---
 
+## 🎨 Modes d'Ambiance
+
+Le tracker propose quatre modes d'arrière-plan animés, accessibles depuis le dock :
+
+| Mode | Description |
+|------|-------------|
+| 🔵 Orbes Cosmiques | Orbes en dégradé flottant doucement |
+| 🃏 Cartes Flottantes | Silhouettes de cartes animées qui dérivent à l'écran |
+| 🟣 Cadres Néons | Rectangles néon clignotants, certains avec un effet de lumière mourante réaliste |
+| ✨ Spécial | Un mode Shiny secret — apparaît avec 1% de chance à chaque cycle. Estimez-vous chanceux ! |
+
+---
+
 ## 💾 Comment les données sont stockées (Confidentialité)
 
-**Vos données sont 100% privées et restent sur votre appareil.** Cette application utilise le **Stockage Local (Local Storage)** de votre navigateur pour sauvegarder toutes vos configurations, les noms des joueurs et l'état des tableaux. 
-* **Pas de base de données :** Il n'y a aucun serveur backend ni base de données cloud. 
+**Vos données sont 100% privées et restent sur votre appareil.** Cette application utilise le **Stockage Local (Local Storage)** de votre navigateur pour sauvegarder toutes vos configurations, les noms des joueurs et l'état des tableaux.
+* **Pas de base de données :** Il n'y a aucun serveur backend ni base de données cloud.
 * **Pas de pistage (tracking) :** Nous ne collectons, ne traitons, ni ne voyons vos données.
 
 ### Sauvegardes et Synchronisation Multi-Appareils
@@ -53,6 +68,14 @@ Puisque les données sont stockées localement dans votre navigateur actuel, ell
 1. Ouvrez le Menu et cliquez sur **Sauvegarder**. Cela téléchargera un fichier `.json` contenant toutes vos données de suivi.
 2. Envoyez ce fichier sur votre autre appareil (par e-mail, Discord, câble, etc.).
 3. Sur le nouvel appareil, ouvrez l'application, cliquez sur **Charger** dans le menu, et sélectionnez le fichier `.json` pour y restaurer votre configuration exacte.
+
+---
+
+## 🔒 Sécurité
+
+* **Protection XSS :** Toutes les saisies utilisateur (noms de joueurs, notes) sont échappées en HTML avant d'être insérées dans la page, empêchant toute injection malveillante.
+* **Aucun script externe :** Le fichier est 100% autonome — aucun appel CDN, aucun code tiers chargé à l'exécution.
+* **Les actions destructives sont doublement confirmées :** Une réinitialisation complète nécessite deux dialogues de confirmation distincts avant qu'une donnée soit effacée.
 
 ---
 

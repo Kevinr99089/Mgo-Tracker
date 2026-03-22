@@ -3,6 +3,7 @@
 🇬🇧 [English](https://github.com/Kevinr99089/Mgo-Tracker/blob/main/README.md) | 🇫🇷 [Français](https://github.com/Kevinr99089/Mgo-Tracker/blob/main/READMEfr.md)
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Play%20Now-success?style=for-the-badge)](https://kevinr99089.github.io/Mgo-Tracker/)
+[![Version](https://img.shields.io/badge/Version-4.07-6366f1?style=for-the-badge)](https://github.com/Kevinr99089/Mgo-Tracker)
 
 A sleek, fast, and fully client-side web application designed to help Monopoly GO! players track their sticker albums, manage multiple accounts, and organize trades effortlessly.
 
@@ -15,16 +16,17 @@ A sleek, fast, and fully client-side web application designed to help Monopoly G
 * **Multi-Player Support:** Track albums for your main account and your alt accounts (or friends) all in one place.
 * **Smart Board System:** Toggle between visual state tracking and exact duplicate counting.
 * **Gold Cards Configuration:** Define which stickers are Gold cards for the current season.
-* **Gold Trades Ledger:** Keep a written record of your planned Gold Blitz trades.
+* **Gold Trades Ledger:** Keep a written record of your Gold card trades.
 * **Bilingual UI:** Automatically adapts to English or French based on your system/browser language.
-* **Customizable Ambiance:** Choose between different animated background modes.
-* **Print-Ready:** Clean print layout to generate a physical checklist of your missing stickers.
+* **Customizable Ambiance:** Choose between four animated background modes, including a rare secret one.
+* **Print-Ready:** Clean print layout with player selection to generate a physical checklist of your missing stickers.
+* **Undo:** Instantly revert your last cell change with the undo button in the dock.
 
 ---
 
 ## 📖 How It Works: The Board
 
-The app is built around "Glass Cards" for each player, containing grids that represent the in-game sticker albums (1 to 24+).
+The app is built around "Glass Cards" for each player, containing grids that represent the in-game sticker albums. Each season can be configured with **21 to 26 albums**, each containing 9 stickers (3×3 grid).
 
 ### Card States
 By clicking on a cell, you can cycle through 3 states to track your collection:
@@ -42,10 +44,23 @@ Gold cards are indicated by a shiny gold border. You can set up your season's go
 
 ---
 
+## 🎨 Ambiance Modes
+
+The tracker features four animated background modes, switchable from the dock:
+
+| Mode | Description |
+|------|-------------|
+| 🔵 Cosmic Orbs | Soft floating gradient orbs |
+| 🃏 Floating Cards | Animated card silhouettes drifting across the screen |
+| 🟣 Neon Frames | Flickering neon rectangles, some with a realistic dying-light effect |
+| ✨ Special | A hidden shiny mode — appears with a 1% chance each time you cycle. Consider yourself lucky! |
+
+---
+
 ## 💾 How Data is Stored (Privacy First)
 
-**Your data is 100% private and stays on your device.** This application uses your browser's **Local Storage** to save all configurations, player names, and board states. 
-* **No databases:** There is no backend server or cloud database. 
+**Your data is 100% private and stays on your device.** This application uses your browser's **Local Storage** to save all configurations, player names, and board states.
+* **No databases:** There is no backend server or cloud database.
 * **No tracking:** We do not collect, process, or see your data.
 
 ### Backups & Cross-Device Sync
@@ -53,6 +68,14 @@ Because data is stored locally in your browser, it won't automatically sync to y
 1. Open the Menu and click **Save**. This will download a `.json` file containing all your tracking data.
 2. Send this file to your other device (via email, Discord, etc.).
 3. On the new device, open the app, click **Load** in the menu, and upload the `.json` file to restore your exact setup.
+
+---
+
+## 🔒 Security
+
+* **XSS Protection:** All user input (player names, notes) is HTML-escaped before being inserted into the page, preventing any injection attack.
+* **No external scripts:** The file is 100% self-contained — no CDN calls, no third-party code loaded at runtime.
+* **Destructive actions are double-confirmed:** A full reset requires two separate confirmation dialogs before any data is erased.
 
 ---
 
