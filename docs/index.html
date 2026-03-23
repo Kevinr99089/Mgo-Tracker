@@ -19,7 +19,7 @@
     <div class="sp-c"></div>
   </div>
   <div class="sp-title">MGO <em>Tracker</em><span>.</span></div>
-  <div class="sp-hint">Chargement en cours…</div>
+  <div class="sp-hint" data-i18n="loading">Chargement en cours…</div>
 </div>
 <div id="toast"></div>
 <div id="setup-mod">
@@ -76,7 +76,8 @@
     <span data-i18n="print">🖨️ Impression</span><span style="font-size:0.8rem;opacity:0.6">▼</span>
   </div>
   <div id="sub-print" style="display:none;flex-direction:column;gap:2px;background:rgba(0,0,0,0.2);padding:8px;border-radius:8px;margin-bottom:8px"></div>
-  <div class="menu-item" data-action="save"><span data-i18n="save_btn">💾 Sauvegarder</span></div>
+  <div class="menu-item" data-action="save-file"><span data-i18n="save_file">💾 Sauver vers un fichier</span></div>
+  <div class="menu-item" data-action="open-share"><span data-i18n="share_board">🔗 Partager un tableau</span></div>
   <div class="menu-item" data-action="load"><span data-i18n="load_btn">📂 Charger</span></div>
   <div class="menu-item" data-action="reset-all" style="color:var(--err)"><span data-i18n="reset_all">🗑️ Tout Réinitialiser</span></div>
 </div>
@@ -122,6 +123,49 @@
     </div>
     <div style="padding:15px">
       <div id="gold-list"></div>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="mod-share">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-head">
+      <span style="font-weight:900;font-size:1.2rem;color:var(--p)" data-i18n="share_title">🔗 Partager un tableau</span>
+      <button class="mini-btn" data-action="close-share" data-i18n="close">FERMER</button>
+    </div>
+    <div class="modal-body" style="display:flex;flex-direction:column;gap:16px">
+      <div>
+        <label style="font-size:0.85rem;font-weight:700;color:var(--txt-dim);text-transform:uppercase;display:block;margin-bottom:8px" data-i18n="share_select">Sélectionner un tableau à partager :</label>
+        <div id="share-player-list" style="display:flex;flex-direction:column;gap:6px"></div>
+      </div>
+      <div id="share-link-section" style="display:none;flex-direction:column;gap:8px">
+        <label style="font-size:0.85rem;font-weight:700;color:var(--txt-dim);text-transform:uppercase" data-i18n="share_link_label">Lien de partage :</label>
+        <div style="display:flex;gap:8px;align-items:stretch">
+          <input id="share-url-field" type="text" readonly style="flex:1;background:rgba(0,0,0,0.4);border:1px solid var(--glass-b);border-radius:8px;color:var(--txt-dim);padding:10px 12px;font-size:0.8rem;font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0">
+          <button class="mini-btn" id="share-copy-btn" data-action="copy-share-link" style="flex-shrink:0;background:var(--p);color:#fff;border-color:var(--p)" data-i18n="share_copy">📋 Copier</button>
+        </div>
+        <div style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:0.82rem;color:var(--txt-dim)" data-i18n="share_hint">💡 Vous pouvez partager ce lien via WhatsApp, Discord, SMS, e-mail…</span>
+          <span style="font-size:0.78rem;color:var(--txt-dim);opacity:0.7" data-i18n="share_hint2">La personne qui reçoit le lien pourra importer ce tableau dans son propre tracker.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="mod-import">
+  <div class="modal-box" style="max-width:420px">
+    <div class="modal-head">
+      <span style="font-weight:900;font-size:1.2rem;color:var(--ok)" data-i18n="share_import_title">📥 Importer un tableau</span>
+    </div>
+    <div class="modal-body" style="display:flex;flex-direction:column;gap:16px">
+      <p style="margin:0;color:var(--txt-dim);font-size:0.9rem" data-i18n="share_import_msg">Un tableau partagé a été détecté :</p>
+      <div id="import-preview" style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);border-radius:12px;padding:16px">
+        <div id="import-name" style="font-size:1.1rem;font-weight:900;color:var(--p);margin-bottom:4px"></div>
+        <div id="import-stats" style="font-size:0.82rem;color:var(--txt-dim)"></div>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="big-btn" id="btn-import-confirm" style="flex:1;padding:12px;font-size:0.95rem;margin:0" data-i18n="share_import_add">➕ Ajouter / Remplacer</button>
+        <button class="mini-btn" id="btn-import-cancel" style="flex:1;padding:12px;font-size:0.9rem;justify-content:center" data-i18n="share_import_cancel">Annuler</button>
+      </div>
     </div>
   </div>
 </div>

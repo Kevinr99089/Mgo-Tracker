@@ -723,6 +723,39 @@ handle(e) {
       document.querySelectorAll('.glass-card').forEach(c => { if(!vals.includes(c.dataset.sec)) c.classList.add('print-hidden'); });
       window.print();
     },
+    'save-file': () => {
+      const blob = new Blob([JSON.stringify({version: CONST.VERSION, config:State.cfg, users:State.usr})], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `MGO_Backup_V${CONST.VERSION}.json`; 
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+      UI.showToast(T('file_dl'));
+    },
+    'open-share': () => {
+      document.getElementById('pop-menu').classList.remove('show');
+      Share.openModal();
+    },
+    'close-share': () => {
+      document.getElementById('mod-share').classList.remove('open');
+    },
+    'copy-share-link': () => {
+      const field = document.getElementById('share-url-field');
+      navigator.clipboard.writeText(field.value).then(() => {
+        const btn = document.getElementById('share-copy-btn');
+        const orig = btn.innerHTML;
+        btn.innerHTML = T('share_copied');
+        btn.style.background = 'var(--ok)';
+        setTimeout(() => { btn.innerHTML = orig; btn.style.background = 'var(--p)'; }, 2000);
+      }).catch(() => {
+        field.select();
+        document.execCommand('copy');
+        UI.showToast(T('share_copied'));
+      });
+    },
     'save': () => {
       const blob = new Blob([JSON.stringify({version: CONST.VERSION, config:State.cfg, users:State.usr})], {type:"application/json"});
       const url = URL.createObjectURL(blob);
@@ -795,11 +828,90 @@ init() {
 }
 };
 
+const Share = {
+  _selected: null,
+  openModal() {
+    this._selected = null;
+    const list = document.getElementById('share-player-list');
+    list.innerHTML = '';
+    document.getElementById('share-link-section').style.display = 'none';
+    State.cfg.usersList.forEach(name => {
+      const id = name.replace(/\s/g, '');
+      const btn = document.createElement('button');
+      btn.className = 'mini-btn';
+      btn.style.cssText = 'width:100%;justify-content:flex-start;padding:12px 16px;font-size:0.95rem;transition:0.2s';
+      btn.innerHTML = `👤 ${esc(name)}`;
+      btn.onclick = () => {
+        list.querySelectorAll('.mini-btn').forEach(b => { b.style.background=''; b.style.color=''; b.style.borderColor=''; });
+        btn.style.background = 'var(--p)';
+        btn.style.color = '#fff';
+        btn.style.borderColor = 'var(--p)';
+        this._selected = name;
+        this._generateLink(name, id);
+      };
+      list.appendChild(btn);
+    });
+    document.getElementById('mod-share').classList.add('open');
+  },
+  _generateLink(name, id) {
+    const userData = State.usr[id] || { state: {}, nums: {} };
+    const payload = { name, data: userData };
+    const json = JSON.stringify(payload);
+    const encoded = btoa(unescape(encodeURIComponent(json)));
+    const url = `https://kevinr99089.github.io/Mgo-Tracker/#share:${encoded}`;
+    document.getElementById('share-url-field').value = url;
+    const sec = document.getElementById('share-link-section');
+    sec.style.display = 'flex';
+  },
+  checkImport() {
+    const hash = window.location.hash;
+    if (!hash.startsWith('#share:')) return;
+    const encoded = hash.slice(7);
+    try {
+      const json = decodeURIComponent(escape(atob(encoded)));
+      const payload = JSON.parse(json);
+      if (!payload.name || !payload.data) return;
+      window.location.hash = '';
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      this._pendingImport = payload;
+      document.getElementById('import-name').textContent = `👤 ${payload.name}`;
+      const stateCount = Object.values(payload.data.state || {}).filter(v => v === 1).length;
+      const dupeCount  = Object.values(payload.data.state || {}).filter(v => v === 2).length;
+      document.getElementById('import-stats').textContent =
+        `${stateCount} carte(s) cochée(s) · ${dupeCount} doublon(s)`;
+      document.getElementById('mod-import').classList.add('open');
+    } catch(e) {
+      console.error('Share import error', e);
+    }
+  },
+  confirmImport() {
+    const p = this._pendingImport;
+    if (!p) return;
+    const id = p.name.replace(/\s/g, '');
+    if (!State.cfg.usersList.includes(p.name)) {
+      State.cfg.usersList.push(p.name);
+      State.saveC();
+    }
+    State.usr[id] = { state: {}, nums: {}, ...p.data };
+    State.saveU(id);
+    this._pendingImport = null;
+    document.getElementById('mod-import').classList.remove('open');
+    UI.showToast(`✅ ${p.name} importé !`);
+    setTimeout(() => location.reload(), 900);
+  }
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
   await loadLanguage();
   applyTranslations();
 
   State.init();
+  Share.checkImport();
+  document.getElementById('btn-import-confirm').onclick = () => Share.confirmImport();
+  document.getElementById('btn-import-cancel').onclick = () => {
+    Share._pendingImport = null;
+    document.getElementById('mod-import').classList.remove('open');
+  };
   const sl = document.getElementById('sl-alb');
   sl.value = State.cfg.albums; 
   document.getElementById('lbl-alb').textContent = State.cfg.albums;

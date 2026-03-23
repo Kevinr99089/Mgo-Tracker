@@ -1,4 +1,5 @@
 {
+  "loading": "Chargement en cours…",
   "saved": "Sauvegardé !",
   "new_season": "Nouvelle Saison",
   "setup_board": "Configurez votre tableau pour commencer.",
@@ -49,5 +50,18 @@
   "amb_1": "Cartes Flottantes",
   "amb_2": "Cadres Néons",
   "amb_3": "✨ SPÉCIAL ✨",
-  "reset_board_q": "Réinitialiser le tableau de ce joueur ?"
+  "reset_board_q": "Réinitialiser le tableau de ce joueur ?",
+  "save_file": "💾 Sauver vers un fichier",
+  "share_board": "🔗 Partager un tableau",
+  "share_title": "🔗 Partager un tableau",
+  "share_select": "Sélectionner un tableau à partager :",
+  "share_link_label": "Lien de partage :",
+  "share_copy": "📋 Copier le lien",
+  "share_copied": "✅ Copié !",
+  "share_hint": "💡 Vous pouvez partager ce lien via WhatsApp, Discord, SMS, e-mail…",
+  "share_hint2": "La personne qui reçoit le lien pourra importer ce tableau dans son propre tracker.",
+  "share_import_title": "📥 Importer un tableau",
+  "share_import_msg": "Un tableau partagé a été détecté :",
+  "share_import_add": "➕ Ajouter / Remplacer",
+  "share_import_cancel": "Annuler"
 }

@@ -1,4 +1,5 @@
 {
+  "loading": "Loading…",
   "saved": "Saved!",
   "new_season": "New Season",
   "setup_board": "Set up your board to start.",
@@ -49,5 +50,18 @@
   "amb_1": "Floating Cards",
   "amb_2": "Neon Frames",
   "amb_3": "✨ SPECIAL ✨",
-  "reset_board_q": "Reset this player's board?"
+  "reset_board_q": "Reset this player's board?",
+  "save_file": "💾 Save to file",
+  "share_board": "🔗 Share a board",
+  "share_title": "🔗 Share a board",
+  "share_select": "Select a board to share:",
+  "share_link_label": "Share link:",
+  "share_copy": "📋 Copy link",
+  "share_copied": "✅ Copied!",
+  "share_hint": "💡 You can share this link via WhatsApp, Discord, SMS, email…",
+  "share_hint2": "The recipient will be able to import this board into their own tracker.",
+  "share_import_title": "📥 Import a board",
+  "share_import_msg": "A shared board has been detected:",
+  "share_import_add": "➕ Add / Replace",
+  "share_import_cancel": "Cancel"
 }
