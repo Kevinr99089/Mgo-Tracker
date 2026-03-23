@@ -64,10 +64,23 @@ Le tracker propose quatre modes d'arrière-plan animés, accessibles depuis le d
 * **Pas de pistage (tracking) :** Nous ne collectons, ne traitons, ni ne voyons vos données.
 
 ### Sauvegardes et Synchronisation Multi-Appareils
-Puisque les données sont stockées localement dans votre navigateur actuel, elles ne se synchroniseront pas automatiquement sur votre téléphone si vous l'utilisez sur votre ordinateur (et vice versa). Cependant, l'application inclut une fonction de **Sauvegarde & Chargement** très simple :
-1. Ouvrez le Menu et cliquez sur **Sauvegarder**. Cela téléchargera un fichier `.json` contenant toutes vos données de suivi.
+Puisque les données sont stockées localement dans votre navigateur, elles ne se synchroniseront pas automatiquement entre vos appareils. L'application propose deux façons de transférer vos données :
+
+**Sauvegarde complète (tous les tableaux) :**
+1. Ouvrez le Menu et cliquez sur **Sauver vers un fichier**. Cela télécharge un fichier `.json` contenant les tableaux de tous les joueurs ainsi que l'ensemble de vos réglages.
 2. Envoyez ce fichier sur votre autre appareil (par e-mail, Discord, câble, etc.).
-3. Sur le nouvel appareil, ouvrez l'application, cliquez sur **Charger** dans le menu, et sélectionnez le fichier `.json` pour y restaurer votre configuration exacte.
+3. Sur le nouvel appareil, ouvrez l'application, cliquez sur **Charger** dans le menu, et sélectionnez le fichier `.json` pour restaurer votre configuration exacte.
+
+**Partage d'un tableau (un seul tableau, via un lien) :**
+L'application permet également de partager le tableau d'un joueur précis via un simple lien, sans aucun fichier à manipuler.
+1. Ouvrez le Menu et cliquez sur **Partager un tableau**.
+2. Sélectionnez le joueur dont vous souhaitez partager le tableau.
+3. Un lien unique est généré instantanément. Copiez-le et envoyez-le à qui vous voulez (WhatsApp, Discord, SMS, e-mail — tout fonctionne).
+4. Quand le destinataire ouvre le lien, l'application détecte automatiquement le tableau partagé et affiche une **fenêtre d'import**, lui permettant de l'ajouter à son propre tracker en un seul clic.
+
+> Particulièrement pratique pour se coordonner avec des amis, gérer des comptes secondaires depuis l'appareil de quelqu'un d'autre, ou synchroniser rapidement un seul tableau sans partager l'intégralité de votre sauvegarde.
+
+> **⚠️ À savoir :** Le lien est une photo de votre tableau au moment où vous l'avez partagé — il ne se met pas à jour tout seul. Si vous modifiez votre tableau par la suite et voulez que l'autre personne ait la version à jour, il suffit de repartager un nouveau lien.
 
 ---
 

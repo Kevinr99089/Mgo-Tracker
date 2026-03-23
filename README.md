@@ -64,10 +64,23 @@ The tracker features four animated background modes, switchable from the dock:
 * **No tracking:** We do not collect, process, or see your data.
 
 ### Backups & Cross-Device Sync
-Because data is stored locally in your browser, it won't automatically sync to your phone if you are using your computer. However, the app includes a built-in **Save & Load** feature:
-1. Open the Menu and click **Save**. This will download a `.json` file containing all your tracking data.
-2. Send this file to your other device (via email, Discord, etc.).
-3. On the new device, open the app, click **Load** in the menu, and upload the `.json` file to restore your exact setup.
+Because data is stored locally in your browser, it won't automatically sync across devices. The app provides two ways to move your data around:
+
+**Full backup (all boards):**
+1. Open the Menu and click **Save to file**. This downloads a `.json` file containing every player's board and all your settings.
+2. Transfer the file to your other device (email, Discord, USB, etc.).
+3. On the new device, open the app, click **Load** in the menu, and upload the `.json` to restore everything exactly as it was.
+
+**Board sharing (single board, via link):**
+The app also lets you share an individual player's board via a simple link — no file involved.
+1. Open the Menu and click **Share a board**.
+2. Select the player whose board you want to share.
+3. A unique link is generated instantly. Copy it and send it to whoever you want (WhatsApp, Discord, SMS, email — anything works).
+4. When the recipient opens the link, the app detects the shared board automatically and shows an **import prompt**, letting them add it to their own tracker in one tap.
+
+> This is especially handy for coordinating with friends, managing alt accounts from someone else's device, or quickly syncing a single board without sharing your entire save file.
+
+> **⚠️ Heads up:** The link is a photo of your board at the moment you shared it — it won't update on its own. If you make changes later and want the other person to have the latest version, just share a new link.
 
 ---
 
