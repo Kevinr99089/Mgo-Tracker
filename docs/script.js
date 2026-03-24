@@ -831,6 +831,7 @@ init() {
 const Share = {
   _selected: null,
   openModal() {
+    if (!window._splashDone) return;
     this._selected = null;
     const list = document.getElementById('share-player-list');
     list.innerHTML = '';
@@ -853,22 +854,46 @@ const Share = {
     });
     document.getElementById('mod-share').classList.add('open');
   },
-  _generateLink(name, id) {
+  async _generateLink(name, id) {
     const userData = State.usr[id] || { state: {}, nums: {} };
     const payload = { name, data: userData };
     const json = JSON.stringify(payload);
-    const encoded = btoa(unescape(encodeURIComponent(json)));
+    let encoded;
+    try {
+      const bytes = new TextEncoder().encode(json);
+      const cs = new CompressionStream('gzip');
+      const writer = cs.writable.getWriter();
+      writer.write(bytes);
+      writer.close();
+      const buf = await new Response(cs.readable).arrayBuffer();
+      let binary = '';
+      new Uint8Array(buf).forEach(b => binary += String.fromCharCode(b));
+      encoded = 'z:' + btoa(binary);
+    } catch(e) {
+      encoded = btoa(unescape(encodeURIComponent(json)));
+    }
     const url = `https://kevinr99089.github.io/Mgo-Tracker/#share:${encoded}`;
     document.getElementById('share-url-field').value = url;
-    const sec = document.getElementById('share-link-section');
-    sec.style.display = 'flex';
+    document.getElementById('share-link-section').style.display = 'flex';
   },
-  checkImport() {
+  async checkImport() {
     const hash = window.location.hash;
     if (!hash.startsWith('#share:')) return;
     const encoded = hash.slice(7);
     try {
-      const json = decodeURIComponent(escape(atob(encoded)));
+      let json;
+      if (encoded.startsWith('z:')) {
+        const binary = atob(encoded.slice(2));
+        const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+        const ds = new DecompressionStream('gzip');
+        const writer = ds.writable.getWriter();
+        writer.write(bytes);
+        writer.close();
+        const buf = await new Response(ds.readable).arrayBuffer();
+        json = new TextDecoder().decode(buf);
+      } else {
+        json = decodeURIComponent(escape(atob(encoded)));
+      }
       const payload = JSON.parse(json);
       if (!payload.name || !payload.data) return;
       window.location.hash = '';
@@ -906,6 +931,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   applyTranslations();
 
   State.init();
+  window._splashDone = false;
   Share.checkImport();
   document.getElementById('btn-import-confirm').onclick = () => Share.confirmImport();
   document.getElementById('btn-import-cancel').onclick = () => {
@@ -988,6 +1014,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         c.style.removeProperty('transition');
       });
       splash.remove();
+      window._splashDone = true;
       if (!State.cfg.setup_done) {
         document.getElementById('setup-mod').classList.add('open');
       }
