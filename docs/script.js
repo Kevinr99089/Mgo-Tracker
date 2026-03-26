@@ -533,7 +533,8 @@ updateStats() {
     if(bot) bot.textContent = `${g}/${gt}`;
     if(perc) {
       perc.textContent = `${pct}%`;
-      perc.style.color = pct === 100 ? 'var(--gold)' : 'var(--ok)';
+const newColor = pct === 100 ? 'var(--gold)' : pct >= 50 ? '#fb923c' : '#f87171';
+      perc.style.color = newColor;
     }
     if(av) av.style.background = `conic-gradient(var(--ok) ${pct}%, var(--p) 0)`;
   });
