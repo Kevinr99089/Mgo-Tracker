@@ -46,13 +46,14 @@ Les cartes en Or sont indiquées par une bordure dorée brillante. Vous pouvez c
 
 ## 🎨 Modes d'Ambiance
 
-Le tracker propose quatre modes d'arrière-plan animés, accessibles depuis le dock :
+Le tracker propose cinq modes d'arrière-plan animés, accessibles depuis le dock :
 
 | Mode | Description |
 |------|-------------|
 | 🔵 Orbes Cosmiques | Orbes en dégradé flottant doucement |
 | 🃏 Cartes Flottantes | Silhouettes de cartes animées qui dérivent à l'écran |
 | 🟣 Cadres Néons | Rectangles néon clignotants, certains avec un effet de lumière mourante réaliste |
+| 🌋 Lampe à Lave | Bulles fluides interactives en 2D qui réagissent au curseur ou au toucher |
 | ✨ Spécial | Un mode Shiny secret — apparaît avec 1% de chance à chaque cycle. Estimez-vous chanceux ! |
 
 ---
