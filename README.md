@@ -46,13 +46,14 @@ Gold cards are indicated by a shiny gold border. You can set up your season's go
 
 ## 🎨 Ambiance Modes
 
-The tracker features four animated background modes, switchable from the dock:
+The tracker features five animated background modes, switchable from the dock:
 
 | Mode | Description |
 |------|-------------|
 | 🔵 Cosmic Orbs | Soft floating gradient orbs |
 | 🃏 Floating Cards | Animated card silhouettes drifting across the screen |
 | 🟣 Neon Frames | Flickering neon rectangles, some with a realistic dying-light effect |
+| 🌋 Lava Lamp | Interactive 2D fluid blobs that react to your cursor or touch |
 | ✨ Special | A hidden shiny mode — appears with a 1% chance each time you cycle. Consider yourself lucky! |
 
 ---
