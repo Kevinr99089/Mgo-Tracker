@@ -147,6 +147,7 @@ this.debounceSave(u);
 },
 resetUser(u) { if(this.usr[u]) { this.usr[u].state = {}; this.usr[u].nums = {}; this.invalidateDupes(); this.saveU(u); } }
 };
+
 window.UserManager = {
 tempUsers: [],
 _dragSrc: null,
@@ -292,6 +293,7 @@ save() {
   UI.showToast(T('players_updated'));
 }
 };
+
 let _lavaRAF = null;
 let _lavaCleanup = null;
 function _lavaStop() {
@@ -1056,6 +1058,7 @@ const actionMap = {
 if(actionMap[act]) actionMap[act]();
 }
 };
+
 const SetupWizard = {
 init() {
 const sAlb = document.getElementById('s-alb');
@@ -1077,6 +1080,7 @@ document.getElementById('btn-start-season').onclick = () => {
 };
 }
 };
+
 const Share = {
   _selected: null,
   openModal() {
@@ -1102,23 +1106,48 @@ const Share = {
     });
     document.getElementById('mod-share').classList.add('open');
   },
-  _generateLink(name, id) {
+  async _generateLink(name, id) {
     const userData = State.usr[id] || { state: {}, nums: {} };
     const payload = { name, data: userData };
     const json = JSON.stringify(payload);
-    const encoded = btoa(unescape(encodeURIComponent(json)));
+    let encoded;
+    try {
+      const bytes = new TextEncoder().encode(json);
+      const cs = new CompressionStream('gzip');
+      const writer = cs.writable.getWriter();
+      writer.write(bytes);
+      writer.close();
+      const buf = await new Response(cs.readable).arrayBuffer();
+      let binary = '';
+      new Uint8Array(buf).forEach(b => binary += String.fromCharCode(b));
+      encoded = 'z:' + btoa(binary);
+    } catch(e) {
+      encoded = btoa(unescape(encodeURIComponent(json)));
+    }
     const base = 'https://kevinr99089.github.io/Mgo-Tracker/';
     const url = `${base}#share:${encoded}`;
     document.getElementById('share-url-field').value = url;
     const sec = document.getElementById('share-link-section');
     sec.style.display = 'flex';
   },
-  checkImport() {
+  async checkImport() {
     const hash = window.location.hash;
     if (!hash.startsWith('#share:')) return;
     const encoded = hash.slice(7);
     try {
-      const json = decodeURIComponent(escape(atob(encoded)));
+      let json;
+      if (encoded.startsWith('z:')) {
+        const binary = atob(encoded.slice(2));
+        const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+        const ds = new DecompressionStream('gzip');
+        const writer = ds.writable.getWriter();
+        writer.write(bytes);
+        writer.close();
+        const buf = await new Response(ds.readable).arrayBuffer();
+        json = new TextDecoder().decode(buf);
+      } else {
+        json = decodeURIComponent(escape(atob(encoded)));
+      }
       const payload = JSON.parse(json);
       if (!payload.name || !payload.data) return;
       window.location.hash = '';
@@ -1150,6 +1179,7 @@ const Share = {
     setTimeout(() => location.reload(), 900);
   }
 };
+
 document.addEventListener('DOMContentLoaded', async () => {
 await loadLanguage();
 applyTranslations();
