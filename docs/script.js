@@ -159,6 +159,7 @@ resetUser(u) { if(this.usr[u]) { this.usr[u].state = {}; this.usr[u].nums = {}; 
 
 window.UserManager = {
 tempUsers: [],
+_newIndices: new Set(),
 _dragSrc: null,
 _touchSrc: null,
 _touchClone: null,
@@ -169,6 +170,7 @@ open() {
   document.getElementById('mod-users').classList.add('open');
 },
 close() {
+  this._newIndices.clear();
   document.getElementById('mod-users').classList.remove('open');
 },
 render() {
@@ -176,7 +178,7 @@ render() {
   c.innerHTML = "";
   this.tempUsers.forEach((u, i) => {
       const row = document.createElement('div');
-      row.className = 'um-row';
+      row.className = 'um-row' + (this._newIndices.has(i) ? ' um-new' : '');
       row.draggable = true;
       row.dataset.idx = i;
       const safeU = esc(u);
@@ -269,8 +271,20 @@ update(idx, val) {
   this.tempUsers[idx] = val.trim() || `${T('player')} ${idx+1}`;
 },
 add() {
-  this.tempUsers.push(`${T('player')} ${this.tempUsers.length + 1}`);
+  const ni = this.tempUsers.length;
+  this.tempUsers.push(`${T('player')} ${ni + 1}`);
+  this._newIndices.add(ni);
   this.render();
+  requestAnimationFrame(() => {
+      const rows = document.querySelectorAll('#users-edit-list .um-row');
+      const row = rows[ni];
+      if(!row) return;
+      row.classList.add('um-flashing');
+      setTimeout(() => {
+          row.classList.remove('um-flashing');
+          row.classList.add('um-new');
+      }, 950);
+  });
 },
 remove(idx) {
   if(this.tempUsers.length > 1) {
@@ -279,6 +293,7 @@ remove(idx) {
   }
 },
 save() {
+  this._newIndices.clear();
   const oldList = State.cfg.usersList;
   const oldPrimaryUid = oldList[0] ? oldList[0].replace(/\s/g, "") : null;
   const newPrimaryUid = this.tempUsers[0] ? this.tempUsers[0].replace(/\s/g, "") : null;

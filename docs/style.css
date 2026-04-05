@@ -178,6 +178,21 @@ body { margin: 0; padding: 0 0 140px; background: var(--bg); color: var(--txt); 
 .um-handle:active { cursor: grabbing; }
 .um-row.um-dragging { opacity: .35; border-color: var(--p); transform: scale(.98); }
 .um-row.um-drag-over { border-color: var(--p); background: rgba(99, 102, 241, .12); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99, 102, 241, .25); }
+
+@keyframes um-new-flash {
+  0% { border-color: var(--err); box-shadow: 0 0 10px rgba(239, 68, 68, .5); }
+  50% { border-color: transparent; box-shadow: none; }
+  100% { border-color: var(--err); box-shadow: 0 0 10px rgba(239, 68, 68, .5); }
+}
+.um-row.um-new {
+  border-color: #f97316 !important;
+  box-shadow: 0 0 8px rgba(249, 115, 22, .35);
+}
+.um-row.um-flashing {
+  animation: um-new-flash .45s ease-in-out 2;
+  border-color: var(--err) !important;
+}
+
 .um-touch-clone { position: fixed; left: 10px; right: 10px; z-index: 99999; pointer-events: none; background: rgba(99, 102, 241, .25) !important; border: 1px solid var(--p) !important; border-radius: 10px; padding: 6px 8px; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(12px); box-shadow: 0 12px 30px rgba(0, 0, 0, .5); opacity: .9; }
 
 .dock-wrap { position: fixed; bottom: 20px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; pointer-events: none; }
