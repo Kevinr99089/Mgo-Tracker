@@ -32,13 +32,19 @@ function applyTranslations() {
     const val = T(key);
     if(I18N_HTML_KEYS.has(key)) { el.innerHTML = val; } else { el.textContent = val; }
   });
+  
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const key = el.dataset.i18nTitle;
+    el.title = T(key);
+  });
 }
 
 const CONST = {
-VERSION: "4.08 (Web)",
+VERSION: "4.08.2 (Web)",
 KEYS: { CFG: "mgo_cfg", USR: "mgo_u_" }
 };
 let HIST = [];
+
 function Mulberry32(a) {
 return function() {
 var t = a += 0x6D2B79F5;
@@ -47,7 +53,9 @@ t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
 return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 }
 }
+
 function isSeedShiny(seed) { return Mulberry32(seed)() < 0.01; }
+
 function validateAmbiance(cfg) {
 const maxValid = isSeedShiny(cfg.seed) ? 4 : 3;
 if(cfg.ambiance == null || typeof cfg.ambiance !== 'number' || cfg.ambiance < 0 || !Number.isInteger(cfg.ambiance)) {
@@ -64,6 +72,7 @@ if(cfg.ambiance > maxValid) {
 }
 return null;
 }
+
 const State = {
 cfg: { albums: 24, mode: "cross", gold_ids: [], gold_ex: [], hidden: [], printHidden: [], setup_done: false, ambiance: 0, seed: Date.now(), usersList: [] },
 usr: {},
@@ -300,6 +309,7 @@ function _lavaStop() {
   if(_lavaRAF) { cancelAnimationFrame(_lavaRAF); _lavaRAF = null; }
   if(_lavaCleanup) { _lavaCleanup(); _lavaCleanup = null; }
 }
+
 const UI = {
 els: { app: document.getElementById('gen-cards'), toast: document.getElementById('toast'), bg: document.getElementById('ambient-bg') },
 showToast(msg) {
@@ -855,6 +865,7 @@ if(t.classList.contains('g-cell')) {
 c.appendChild(rowDiv);
 }
 };
+
 const Actions = {
 _lastClickCell: null,
 _lastClickTime: 0,
@@ -930,15 +941,33 @@ if(!btn) return;
 e.stopPropagation();
 const act = btn.dataset.action;
 const actionMap = {
-'toggle-menu': () => document.getElementById('pop-menu').classList.toggle('show'),
-'toggle-view': () => document.getElementById('pop-view').classList.toggle('show'),
+'toggle-menu': () => {
+  const pm = document.getElementById('pop-menu');
+  const pv = document.getElementById('pop-view');
+  const wasOpen = pm.classList.contains('show');
+  pv.classList.remove('show');
+  wasOpen ? pm.classList.remove('show') : pm.classList.add('show');
+},
+'toggle-view': () => {
+  const pm = document.getElementById('pop-menu');
+  const pv = document.getElementById('pop-view');
+  const wasOpen = pv.classList.contains('show');
+  pm.classList.remove('show');
+  wasOpen ? pv.classList.remove('show') : pv.classList.add('show');
+},
 'open-users': () => window.UserManager.open(),
 'close-users': () => window.UserManager.close(),
 'add-user-row': () => window.UserManager.add(),
 'save-users': () => window.UserManager.save(),
 'undo': () => {
   const last = HIST.pop();
-  if(last) { State.updateCell(last.u, last.c, last.v); UI.hydrate(); UI.showToast(T('undone')); }
+  if(last) { 
+      State.updateCell(last.u, last.c, last.v); 
+      UI.hydrate(); 
+      UI.showToast(T('undone')); 
+  } else {
+      UI.showToast(T('nothing_to_undo'));
+  }
 },
 'mode-toggle': () => {
   State.cfg.mode = State.cfg.mode === 'number' ? 'cross' : 'number';
