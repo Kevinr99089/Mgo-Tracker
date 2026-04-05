@@ -38,6 +38,8 @@
   "click_gold": "Cliquez sur une case pour définir une carte en OR.",
   "main_player_info": "Le premier joueur de la liste est le joueur principal (Notes et Tableau à chiffres). Les chiffres sont réinitialisés en cas de changement de première place.",
   "add_player": "+ Ajouter un joueur",
+  "add_player_title": "Ajouter un joueur",
+  "add_label": "Ajouter",
   "save_upper": "ENREGISTRER",
   "gold_trades": "Échanges Gold",
   "add_upper": "<b>+</b> AJOUTER",

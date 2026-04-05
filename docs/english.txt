@@ -38,6 +38,8 @@
   "click_gold": "Click a cell to set a GOLD card.",
   "main_player_info": "The first player in the list is the main player (Notes and Number Board). Numbers are reset if the first place changes.",
   "add_player": "+ Add a player",
+  "add_player_title": "Add a player",
+  "add_label": "Add",
   "save_upper": "SAVE",
   "gold_trades": "Gold Trades",
   "add_upper": "<b>+</b> ADD",

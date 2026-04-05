@@ -111,7 +111,10 @@
 <div class="modal-overlay" id="mod-users">
   <div class="modal-box">
     <div class="modal-head" style="position:relative">
-      <button class="mini-btn" data-action="add-user-row" data-i18n-title="add_player" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);width:30px;height:30px;padding:0;font-size:1.1rem;font-weight:900;justify-content:center;border-radius:50%">+</button>
+      <div style="position:absolute;left:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:3px">
+        <button class="mini-btn" data-action="add-user-row" data-i18n-title="add_player_title" style="width:30px;height:30px;padding:0;font-size:1.1rem;font-weight:900;justify-content:center;border-radius:50%">+</button>
+        <span style="font-size:9px;font-weight:700;color:var(--txt-dim);text-transform:uppercase;letter-spacing:.5px" data-i18n="add_label">Ajouter</span>
+      </div>
       <span style="font-weight:900;font-size:1.2rem;color:var(--p);margin:0 auto" data-i18n="manage_players">👥 Gérer les joueurs</span>
       <button class="mini-btn" data-action="close-users" data-i18n="close">FERMER</button>
     </div>
