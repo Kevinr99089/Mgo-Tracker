@@ -38,7 +38,7 @@ MGO Tracker étant construit comme un fichier HTML monolithique, aucune installa
 
 * Créé entièrement en HTML, CSS et JavaScript Vanilla pur.
 * Zéro dépendance, aucune base de données externe.
-* Tout le code est regroupé dans un seul fichier pour une portabilité maximale.
+* Les versions disponibles dans les releases sont regroupé dans un seul fichier pour une portabilité maximale.
 
 ---
 
