@@ -6,7 +6,7 @@ Bienvenue sur **MGO Tracker**, une application web autonome et performante conç
 
 Que vous jouiez sur un seul compte ou que vous gériez plusieurs joueurs, cet outil offre une solution fluide, rapide et sécurisée pour mettre à jour votre progression en ligne ou hors ligne.
 
-[![MGO Tracker | Tester en ligne](https://img.shields.io/badge/MGO_Tracker-Tester_en_ligne-2563eb?style=for-the-badge)](https://kevinr99089.github.io/Mgo-Tracker/)
+[![MGO Tracker V4.08.2](https://img.shields.io/badge/Lancez_MGO_Tracker_V4.08.2-Créez/gérez_vos_tableaux-2563eb?style=for-the-badge)](https://kevinr99089.github.io/Mgo-Tracker/)
 
 ---
 
