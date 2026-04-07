@@ -39,6 +39,7 @@ Since MGO Tracker is built as a monolithic HTML file, installation is entirely o
 * Built entirely with pure HTML, CSS, and Vanilla JavaScript.
 * Zero dependencies, zero external database tracking.
 * The Releases versions is bundled into a single file for maximum portability.
+* This file is not optimized for Firefox; use the lite version for optimal performance.
 
 ---
 
