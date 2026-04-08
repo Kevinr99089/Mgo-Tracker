@@ -40,7 +40,7 @@ function applyTranslations() {
 }
 
 const CONST = {
-VERSION: "4.08.3 (Web)",
+VERSION: "4.08.4 (Web)",
 KEYS: { CFG: "mgo_cfg", USR: "mgo_u_" }
 };
 let HIST = [];
@@ -294,21 +294,39 @@ remove(idx) {
 },
 save() {
   this._newIndices.clear();
-  const oldList = State.cfg.usersList;
-  const oldPrimaryUid = oldList[0] ? oldList[0].replace(/\s/g, "") : null;
-  const newPrimaryUid = this.tempUsers[0] ? this.tempUsers[0].replace(/\s/g, "") : null;
-  if (oldPrimaryUid && newPrimaryUid && oldPrimaryUid !== newPrimaryUid) {
-      if(State.usr[oldPrimaryUid]) {
-          State.usr[oldPrimaryUid].nums = {};
-          State.saveU(oldPrimaryUid);
-      }
+  const originalList = State.cfg.usersList.slice();
+  
+  this.tempUsers.forEach((newName, i) => {
+    const oldName = originalList[i];
+    if (!oldName) return;
+    const oldKey = oldName.replace(/\s/g, "");
+    const newKey = newName.replace(/\s/g, "");
+    
+    if (oldKey !== newKey && State.usr[oldKey]) {
+      State.usr[newKey] = State.usr[oldKey];
+      delete State.usr[oldKey];
+      try { localStorage.removeItem(CONST.KEYS.USR + oldKey); } catch(e){}
+      State.saveU(newKey);
+    }
+  });
+
+  const oldFirstKey = originalList[0] ? originalList[0].replace(/\s/g, "") : null;
+  const newFirstKey = this.tempUsers[0] ? this.tempUsers[0].replace(/\s/g, "") : null;
+  
+  if (oldFirstKey && newFirstKey && oldFirstKey !== newFirstKey) {
+    if(State.usr[oldFirstKey]) {
+        State.usr[oldFirstKey].nums = {};
+        State.saveU(oldFirstKey);
+    }
   }
+
   this.tempUsers.forEach((name) => {
       const uid = name.replace(/\s/g, "");
       if(!State.usr[uid]) {
           State.usr[uid] = { state: {}, nums: {} };
       }
   });
+
   State.cfg.usersList = [...this.tempUsers];
   State.saveC();
   this.close();
@@ -1210,12 +1228,19 @@ const Share = {
   },
   async checkImport() {
     const hash = window.location.hash;
-    if (!hash.startsWith('#share:')) return;
-    const encoded = hash.slice(7);
+    const raw = hash.startsWith('#share:') ? hash.slice(7) : localStorage.getItem('mgo_pending_share');
+    if (!raw) return;
+
+    if (hash.startsWith('#share:')) {
+      localStorage.setItem('mgo_pending_share', raw);
+      window.location.hash = '';
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+
     try {
       let json;
-      if (encoded.startsWith('z:')) {
-        const binary = atob(encoded.slice(2));
+      if (raw.startsWith('z:')) {
+        const binary = atob(raw.slice(2));
         const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
         const ds = new DecompressionStream('gzip');
         const writer = ds.writable.getWriter();
@@ -1224,21 +1249,22 @@ const Share = {
         const buf = await new Response(ds.readable).arrayBuffer();
         json = new TextDecoder().decode(buf);
       } else {
-        json = decodeURIComponent(escape(atob(encoded)));
+        json = decodeURIComponent(escape(atob(raw)));
       }
       const payload = JSON.parse(json);
       if (!payload.name || !payload.data) return;
-      window.location.hash = '';
-      history.replaceState(null, '', window.location.pathname + window.location.search);
       this._pendingImport = payload;
       document.getElementById('import-name').textContent = `👤 ${payload.name}`;
-      const stateCount = Object.values(payload.data.state || {}).filter(v => v === 1).length;
-      const dupeCount = Object.values(payload.data.state || {}).filter(v => v === 2).length;
-      document.getElementById('import-stats').textContent =
-        `${stateCount} carte(s) cochée(s) · ${dupeCount} doublon(s)`;
+      const checked = Object.values(payload.data.state || {}).filter(v => v === 1).length;
+      const dupes = Object.values(payload.data.state || {}).filter(v => v === 2).length;
+      document.getElementById('import-stats').textContent = T('import_stats').replace('{c}', checked).replace('{d}', dupes);
+      
+      document.getElementById('import-step-1').style.display = 'flex';
+      document.getElementById('import-step-2').style.display = 'none';
       document.getElementById('mod-import').classList.add('open');
     } catch(e) {
       console.error('Share import error', e);
+      localStorage.removeItem('mgo_pending_share');
     }
   },
   confirmImport() {
@@ -1252,8 +1278,61 @@ const Share = {
     State.usr[id] = { state: {}, nums: {}, ...p.data };
     State.saveU(id);
     this._pendingImport = null;
+    this._replaceTarget = null;
+    localStorage.removeItem('mgo_pending_share');
+    this._closeImportModal();
+    UI.showToast(`✅ ${p.name} ${T('imported')}`);
+    setTimeout(() => location.reload(), 900);
+  },
+  _closeImportModal() {
     document.getElementById('mod-import').classList.remove('open');
-    UI.showToast(`✅ ${p.name} importé !`);
+    document.getElementById('import-step-1').style.display = 'flex';
+    document.getElementById('import-step-2').style.display = 'none';
+  },
+  openReplaceStep() {
+    const list = document.getElementById('import-player-select');
+    list.innerHTML = '';
+    this._replaceTarget = null;
+    document.getElementById('btn-import-replace-confirm').disabled = true;
+    
+    State.cfg.usersList.forEach(name => {
+      const btn = document.createElement('button');
+      btn.className = 'mini-btn';
+      btn.style.cssText = 'width:100%;justify-content:flex-start;padding:10px 14px;font-size:0.9rem;transition:0.2s';
+      btn.textContent = `👤 ${name}`;
+      btn.onclick = () => {
+        list.querySelectorAll('.mini-btn').forEach(b => {
+          b.style.background = '';
+          b.style.borderColor = '';
+          b.style.color = '';
+        });
+        btn.style.background = 'var(--p)';
+        btn.style.borderColor = 'var(--p)';
+        btn.style.color = '#fff';
+        this._replaceTarget = name;
+        document.getElementById('btn-import-replace-confirm').disabled = false;
+      };
+      list.appendChild(btn);
+    });
+    
+    document.getElementById('import-step-1').style.display = 'none';
+    document.getElementById('import-step-2').style.display = 'flex';
+  },
+  confirmReplace() {
+    const p = this._pendingImport;
+    if (!p || !this._replaceTarget) return;
+    if (!confirm(T('import_replace_warn').replace('{name}', this._replaceTarget))) return;
+    
+    const targetKey = this._replaceTarget.replace(/\s/g, '');
+    State.usr[targetKey] = { state: {}, nums: {}, ...p.data };
+    State.saveU(targetKey);
+    
+    const replaced = this._replaceTarget;
+    this._pendingImport = null;
+    this._replaceTarget = null;
+    localStorage.removeItem('mgo_pending_share');
+    this._closeImportModal();
+    UI.showToast(`✅ ${T('data_replaced').replace('{name}', replaced)}`);
     setTimeout(() => location.reload(), 900);
   }
 };
@@ -1262,12 +1341,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 await loadLanguage();
 applyTranslations();
 State.init();
+
 Share.checkImport();
 document.getElementById('btn-import-confirm').onclick = () => Share.confirmImport();
+document.getElementById('btn-import-replace').onclick = () => Share.openReplaceStep();
+document.getElementById('btn-import-replace-back').onclick = () => {
+  document.getElementById('import-step-1').style.display = 'flex';
+  document.getElementById('import-step-2').style.display = 'none';
+  Share._replaceTarget = null;
+};
+document.getElementById('btn-import-replace-confirm').onclick = () => Share.confirmReplace();
 document.getElementById('btn-import-cancel').onclick = () => {
   Share._pendingImport = null;
-  document.getElementById('mod-import').classList.remove('open');
+  Share._replaceTarget = null;
+  localStorage.removeItem('mgo_pending_share');
+  Share._closeImportModal();
 };
+
 const sl = document.getElementById('sl-alb');
 sl.value = State.cfg.albums; 
 document.getElementById('lbl-alb').textContent = State.cfg.albums;
