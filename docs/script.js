@@ -40,7 +40,7 @@ function applyTranslations() {
 }
 
 const CONST = {
-VERSION: "4.08.4 (Web)",
+VERSION: "4.08.5 (Web)",
 KEYS: { CFG: "mgo_cfg", USR: "mgo_u_" }
 };
 let HIST = [];
@@ -1221,17 +1221,32 @@ const Share = {
       encoded = btoa(unescape(encodeURIComponent(json)));
     }
     const base = 'https://kevinr99089.github.io/Mgo-Tracker/';
-    const url = `${base}#share:${encoded}`;
+    const url = `${base}?share=${encodeURIComponent(encoded)}`;
     document.getElementById('share-url-field').value = url;
     const sec = document.getElementById('share-link-section');
     sec.style.display = 'flex';
   },
   async checkImport() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const queryShare = urlParams.get('share');
     const hash = window.location.hash;
-    const raw = hash.startsWith('#share:') ? hash.slice(7) : localStorage.getItem('mgo_pending_share');
+    
+    let raw = null;
+    if (queryShare) {
+      raw = queryShare;
+    } else if (hash.startsWith('#share:')) {
+      raw = hash.slice(7);
+    } else {
+      raw = localStorage.getItem('mgo_pending_share');
+    }
+
     if (!raw) return;
 
-    if (hash.startsWith('#share:')) {
+    if (queryShare) {
+      localStorage.setItem('mgo_pending_share', raw);
+      const urlWithoutSearch = window.location.pathname + window.location.hash;
+      history.replaceState(null, '', urlWithoutSearch);
+    } else if (hash.startsWith('#share:')) {
       localStorage.setItem('mgo_pending_share', raw);
       window.location.hash = '';
       history.replaceState(null, '', window.location.pathname + window.location.search);
