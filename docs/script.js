@@ -40,7 +40,7 @@ function applyTranslations() {
 }
 
 const CONST = {
-VERSION: "4.08.2 (Web)",
+VERSION: "4.08.3 (Web)",
 KEYS: { CFG: "mgo_cfg", USR: "mgo_u_" }
 };
 let HIST = [];
@@ -332,6 +332,50 @@ this.els.toast.textContent = msg;
 this.els.toast.classList.add('show');
 clearTimeout(this._toastTimer);
 this._toastTimer = setTimeout(() => this.els.toast.classList.remove('show'), 2000);
+},
+switchAmbiance() {
+  const bg = this.els.bg;
+  bg.style.transition = "opacity 0.4s ease";
+  bg.style.opacity = "0";
+  setTimeout(() => {
+      this.renderAmbiance();
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+          bg.style.transition = "opacity 0.4s ease";
+          bg.style.opacity = "1";
+      }));
+  }, 450);
+},
+renderAmbianceSelector() {
+  const el = document.getElementById("amb-sel");
+  if(!el) return;
+  el.innerHTML = "";
+  const hasSpecial = isSeedShiny(State.cfg.seed);
+  const count = hasSpecial ? 5 : 4;
+  const icons = [
+      "<span style='display:inline-block;width:10px;height:10px;background:#fff;border-radius:50%'></span>",
+      "<span style='display:inline-block;width:14px;height:9px;background:#fff;border-radius:3px'></span>",
+      "<span style='display:inline-block;width:10px;height:10px;border:2.5px solid #fff;border-radius:1px;box-sizing:border-box'></span>",
+      "<span style='display:grid;grid-template-columns:1fr 1fr;gap:2px;width:10px;height:10px'><span style='background:#fff;border-radius:50%'></span><span style='background:#fff;border-radius:50%'></span><span style='background:#fff;border-radius:50%'></span><span style='background:#fff;border-radius:50%'></span></span>",
+      "<span style='font-size:0.85em;line-height:1'>✨</span>"
+  ];
+  const labels = [T('amb_0'), T('amb_1'), T('amb_2'), T('amb_3'), T('amb_4')];
+  
+  for(let i = 0; i < count; i++) {
+      const btn = document.createElement("button");
+      const isActive = State.cfg.ambiance === i;
+      btn.style.cssText = `width:40px;height:36px;border-radius:10px;border:2px solid ${isActive ? "var(--p)" : "rgba(255,255,255,0.15)"};background:${isActive ? "rgba(99,102,241,0.2)" : "rgba(0,0,0,0.3)"};cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border 0.2s,background 0.2s;box-shadow:${isActive ? "0 0 8px rgba(99,102,241,0.4)" : "none"}`;
+      btn.innerHTML = icons[i];
+      btn.title = labels[i];
+      btn.onclick = () => {
+          if(State.cfg.ambiance === i) return;
+          State.cfg.ambiance = i;
+          State.saveC();
+          this.switchAmbiance();
+          this.renderAmbianceSelector();
+          this.showToast(labels[i]);
+      };
+      el.appendChild(btn);
+  }
 },
 renderAmbiance() {
 _lavaStop();
@@ -989,16 +1033,6 @@ const actionMap = {
   State.saveC(); 
   UI.renderMain();
 },
-'cycle-ambiance': () => {
-  const rng = Mulberry32(State.cfg.seed);
-  const isShiny = rng() < 0.01;
-  const maxModes = isShiny ? 5 : 4;
-  State.cfg.ambiance = (State.cfg.ambiance + 1) % maxModes;
-  State.saveC();
-  UI.renderAmbiance();
-  const names = [T('amb_0'), T('amb_1'), T('amb_2'), T('amb_3'), T('amb_4')];
-  UI.showToast(names[State.cfg.ambiance]);
-},
 'reset-u': () => {
   const u = btn.closest('.glass-card').dataset.sec;
   if(confirm(T('reset_board_q'))) { State.resetUser(u); UI.hydrate(); UI.showToast(T('reset_done')); }
@@ -1254,6 +1288,7 @@ UI.renderMenus();
 const _cheatMsg = validateAmbiance(State.cfg);
 if(_cheatMsg) { State.saveC(); }
 UI.renderAmbiance();
+UI.renderAmbianceSelector(); 
 if(_cheatMsg) { setTimeout(() => UI.showToast(T(_cheatMsg)), 500); }
 else if(State.cfg.ambiance === 4) UI.showToast(T('shiny_season'));
 const boundHandler = Actions.handle.bind(Actions);

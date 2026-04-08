@@ -74,10 +74,12 @@
     <span><span data-i18n="albums">Albums:</span> <b id="lbl-alb">24</b></span>
     <input type="range" id="sl-alb" min="21" max="26" style="width:100px; accent-color:var(--p)">
   </div>
-  <div class="menu-item" data-action="cycle-ambiance">
+  
+  <div class="menu-item" style="cursor:default;user-select:none">
     <span data-i18n="ambiance">Ambiance</span>
-    <button class="mini-btn" style="background:var(--p);color:#fff;border:none" data-i18n="change">🎲 CHANGER</button>
   </div>
+  <div id="amb-sel" style="display:flex;gap:6px;padding:2px 12px 8px;justify-content:center;flex-wrap:wrap"></div>
+
   <hr style="border:0;border-top:1px solid var(--glass-b);margin:5px 0">
   <div class="menu-item" data-action="open-users"><span data-i18n="manage_players">👥 Gérer les joueurs</span></div>
   <div class="menu-item" data-action="toggle-print-sub">
