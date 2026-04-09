@@ -1262,7 +1262,6 @@ const Share = {
       const checked = Object.values(payload.data.state || {}).filter(v => v === 1).length;
       const dupes = Object.values(payload.data.state || {}).filter(v => v === 2).length;
       
-      // Adaptation pour la traduction si besoin, sinon on garde l'affichage basique
       const statsEl = document.getElementById('import-stats');
       if (typeof T === 'function') {
         let txt = T('import_stats') || '{c} carte(s) cochée(s) · {d} doublon(s)';
@@ -1276,7 +1275,6 @@ const Share = {
       document.getElementById('mod-import').classList.add('open');
     } catch(e) {
       console.error('Share import error', e);
-      // Nettoyage en cas d'URL corrompue
       this._cleanURL();
     }
   },
@@ -1302,7 +1300,6 @@ const Share = {
     setTimeout(() => location.reload(), 900);
   },
   _cleanURL() {
-    // Cette fonction s'occupe de nettoyer l'URL proprement sans recharger la page
     const url = new URL(window.location);
     let changed = false;
     
@@ -1320,7 +1317,6 @@ const Share = {
     }
   },
   _closeImportModal() {
-    // On nettoie l'URL uniquement quand la modale se ferme
     this._cleanURL();
     
     document.getElementById('mod-import').classList.remove('open');
