@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0f172a">
-    <title>MGO Tracker - Choix de la version</title>
+    <title>MGO Tracker - Hub</title>
     <style>
         * {
             box-sizing: border-box;
@@ -47,7 +47,7 @@
             font-size: 0.95rem;
             margin-bottom: 25px;
             line-height: 1.5;
-            text-align: center; 
+            text-align: center;
         }
         .btn {
             display: flex;
@@ -83,12 +83,36 @@
 </head>
 <body>
     <div class="hub-card">
-        <h1> Tableau Partagé</h1>
-        <p>Avec quelle version de l'application souhaitez-vous ouvrir ce tableau ?</p>
-        <a href="#" id="link-full" class="btn btn-full"> Version Complète</a>
+        <h1 id="txt-title">Mgo Tracker - Hub</h1>
+        <p id="txt-desc">Quelle version de l'application souhaitez-vous ouvrir ?</p>
+        <a href="#" id="link-full" class="btn btn-full"> Version Compl&egrave;te</a>
         <a href="#" id="link-lite" class="btn btn-lite"> Version Lite</a>
     </div>
     <script>
+        const dicos = {
+            fr: {
+                title: "Mgo Tracker Hub",
+                desc: "Quelle version de l'application souhaitez-vous ouvrir ?",
+                full: " Version Complète",
+                lite: " Version Lite",
+                docTitle: "MGO Tracker - Choix de la version"
+            },
+            en: {
+                title: "Mgo Tracker - Hub",
+                desc: "Which version of the application do you wish to open?",
+                full: " Full Version",
+                lite: " Lite Version",
+                docTitle: "MGO Tracker - Version Selection"
+            }
+        };
+        const lang = (navigator.language || "en").startsWith("fr") ? "fr" : "en";
+        const t = dicos[lang];
+        document.getElementById('txt-title').textContent = t.title;
+        document.getElementById('txt-desc').textContent = t.desc;
+        document.getElementById('link-full').textContent = t.full;
+        document.getElementById('link-lite').textContent = t.lite;
+        document.title = t.docTitle;
+        document.documentElement.lang = lang;
         const urlParams = window.location.search;
         const urlHash = window.location.hash;
         const btnFull = document.getElementById('link-full');
