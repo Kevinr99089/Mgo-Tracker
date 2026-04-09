@@ -1220,7 +1220,7 @@ const Share = {
     } catch(e) {
       encoded = btoa(unescape(encodeURIComponent(json)));
     }
-    const base = 'https://kevinr99089.github.io/Mgo-Tracker/';
+    const base = 'https://kevinr99089.github.io/Mgo-Tracker/hub/';
     const url = `${base}?share=${encodeURIComponent(encoded)}`;
     document.getElementById('share-url-field').value = url;
     const sec = document.getElementById('share-link-section');
