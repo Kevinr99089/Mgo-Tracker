@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0f172a">
+    <title>MGO Tracker - Choix de la version</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #050511;
+            background-image: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 50%);
+            color: #f8fafc;
+            font-family: 'SF Pro Display', system-ui, -apple-system, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .hub-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin: 0 0 10px 0;
+            background: linear-gradient(to right, #6366f1, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            text-align: center; 
+        }
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: calc(100% - 20px);
+            max-width: 320px;
+            margin-bottom: 12px;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: white;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .btn-full {
+            background: #6366f1;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+        }
+        .btn-lite {
+            background: rgba(244, 114, 182, 0.2);
+            border: 1px solid #f472b6;
+            color: #f472b6;
+        }
+        .btn:hover {
+            transform: scale(1.02);
+            filter: brightness(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="hub-card">
+        <h1> Tableau Partagé</h1>
+        <p>Avec quelle version de l'application souhaitez-vous ouvrir ce tableau ?</p>
+        <a href="#" id="link-full" class="btn btn-full"> Version Complète</a>
+        <a href="#" id="link-lite" class="btn btn-lite"> Version Lite</a>
+    </div>
+    <script>
+        const urlParams = window.location.search;
+        const urlHash = window.location.hash;
+        const btnFull = document.getElementById('link-full');
+        const btnLite = document.getElementById('link-lite');
+        btnFull.href = '../' + urlParams + urlHash;
+        btnLite.href = '../lite/' + urlParams + urlHash;
+    </script>
+</body>
+</html>
