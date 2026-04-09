@@ -79,5 +79,12 @@
   "reset_board_q": "Reset this player's board?",
   "cheat_shiny": "Nice try ;)",
   "cheat_easter": "Looking for extra easter eggs?",
-  "loading": "Loading…"
+  "loading": "Loading…",
+  "hub_sub": "Choose the version to launch",
+  "hub_full": "Full Version",
+  "hub_fullDesc": "Animated ambiance · Visual effects · All features",
+  "hub_lite": "Lite Version",
+  "hub_liteDesc": "Lightweight UI · Fast start · Same tracker",
+  "hub_remember": "Remember my choice",
+  "hub_switchLbl": "⇄ Switch version"
 }

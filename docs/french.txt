@@ -79,5 +79,12 @@
   "reset_board_q": "Réinitialiser le tableau de ce joueur ?",
   "cheat_shiny": "Petit coquin ;)",
   "cheat_easter": "On recherche des easter-eggs supplémentaires ?",
-  "loading": "Chargement en cours…"
+  "loading": "Chargement en cours…",
+  "hub_sub": "Choisissez la version à lancer",
+  "hub_full": "Version Complète",
+  "hub_fullDesc": "Ambiance animée · Effets visuels · Toutes les fonctionnalités",
+  "hub_lite": "Version Lite",
+  "hub_liteDesc": "Interface légère · Démarrage rapide · Même tracker",
+  "hub_remember": "Mémoriser mon choix",
+  "hub_switchLbl": "⇄ Changer de version"
 }
