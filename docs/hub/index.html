@@ -85,36 +85,41 @@
     <div class="hub-card">
         <h1 id="txt-title">Mgo Tracker - Hub</h1>
         <p id="txt-desc">Quelle version de l'application souhaitez-vous ouvrir ?</p>
-        <a href="#" id="link-full" class="btn btn-full"> Version Complète</a>
-        <a href="#" id="link-lite" class="btn btn-lite"> Version Lite</a>
+        <a href="#" id="link-full" class="btn btn-full">  Version Complète</a>
+        <a href="#" id="link-lite" class="btn btn-lite">  Version Lite</a>
     </div>
     <script>
+        const urlParams = window.location.search;
+        const urlHash = window.location.hash;
+        const hasShare = urlParams.includes('share=') || urlHash.startsWith('#share:');
         const dicos = {
             fr: {
-                title: "Mgo Tracker - Hub",
-                desc: "Quelle version de l'application souhaitez-vous ouvrir ?",
-                full: " Version Complète",
-                lite: " Version Lite",
+                titleApp: "Mgo Tracker - Hub",
+                descApp: "Quelle version de l'application souhaitez-vous ouvrir ?",
+                titleShare: "📥 Tableau Partagé",
+                descShare: "Avec quelle version de l'application souhaitez-vous importer ce tableau ?",
+                full: "  Version Complète",
+                lite: "  Version Lite",
                 docTitle: "MGO Tracker - Choix de la version"
             },
             en: {
-                title: "Mgo Tracker - Hub",
-                desc: "Which version of the application do you wish to open?",
-                full: " Full Version",
-                lite: " Lite Version",
+                titleApp: "Mgo Tracker - Hub",
+                descApp: "Which version of the application do you wish to open?",
+                titleShare: "📥 Shared Board",
+                descShare: "Which version of the app do you want to use to import this board?",
+                full: "  Full Version",
+                lite: "  Lite Version",
                 docTitle: "MGO Tracker - Version Selection"
             }
         };
         const lang = (navigator.language || "en").startsWith("fr") ? "fr" : "en";
         const t = dicos[lang];
-        document.getElementById('txt-title').textContent = t.title;
-        document.getElementById('txt-desc').textContent = t.desc;
+        document.getElementById('txt-title').textContent = hasShare ? t.titleShare : t.titleApp;
+        document.getElementById('txt-desc').textContent = hasShare ? t.descShare : t.descApp;
         document.getElementById('link-full').textContent = t.full;
         document.getElementById('link-lite').textContent = t.lite;
         document.title = t.docTitle;
         document.documentElement.lang = lang;
-        const urlParams = window.location.search;
-        const urlHash = window.location.hash;
         const btnFull = document.getElementById('link-full');
         const btnLite = document.getElementById('link-lite');
         btnFull.href = '../' + urlParams + urlHash;
