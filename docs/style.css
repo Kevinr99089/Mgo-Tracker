@@ -454,7 +454,7 @@ body {
   flex: none !important;
   width: auto !important;
   padding: 0 16px;
-  border-right: 1px solid var(--glass-b);
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
 }
 .alb-head {
   font-size: 7px;
@@ -635,7 +635,7 @@ body {
 .dock-wrap { position: fixed; bottom: 20px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; pointer-events: none; }
 .dock {
   pointer-events: auto;
-  background: rgba(10, 16, 32, .98);
+  background: rgba(15, 23, 42, .98);
   border: 1px solid rgba(255, 255, 255, .12);
   padding: 8px 12px;
   border-radius: 20px;
@@ -668,7 +668,7 @@ body {
   left: 50%;
   transform: translateX(-50%) scale(.9);
   width: 280px;
-  background: #1e293b;
+  background: #0f172a;
   border: 1px solid var(--glass-b);
   border-radius: 16px;
   padding: 10px;
@@ -746,7 +746,7 @@ input:checked + .switch::after { transform: translateX(18px); }
 .glass-card.is-primary.mode-num .t-num { display: inline; }
 .glass-card.is-primary.mode-num .t-x { display: none; }
 .cell-input { width: 100%; height: 100%; background: rgba(0, 0, 0, .5); border: 1px solid var(--p); color: #fff; text-align: center; font-size: 10px; font-weight: 700; border-radius: 2px; padding: 0; }
-#toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-20px); background: rgba(10, 16, 32, .98); border: 1px solid rgba(255, 255, 255, .12); color: #fff; padding: 10px 20px; border-radius: 30px; font-weight: 700; font-size: .9rem; box-shadow: 0 10px 30px rgba(0, 0, 0, .5); opacity: 0; visibility: hidden; transition: .3s; z-index: 9999; text-align: center; white-space: nowrap; }
+#toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-20px); background: rgba(15, 23, 42, .98); border: 1px solid rgba(255, 255, 255, .12); color: #fff; padding: 10px 20px; border-radius: 30px; font-weight: 700; font-size: .9rem; box-shadow: 0 10px 30px rgba(0, 0, 0, .5); opacity: 0; visibility: hidden; transition: .3s; z-index: 9999; text-align: center; white-space: nowrap; }
 #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; }
 #setup-mod { position: fixed; inset: 0; z-index: 9100; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: .3s; padding: 20px; }
 #setup-mod.open { opacity: 1; visibility: visible; }
@@ -799,12 +799,16 @@ input:checked + .switch::after { transform: translateX(18px); }
 .lite-mode .glass-card.hidden { display: none !important; }
 .lite-mode .glass-card.blur-active, .lite-mode .glass-card.blur-out { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; animation: none !important; }
 .lite-mode .glass-card::before { transition: none !important; }
-.lite-mode .dock { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(15, 23, 42, .98) !important; }
-.lite-mode #toast { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(15, 23, 42, .98) !important; }
+.lite-mode .dock { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+.lite-mode #toast { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 .lite-mode .modal-overlay { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 .lite-mode .setup-card { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(15, 23, 42, .98) !important; }
 .lite-mode .um-touch-clone { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 .lite-mode .f-obj { animation: none !important; will-change: auto !important; }
+.lite-mode .glass-card::before { display: none !important; }
+.lite-mode .glass-card.blur-active { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; animation: none !important; }
+.lite-mode .glass-card.blur-active::before { display: none !important; }
+.lite-mode .glass-card.blur-out { animation: none !important; }
 .lite-mode #splash .sp-c { animation: none !important; opacity: 1 !important; transform: translateY(0) rotate(var(--er, 0deg)) !important; }
 .lite-mode #splash .sp-title, .lite-mode #splash .sp-hint { animation: none !important; opacity: 1 !important; transform: none !important; }
 [data-full-only] { display: none; }
