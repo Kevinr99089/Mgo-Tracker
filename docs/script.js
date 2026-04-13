@@ -1,6 +1,36 @@
 const __MGO_PREF = 'mgo_unified_version';
 let LITE_MODE = false;
 
+(() => {
+    const L = (navigator.language || 'fr').startsWith('fr') ? 'fr' : 'en';
+    const T = {
+        fr: { sub: 'Choisissez la version à lancer', full: 'Version Complète', fullDesc: 'Ambiance animée · Effets visuels · Toutes les fonctionnalités', lite: 'Version Lite', liteDesc: 'Interface légère · Démarrage rapide · Même tracker', remember: 'Mémoriser mon choix', switchLbl: '⇄ Changer de version' },
+        en: { sub: 'Choose the version to launch', full: 'Full Version', fullDesc: 'Animated ambiance · Visual effects · All features', lite: 'Lite Version', liteDesc: 'Lightweight UI · Fast start · Same tracker', remember: 'Remember my choice', switchLbl: '⇄ Switch version' }
+    };
+    const t = T[L];
+    document.addEventListener('DOMContentLoaded', () => {
+        const st = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+        st('__hub-sub', t.sub); st('__hub-lbl-full', t.full); st('__hub-desc-full', t.fullDesc);
+        st('__hub-lbl-lite', t.lite); st('__hub-desc-lite', t.liteDesc);
+        st('__hub-lbl-remember', t.remember); st('__switch-lbl', t.switchLbl);
+    });
+})();
+
+window.__pickVersion = function(v) {
+    LITE_MODE = v === 'lite';
+    if (document.getElementById('__hub-chk').checked) localStorage.setItem(__MGO_PREF, v);
+    else localStorage.removeItem(__MGO_PREF);
+    document.documentElement.className = LITE_MODE ? 'lite-mode' : 'full-mode';
+    document.getElementById('__hub').style.display = 'none';
+    __initApp();
+};
+
+(function() {
+    var v = localStorage.getItem('mgo_unified_version');
+    if (v === 'lite') document.documentElement.className = 'lite-mode';
+    else if (v === 'full') document.documentElement.className = 'full-mode';
+})();
+
 let e = { en: {}, fr: {} };
 const t = (navigator.language || "en").startsWith("fr") ? "fr" : "en";
 const s = k => e[t] && e[t][k] ? e[t][k] : k;
@@ -27,19 +57,7 @@ function r() {
     });
 }
 
-window.__pickVersion = function(v) {
-    LITE_MODE = v === 'lite';
-    if (document.getElementById('__hub-chk').checked) {
-        localStorage.setItem(__MGO_PREF, v);
-    } else {
-        localStorage.removeItem(__MGO_PREF);
-    }
-    document.documentElement.className = LITE_MODE ? 'lite-mode' : 'full-mode';
-    document.getElementById('__hub').style.display = 'none';
-    __initApp();
-};
-
-const o = { VERSION: "4.1.1 (Web)", KEYS: { CFG: "mgo_cfg", USR: "mgo_u_" } };
+const o = { VERSION: "4.1.2 (Web)", KEYS: { CFG: "mgo_cfg", USR: "mgo_u_" } };
 let i = [];
 
 function l(seed) {
@@ -519,15 +537,18 @@ const g = {
             function onUp() { mouse.active = false; rect = null; }
             function onResize() { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { ctx.setTransform(1, 0, 0, 1, 0, 0); resize(); scaleF = 0.5 * dpr; pts.forEach(p => { p.x = Math.min(p.x, W); p.y = Math.min(p.y, H); }); }, 150); }
             
+            const __ac = new AbortController();
+            const __sig = __ac.signal;
+
             wrap.style.pointerEvents = "auto";
-            wrap.addEventListener("mousedown", onDown);
-            wrap.addEventListener("mousemove", onMove);
-            wrap.addEventListener("mouseup", onUp);
-            wrap.addEventListener("mouseleave", onUp);
-            wrap.addEventListener("touchstart", onDown, { passive: true });
-            wrap.addEventListener("touchmove", onMove, { passive: true });
-            wrap.addEventListener("touchcancel", onUp);
-            window.addEventListener("resize", onResize);
+            wrap.addEventListener("mousedown", onDown, { signal: __sig });
+            wrap.addEventListener("mousemove", onMove, { signal: __sig });
+            wrap.addEventListener("mouseup", onUp, { signal: __sig });
+            wrap.addEventListener("mouseleave", onUp, { signal: __sig });
+            wrap.addEventListener("touchstart", onDown, { passive: true, signal: __sig });
+            wrap.addEventListener("touchmove", onMove, { passive: true, signal: __sig });
+            wrap.addEventListener("touchcancel", onUp, { signal: __sig });
+            window.addEventListener("resize", onResize, { signal: __sig });
             
             let lastT = 0;
             let scaleF = 0.5 * dpr;
@@ -599,15 +620,7 @@ const g = {
             });
             
             p = function() {
-                wrap.removeEventListener("mousedown", onDown);
-                wrap.removeEventListener("mousemove", onMove);
-                wrap.removeEventListener("mouseup", onUp);
-                wrap.removeEventListener("mouseleave", onUp);
-                wrap.removeEventListener("touchstart", onDown);
-                wrap.removeEventListener("touchmove", onMove);
-                wrap.removeEventListener("touchend", onUp);
-                wrap.removeEventListener("touchcancel", onUp);
-                window.removeEventListener("resize", onResize);
+                __ac.abort();
                 clearTimeout(resizeTimer);
             };
         }
@@ -657,13 +670,15 @@ const g = {
                         ${btnMode}
                         ${noteInp}
                     </div>
-                    <div class="card-tools"><button class="mini-btn danger" data-action="reset-u">↺</button></div>
+                    <div class="card-tools"><button class="mini-btn danger reset-u-btn" data-action="reset-u" title="Réinitialiser">↺</button></div>
                 </div>
+                <div class="expand-hint">${a(s("expand_hint"))}</div>
                 <div style="padding:0" data-u="${key}">
                    <div class="grid-scroll">
                       <div class="track-row">${this._genRow(1, half, percent)}</div>
                       <div class="track-row">${this._genRow(half + 1, numAlb - half, percent)}</div>
                    </div>
+                   <div class="legend-bar"><div class="legend-item"><div class="legend-swatch s-have"></div>${a(s("legend_have"))}</div><div class="legend-item"><div class="legend-swatch s-dupe"></div>${a(s("legend_dupe"))}</div><div class="legend-item"><div class="legend-swatch s-gold-dot"></div>${a(s("legend_gold"))}</div></div>
                 </div>
             </div>`;
             this.els.app.insertAdjacentHTML("beforeend", html);
@@ -788,23 +803,52 @@ const g = {
     renderGoldEx() {
         const ctn = document.getElementById("gold-list");
         ctn.innerHTML = "";
-        const frag = document.createDocumentFragment();
         
+        if (u.cfg.gold_ex.length > 0) {
+            const h = document.createElement("div");
+            h.className = "gold-row-header";
+            h.innerHTML = `<span>${a(s("album"))}</span><span>${a(s("card"))}</span><span>${a(s("date"))}</span><span></span>`;
+            ctn.appendChild(h);
+        }
+        
+        const frag = document.createDocumentFragment();
         u.cfg.gold_ex.forEach((item, idx) => {
             const div = document.createElement("div");
             div.className = "gold-row";
             div.innerHTML = `
-                <input class="g-inp" data-f="alb" placeholder="${a(s("album"))}" value="${a(item.alb || item.album || "")}">
+                <input class="g-inp" data-f="alb" maxlength="2" inputmode="numeric" placeholder="--" value="${a(item.alb || item.album || "")}">
                 <input class="g-inp" data-f="card" placeholder="${a(s("card"))}" value="${a(item.card || "")}">
-                <input class="g-inp" data-f="date" placeholder="${a(s("date"))}" value="${a(item.date || "")}">
+                <input class="g-inp" data-f="date" maxlength="5" inputmode="numeric" placeholder="JJ/MM" value="${a(item.date || "")}">
                 <button style="background:0 0;border:none;color:var(--err);font-weight:700;cursor:pointer" data-action="del-gold" data-idx="${idx}">×</button>
             `;
-            div.querySelectorAll("input").forEach(inp => {
-                inp.oninput = e => {
-                    u.cfg.gold_ex[idx][e.target.dataset.f] = e.target.value;
-                    u.saveC();
-                };
+            
+            const albInp = div.querySelector('[data-f="alb"]');
+            const cardInp = div.querySelector('[data-f="card"]');
+            const dateInp = div.querySelector('[data-f="date"]');
+            
+            albInp.oninput = () => {
+                albInp.value = albInp.value.replace(/\D/g, "").slice(0, 2);
+                u.cfg.gold_ex[idx].alb = albInp.value;
+                u.saveC();
+            };
+            cardInp.oninput = () => {
+                u.cfg.gold_ex[idx].card = cardInp.value;
+                u.saveC();
+            };
+            dateInp.addEventListener("keydown", ev => {
+                if (ev.key === "Backspace" && dateInp.value.endsWith("/")) {
+                    dateInp.value = dateInp.value.slice(0, -1);
+                    ev.preventDefault();
+                }
             });
+            dateInp.oninput = () => {
+                let raw = dateInp.value.replace(/\D/g, "");
+                if (raw.length > 4) raw = raw.slice(0, 4);
+                dateInp.value = raw.length > 2 ? raw.slice(0, 2) + "/" + raw.slice(2) : raw;
+                u.cfg.gold_ex[idx].date = dateInp.value;
+                u.saveC();
+            };
+            
             frag.appendChild(div);
         });
         ctn.appendChild(frag);
@@ -1053,6 +1097,15 @@ const v = {
                 u.cfg.mode = u.cfg.mode === "number" ? "cross" : "number";
                 u.saveC();
                 g.renderMain();
+            },
+            "cycle-ambiance": () => {
+                if (LITE_MODE) return;
+                const isSpecial = l(u.cfg.seed)() < .01;
+                u.cfg.ambiance = (u.cfg.ambiance + 1) % (isSpecial ? 5 : 4);
+                u.saveC();
+                g.renderAmbiance();
+                const labels = [s("amb_0"), s("amb_1"), s("amb_2"), s("amb_3"), s("amb_4")];
+                g.showToast(labels[u.cfg.ambiance]);
             },
             "reset-u": () => {
                 const key = btn.closest(".glass-card").dataset.sec;
