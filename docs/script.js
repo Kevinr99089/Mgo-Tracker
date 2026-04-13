@@ -1,40 +1,8 @@
 const __MGO_PREF = 'mgo_unified_version';
 let LITE_MODE = false;
-
-(() => {
-    const L = (navigator.language || 'fr').startsWith('fr') ? 'fr' : 'en';
-    const T = {
-        fr: { sub: 'Choisissez la version à lancer', full: 'Version Complète', fullDesc: 'Ambiance animée · Effets visuels · Toutes les fonctionnalités', lite: 'Version Lite', liteDesc: 'Interface légère · Démarrage rapide · Même tracker', remember: 'Mémoriser mon choix', switchLbl: '⇄ Changer de version' },
-        en: { sub: 'Choose the version to launch', full: 'Full Version', fullDesc: 'Animated ambiance · Visual effects · All features', lite: 'Lite Version', liteDesc: 'Lightweight UI · Fast start · Same tracker', remember: 'Remember my choice', switchLbl: '⇄ Switch version' }
-    };
-    const t = T[L];
-    document.addEventListener('DOMContentLoaded', () => {
-        const st = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-        st('__hub-sub', t.sub); st('__hub-lbl-full', t.full); st('__hub-desc-full', t.fullDesc);
-        st('__hub-lbl-lite', t.lite); st('__hub-desc-lite', t.liteDesc);
-        st('__hub-lbl-remember', t.remember); st('__switch-lbl', t.switchLbl);
-    });
-})();
-
-window.__pickVersion = function(v) {
-    LITE_MODE = v === 'lite';
-    if (document.getElementById('__hub-chk').checked) localStorage.setItem(__MGO_PREF, v);
-    else localStorage.removeItem(__MGO_PREF);
-    document.documentElement.className = LITE_MODE ? 'lite-mode' : 'full-mode';
-    document.getElementById('__hub').style.display = 'none';
-    __initApp();
-};
-
-(function() {
-    var v = localStorage.getItem('mgo_unified_version');
-    if (v === 'lite') document.documentElement.className = 'lite-mode';
-    else if (v === 'full') document.documentElement.className = 'full-mode';
-})();
-
 let e = { en: {}, fr: {} };
 const t = (navigator.language || "en").startsWith("fr") ? "fr" : "en";
 const s = k => e[t] && e[t][k] ? e[t][k] : k;
-
 function a(str) {
     return (str + "").replace(/&/g, "&amp;")
                      .replace(/</g, "&lt;")
@@ -42,9 +10,7 @@ function a(str) {
                      .replace(/"/g, "&quot;")
                      .replace(/'/g, "&#39;");
 }
-
 const n = new Set(["add_upper"]);
-
 function r() {
     document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.dataset.i18n;
@@ -56,10 +22,19 @@ function r() {
         }
     });
 }
-
-const o = { VERSION: "4.1.2 (Web)", KEYS: { CFG: "mgo_cfg", USR: "mgo_u_" } };
+window.__pickVersion = function(v) {
+    LITE_MODE = v === 'lite';
+    if (document.getElementById('__hub-chk').checked) {
+        localStorage.setItem(__MGO_PREF, v);
+    } else {
+        localStorage.removeItem(__MGO_PREF);
+    }
+    document.documentElement.className = LITE_MODE ? 'lite-mode' : 'full-mode';
+    document.getElementById('__hub').style.display = 'none';
+    __initApp();
+};
+const o = { VERSION: "4.1.3 (Web)", KEYS: { CFG: "mgo_cfg", USR: "mgo_u_" } };
 let i = [];
-
 function l(seed) {
     return function() {
         var t = seed += 1831565813;
@@ -67,11 +42,9 @@ function l(seed) {
         return (((t ^= t + Math.imul(t ^ t >>> 7, 61 | t)) ^ t >>> 14) >>> 0) / 4294967296;
     }
 }
-
 function c(seed) {
     return l(seed)() < .01;
 }
-
 function d(cfg) {
     const max = c(cfg.seed) ? 4 : 3;
     if (cfg.ambiance == null || typeof cfg.ambiance !== "number" || cfg.ambiance < 0 || !Number.isInteger(cfg.ambiance)) {
@@ -88,7 +61,6 @@ function d(cfg) {
     }
     return null;
 }
-
 const u = {
     cfg: { albums: 24, mode: "cross", gold_ids: [], gold_ex: [], hidden: [], printHidden: [], setup_done: false, ambiance: 0, seed: Date.now(), usersList: [] },
     usr: {},
@@ -176,7 +148,6 @@ const u = {
         if (this.usr[userKey]) {
             if (!this.usr[userKey].state) this.usr[userKey].state = {};
             if (!this.usr[userKey].nums) this.usr[userKey].nums = {};
-            
             if (isNum) {
                 if (val) this.usr[userKey].nums[cell] = val;
                 else delete this.usr[userKey].nums[cell];
@@ -184,7 +155,6 @@ const u = {
                 const old = this.usr[userKey].state[cell] || 0;
                 if (val === 0) delete this.usr[userKey].state[cell];
                 else this.usr[userKey].state[cell] = val;
-                
                 if (old === 2 || val === 2) {
                     this.invalidateDupes();
                 }
@@ -201,7 +171,6 @@ const u = {
         }
     }
 };
-
 window.UserManager = {
     tempUsers: [],
     _newIndices: new Set(),
@@ -232,21 +201,17 @@ window.UserManager = {
                 <input type="text" class="g-inp um-inp" style="flex:1;border:1px solid var(--glass-b);border-radius:6px;padding:8px;color:#fff" value="${safeName}" data-idx="${idx}">
                 <button class="mini-btn danger um-del" data-idx="${idx}" ${this.tempUsers.length <= 1 ? "disabled" : ""}>×</button>
             `;
-            
             row.addEventListener("dragstart", e => this._onDragStart(e, row));
             row.addEventListener("dragover", e => this._onDragOver(e, row));
             row.addEventListener("dragleave", e => row.classList.remove("um-drag-over"));
             row.addEventListener("drop", e => this._onDrop(e, row));
             row.addEventListener("dragend", e => this._onDragEnd());
-            
             const handle = row.querySelector(".um-handle");
             handle.addEventListener("touchstart", e => this._onTouchStart(e, row), { passive: false });
             handle.addEventListener("touchmove", e => this._onTouchMove(e), { passive: false });
             handle.addEventListener("touchend", e => this._onTouchEnd(e), { passive: false });
-            
             row.querySelector(".um-inp").addEventListener("change", e => this.update(+e.target.dataset.idx, e.target.value));
             row.querySelector(".um-del").addEventListener("click", e => this.remove(+e.target.dataset.idx));
-            
             listEl.appendChild(row);
         });
     },
@@ -292,7 +257,6 @@ window.UserManager = {
         e.preventDefault();
         const touchY = e.touches[0].clientY;
         this._touchClone.style.top = (touchY - 22) + "px";
-        
         const overEl = document.elementsFromPoint(e.touches[0].clientX, touchY).find(el => el.classList.contains("um-row") && el !== this._touchSrc);
         document.querySelectorAll(".um-row").forEach(el => el.classList.remove("um-drag-over"));
         if (overEl) overEl.classList.add("um-drag-over");
@@ -301,10 +265,8 @@ window.UserManager = {
         if (!this._touchClone) return;
         const touch = e.changedTouches[0];
         const overEl = document.elementsFromPoint(touch.clientX, touch.clientY).find(el => el.classList.contains("um-row") && el !== this._touchSrc);
-        
         this._touchClone.remove();
         this._touchClone = null;
-        
         if (overEl) {
             const targetIdx = +overEl.dataset.idx;
             const draggedItem = this.tempUsers.splice(+this._touchSrc.dataset.idx, 1)[0];
@@ -341,13 +303,11 @@ window.UserManager = {
     save() {
         this._newIndices.clear();
         const originalList = u.cfg.usersList.slice();
-        
         this.tempUsers.forEach((newName, idx) => {
             const oldName = originalList[idx];
             if (!oldName) return;
             const oldKey = oldName.replace(/\s/g, "");
             const newKey = newName.replace(/\s/g, "");
-            
             if (oldKey !== newKey && u.usr[oldKey]) {
                 u.usr[newKey] = u.usr[oldKey];
                 delete u.usr[oldKey];
@@ -355,22 +315,18 @@ window.UserManager = {
                 u.saveU(newKey);
             }
         });
-        
         const oldFirstKey = originalList[0] ? originalList[0].replace(/\s/g, "") : null;
         const newFirstKey = this.tempUsers[0] ? this.tempUsers[0].replace(/\s/g, "") : null;
-        
         if (oldFirstKey && newFirstKey && oldFirstKey !== newFirstKey && u.usr[oldFirstKey]) {
             u.usr[oldFirstKey].nums = {};
             u.saveU(oldFirstKey);
         }
-        
         this.tempUsers.forEach(name => {
             const key = name.replace(/\s/g, "");
             if (!u.usr[key]) {
                 u.usr[key] = { state: {}, nums: {} };
             }
         });
-        
         u.cfg.usersList = [...this.tempUsers];
         u.saveC();
         this.close();
@@ -379,13 +335,11 @@ window.UserManager = {
         g.showToast(s("players_updated"));
     }
 };
-
 let m = null, p = null;
 function h() {
     if (m) { cancelAnimationFrame(m); m = null; }
     if (p) { p(); p = null; }
 }
-
 const g = {
     els: {
         app: document.getElementById("gen-cards"),
@@ -405,7 +359,6 @@ const g = {
         const seedRandom = l(u.cfg.seed);
         const amb = u.cfg.ambiance || 0;
         const colors = ["#4f46e5", "#c026d3", "#06b6d4", "#f472b6", "#fbbf24"];
-        
         if (amb === 4) {
             this.els.bg.innerHTML = `
                 <div class="shiny-screen">
@@ -419,7 +372,6 @@ const g = {
             `;
             return;
         }
-        
         if (amb === 0) {
             const count = 7;
             for (let i = 0; i < count; i++) {
@@ -437,7 +389,6 @@ const g = {
             }
             return;
         }
-        
         if (amb === 1) {
             const grads = ["linear-gradient(145deg,#3b41d8,#6468f5)", "linear-gradient(145deg,#c77b10,#f0aa22)", "linear-gradient(145deg,#b8233b,#eb3a5f)", "linear-gradient(145deg,#0e766e,#14b8a6)", "linear-gradient(145deg,#7c3aed,#a855f7)", "linear-gradient(145deg,#065f86,#0ea5e9)"];
             const count = 7;
@@ -457,7 +408,6 @@ const g = {
             }
             return;
         }
-        
         if (amb === 2) {
             const count = 9;
             for (let i = 0; i < count; i++) {
@@ -483,7 +433,6 @@ const g = {
             }
             return;
         }
-        
         if (amb === 3) {
             const wrap = document.createElement("div");
             wrap.className = "lava-wrap";
@@ -491,10 +440,8 @@ const g = {
             canvas.className = "lava-canvas";
             wrap.appendChild(canvas);
             this.els.bg.appendChild(wrap);
-            
             const ctx = canvas.getContext("2d");
             let W, H, dpr;
-            
             function resize() {
                 dpr = Math.min(window.devicePixelRatio || 1, 2);
                 W = wrap.clientWidth;
@@ -506,15 +453,12 @@ const g = {
                 ctx.scale(0.5 * dpr, 0.5 * dpr);
             }
             resize();
-            
             const pColors = [];
             const numCols = 2 + Math.floor(2 * seedRandom());
             const shuffled = [...colors].sort(() => seedRandom() - 0.5);
             for (let i = 0; i < numCols; i++) pColors.push(shuffled[i % shuffled.length]);
-            
             const hexToRgb = hex => [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)];
             const rgbColors = pColors.map(hexToRgb);
-            
             const N = 10;
             const pts = [];
             for (let i = 0; i < N; i++) {
@@ -527,19 +471,15 @@ const g = {
                     drift: 0.06 * (seedRandom() - 0.5), temp: 1 - y / H, tempInertia: 0.12 + 0.18 * seedRandom()
                 });
             }
-            
             let resizeTimer;
             const mouse = { x: -9999, y: -9999, active: false };
             let rect = null;
-            
             function onDown(e) { const t = e.touches ? e.touches[0] : e; rect = wrap.getBoundingClientRect(); mouse.x = t.clientX - rect.left; mouse.y = t.clientY - rect.top; mouse.active = true; }
             function onMove(e) { if (!mouse.active || !rect) return; const t = e.touches ? e.touches[0] : e; mouse.x = t.clientX - rect.left; mouse.y = t.clientY - rect.top; }
             function onUp() { mouse.active = false; rect = null; }
             function onResize() { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { ctx.setTransform(1, 0, 0, 1, 0, 0); resize(); scaleF = 0.5 * dpr; pts.forEach(p => { p.x = Math.min(p.x, W); p.y = Math.min(p.y, H); }); }, 150); }
-            
             const __ac = new AbortController();
             const __sig = __ac.signal;
-
             wrap.style.pointerEvents = "auto";
             wrap.addEventListener("mousedown", onDown, { signal: __sig });
             wrap.addEventListener("mousemove", onMove, { signal: __sig });
@@ -549,16 +489,13 @@ const g = {
             wrap.addEventListener("touchmove", onMove, { passive: true, signal: __sig });
             wrap.addEventListener("touchcancel", onUp, { signal: __sig });
             window.addEventListener("resize", onResize, { signal: __sig });
-            
             let lastT = 0;
             let scaleF = 0.5 * dpr;
-            
             m = requestAnimationFrame(function loop(time) {
                 m = requestAnimationFrame(loop);
                 const dt = Math.min((time - lastT) / 1000, 0.05);
                 if (dt <= 0) return;
                 lastT = time;
-                
                 for (let i = 0; i < N; i++) {
                     const p = pts[i];
                     p.temp += (p.y / H - p.temp) * p.tempInertia * dt;
@@ -566,7 +503,6 @@ const g = {
                     p.phase += p.freq * dt;
                     p.vx += Math.sin(p.phase + 1.7 * i) * 1 * dt;
                     p.vx += p.drift * dt * 3;
-                    
                     if (mouse.active) {
                         const dx = mouse.x - p.x;
                         const dy = mouse.y - p.y;
@@ -577,7 +513,6 @@ const g = {
                         p.vx += nx * force - ny * force;
                         p.vy += ny * force + nx * force;
                     }
-                    
                     for (let j = i + 1; j < N; j++) {
                         const p2 = pts[j];
                         const dx = p2.x - p.x;
@@ -590,10 +525,8 @@ const g = {
                             p.vx -= fx; p.vy -= fy; p2.vx += fx; p2.vy += fy;
                         }
                     }
-                    
                     p.vx *= 0.994; p.vy *= 0.994;
                     p.x += p.vx; p.y += p.vy;
-                    
                     const edge = 0.3 * p.r;
                     if (p.x < -edge) { p.x = -edge; p.vx = 0.3 * Math.abs(p.vx); }
                     if (p.x > W + edge) { p.x = W + edge; p.vx = 0.3 * -Math.abs(p.vx); }
@@ -601,10 +534,8 @@ const g = {
                     if (p.y > H + edge) { p.y = H + edge; p.vy = 0.3 * -Math.abs(p.vy); }
                     p.r = p.baseR + Math.sin(0.0006 * time + 2.1 * i) * p.baseR * 0.06;
                 }
-                
                 ctx.setTransform(scaleF, 0, 0, scaleF, 0, 0);
                 ctx.clearRect(0, 0, W, H);
-                
                 for (let i = 0; i < N; i++) {
                     const p = pts[i];
                     const [r, g, b] = p.col;
@@ -618,7 +549,6 @@ const g = {
                     ctx.fillStyle = grad; ctx.fill();
                 }
             });
-            
             p = function() {
                 __ac.abort();
                 clearTimeout(resizeTimer);
@@ -630,26 +560,21 @@ const g = {
         const numAlb = u.cfg.albums;
         const half = Math.ceil(numAlb / 2);
         const percent = 100 / half;
-        
         u.cfg.usersList.forEach((rawName, idx) => {
             const key = rawName.replace(/\s/g, "");
             const isFirst = idx === 0;
             let btnMode = "";
-            
             if (isFirst) {
                 btnMode = `<button class="mini-btn" data-action="mode-toggle" style="margin-right:8px;height:24px">${u.cfg.mode === "number" ? "123" : "XXX"}</button>`;
             }
-            
             let noteInp = "";
             if (isFirst) {
                 const noteVal = a(u.usr[key].note || "");
                 noteInp = `<input type="text" class="user-note" placeholder="${a(s("note_ph"))}" value="${noteVal}" data-uid="${a(key)}" onclick="event.stopPropagation()" ondblclick="event.stopPropagation()">`;
             }
-            
             const clsPrimary = isFirst ? "is-primary" : "";
             const clsNum = isFirst && u.cfg.mode === "number" ? "mode-num" : "";
             const safeName = a(rawName);
-            
             const html = `
             <div class="glass-card anim-section ${clsPrimary} ${clsNum}" data-sec="${a(key)}">
                 <div class="card-header">
@@ -671,8 +596,8 @@ const g = {
                         ${noteInp}
                     </div>
                     <div class="card-tools"><button class="mini-btn danger reset-u-btn" data-action="reset-u" title="Réinitialiser">↺</button></div>
+                    <div class="expand-hint">${a(s("expand_hint"))}</div>
                 </div>
-                <div class="expand-hint">${a(s("expand_hint"))}</div>
                 <div style="padding:0" data-u="${key}">
                    <div class="grid-scroll">
                       <div class="track-row">${this._genRow(1, half, percent)}</div>
@@ -706,14 +631,12 @@ const g = {
     hydrate() {
         const goldSet = u.getGoldSet();
         const dupeSet = u.getDupesSet();
-        
         this.els.app.querySelectorAll(".cell-wrap").forEach(el => {
             const cellId = +el.dataset.uid;
             const block = el.closest("[data-u]");
             if (!block) return;
             const uKey = block.dataset.u;
             if (!u.usr[uKey]) return;
-            
             const stateVal = (u.usr[uKey].state && u.usr[uKey].state[cellId]) || 0;
             const numVal = (u.usr[uKey].nums && u.usr[uKey].nums[cellId]) || "";
             const isG = goldSet.has(cellId);
@@ -727,7 +650,6 @@ const g = {
         const isG = u.getGoldSet().has(+cellId);
         const cState = u.usr[uKey]?.state?.[cellId] || 0;
         const cNum = u.usr[uKey]?.nums?.[cellId] || "";
-        
         if (updateContext === 2 || cState === 2) {
             const isD = u.getDupesSet().has(+cellId);
             document.querySelectorAll(`.cell-wrap[data-uid="${cellId}"]`).forEach(el => {
@@ -751,10 +673,8 @@ const g = {
         const span = el.querySelector(".t-num");
         const nStr = num == null ? "" : num + "";
         if (span.textContent !== nStr) span.textContent = nStr;
-        
         if (isG) el.dataset.bg = "1";
         else delete el.dataset.bg;
-        
         el.classList.remove("show-gold", "show-dupe");
         if (st === 0) {
             if (isG) el.classList.add("show-gold");
@@ -764,16 +684,13 @@ const g = {
     updateStats() {
         const max = 9 * u.cfg.albums;
         const gSet = u.getGoldSet();
-        
         this.els.app.querySelectorAll(".glass-card[data-sec]").forEach(card => {
             if (card.id === "sec-gold") return;
             const uKey = card.dataset.sec;
             const userData = u.usr[uKey];
             if (!userData) return;
-            
             const stObj = userData.state || {};
             let count = 0, countG = 0, totalG = 0;
-            
             for (let i = 0; i < max; i++) {
                 const v = stObj[i] || 0;
                 if (v > 0) count++;
@@ -782,13 +699,11 @@ const g = {
                     if (v > 0) countG++;
                 }
             }
-            
             const pct = max > 0 ? Math.round((count / max) * 100) : 0;
             const avatar = card.querySelector(".user-avatar");
             const pTop = card.querySelector(".ua-top");
             const pBot = card.querySelector(".ua-bot");
             const pPct = card.querySelector(".ua-percent");
-            
             if (pTop) pTop.textContent = `${count}/${max}`;
             if (pBot) pBot.textContent = `${countG}/${totalG}`;
             if (pPct) {
@@ -803,14 +718,12 @@ const g = {
     renderGoldEx() {
         const ctn = document.getElementById("gold-list");
         ctn.innerHTML = "";
-        
         if (u.cfg.gold_ex.length > 0) {
             const h = document.createElement("div");
             h.className = "gold-row-header";
             h.innerHTML = `<span>${a(s("album"))}</span><span>${a(s("card"))}</span><span>${a(s("date"))}</span><span></span>`;
             ctn.appendChild(h);
         }
-        
         const frag = document.createDocumentFragment();
         u.cfg.gold_ex.forEach((item, idx) => {
             const div = document.createElement("div");
@@ -821,11 +734,9 @@ const g = {
                 <input class="g-inp" data-f="date" maxlength="5" inputmode="numeric" placeholder="JJ/MM" value="${a(item.date || "")}">
                 <button style="background:0 0;border:none;color:var(--err);font-weight:700;cursor:pointer" data-action="del-gold" data-idx="${idx}">×</button>
             `;
-            
             const albInp = div.querySelector('[data-f="alb"]');
             const cardInp = div.querySelector('[data-f="card"]');
             const dateInp = div.querySelector('[data-f="date"]');
-            
             albInp.oninput = () => {
                 albInp.value = albInp.value.replace(/\D/g, "").slice(0, 2);
                 u.cfg.gold_ex[idx].alb = albInp.value;
@@ -848,7 +759,6 @@ const g = {
                 u.cfg.gold_ex[idx].date = dateInp.value;
                 u.saveC();
             };
-            
             frag.appendChild(div);
         });
         ctn.appendChild(frag);
@@ -858,14 +768,11 @@ const g = {
         list.innerHTML = "";
         const pList = document.getElementById("sub-print");
         pList.innerHTML = "";
-        
         const fragV = document.createDocumentFragment();
         const fragP = document.createDocumentFragment();
-        
         [...u.cfg.usersList, "Gold"].forEach(name => {
             const key = name === "Gold" ? "Gold" : name.replace(/\s/g, "");
             const isHidden = u.cfg.hidden.includes(key);
-            
             const d1 = document.createElement("div");
             d1.className = "menu-item";
             d1.innerHTML = `<span>${name}</span><label style="cursor:pointer;display:flex"><input type="checkbox" ${isHidden ? "" : "checked"} style="display:none"><div class="switch"></div></label>`;
@@ -876,7 +783,6 @@ const g = {
                 this.updateVis();
             };
             fragV.appendChild(d1);
-            
             const d2 = document.createElement("div");
             d2.className = "menu-item";
             d2.style.cssText = "padding:5px 8px;font-size:0.8rem";
@@ -884,7 +790,6 @@ const g = {
             fragP.appendChild(d2);
         });
         list.appendChild(fragV);
-        
         const btnP = document.createElement("button");
         btnP.className = "mini-btn";
         btnP.dataset.action = "do-print";
@@ -906,7 +811,6 @@ const g = {
         const gSet = u.getGoldSet();
         const row = document.createElement("div");
         row.className = "g-conf-row";
-        
         for (let a = 1; a <= max; a++) {
             let cells = "";
             for (let j = 0; j < 9; j++) {
@@ -956,7 +860,6 @@ const g = {
             "<span style='font-size:0.85em;line-height:1'>✨</span>"
         ];
         const labels = [s("amb_0"), s("amb_1"), s("amb_2"), s("amb_3"), s("amb_4")];
-        
         for (let i = 0; i < count; i++) {
             const btn = document.createElement("button");
             const isActive = u.cfg.ambiance === i;
@@ -975,7 +878,6 @@ const g = {
         }
     }
 };
-
 const v = {
     _lastClickCell: null,
     _lastClickTime: 0,
@@ -988,11 +890,9 @@ const v = {
         const btn = t.closest("[data-action]");
         const cell = t.closest(".cell-wrap");
         const card = t.closest(".glass-card");
-        
         if (!t.closest(".popover") && !t.closest(".dock")) {
             this._getPopovers().forEach(p => p.classList.remove("show"));
         }
-        
         if (cell && t.tagName !== "INPUT") {
             if (e.type === "dblclick") {
                 e.stopPropagation();
@@ -1006,11 +906,9 @@ const v = {
             }
             v._lastClickCell = cell;
             v._lastClickTime = now;
-            
             const isPrim = card && card.classList.contains("is-primary");
             const uKey = cell.closest("[data-u]")?.dataset.u;
             const uid = +cell.dataset.uid;
-            
             if (u.cfg.mode === "number" && isPrim) {
                 e.stopPropagation();
                 const inner = cell.querySelector(".cell-inner");
@@ -1031,7 +929,6 @@ const v = {
                 setTimeout(() => { try { inp.focus(); } catch (err) {} }, 50);
                 return;
             }
-            
             const old = u.usr[uKey].state[uid] || 0;
             const nVal = (old + 1) % 3;
             i.push({ u: uKey, c: uid, v: old });
@@ -1040,7 +937,6 @@ const v = {
             g.updateSingleCell(uKey, uid, old);
             return;
         }
-        
         if (card && e.type === "dblclick" && !btn && !cell) {
             if (card.classList.contains("expanded")) {
                 card.classList.remove("blur-active");
@@ -1061,11 +957,9 @@ const v = {
             }
             return;
         }
-        
         if (!btn) return;
         e.stopPropagation();
         const action = btn.dataset.action;
-        
         const map = {
             "toggle-menu": () => {
                 const pm = document.getElementById("pop-menu"), pv = document.getElementById("pop-view");
@@ -1208,7 +1102,6 @@ const v = {
                                 if (!u.cfg.gold_ex) u.cfg.gold_ex = [];
                                 if (!u.cfg.hidden) u.cfg.hidden = [];
                                 if (!u.cfg.printHidden) u.cfg.printHidden = [];
-                                
                                 Object.keys(parsed.users).forEach(k => {
                                     if (!parsed.users[k].state) parsed.users[k].state = {};
                                     if (!parsed.users[k].nums) parsed.users[k].nums = {};
@@ -1234,7 +1127,6 @@ const v = {
         if (map[action]) map[action]();
     }
 };
-
 const f = {
     init() {
         const inp = document.getElementById("s-alb");
@@ -1256,7 +1148,6 @@ const f = {
         };
     }
 };
-
 const y = {
     _selected: null,
     _pendingImport: null,
@@ -1267,7 +1158,6 @@ const y = {
         const list = document.getElementById("share-player-list");
         list.innerHTML = "";
         document.getElementById("share-link-section").style.display = "none";
-        
         u.cfg.usersList.forEach(name => {
             const key = name.replace(/\s/g, "");
             const btn = document.createElement("button");
@@ -1313,7 +1203,6 @@ const y = {
             raw = window.location.hash.slice(7);
         }
         if (!raw) return;
-        
         try {
             let decoded;
             if (raw.startsWith("z:")) {
@@ -1339,23 +1228,18 @@ const y = {
     showImportIfPending() {
         const impData = this._pendingImport;
         if (!impData) return;
-        
         document.getElementById("import-name").textContent = "👤 " + impData.name;
         const checked = Object.values(impData.data.state || {}).filter(val => val === 1).length;
         const dupes = Object.values(impData.data.state || {}).filter(val => val === 2).length;
         document.getElementById("import-stats").textContent = s("import_stats").replace("{c}", checked).replace("{d}", dupes);
-
         const nameMatch = u.cfg.usersList.includes(impData.name);
         let shareMem = {};
         try { shareMem = JSON.parse(localStorage.getItem("mgo_share_mem") || "{}"); } catch (err) {}
-        
         const remembered = shareMem[impData.name];
         const rememberedValid = remembered && u.cfg.usersList.includes(remembered);
-        
         const btnC = document.getElementById("btn-import-confirm");
         const btnR = document.getElementById("btn-import-replace");
         const btnQ = document.getElementById("btn-import-quick");
-        
         if (nameMatch) {
             btnC.textContent = "✅ " + s("import_update") + " (" + impData.name + ")";
             btnR.style.display = "none";
@@ -1373,7 +1257,6 @@ const y = {
                 this._quickTarget = null;
             }
         }
-        
         document.getElementById("import-step-1").style.display = "flex";
         document.getElementById("import-step-2").style.display = "none";
         document.getElementById("mod-import").classList.add("open");
@@ -1420,7 +1303,6 @@ const y = {
         list.innerHTML = "";
         this._replaceTarget = null;
         document.getElementById("btn-import-replace-confirm").disabled = true;
-        
         u.cfg.usersList.forEach(name => {
             const btn = document.createElement("button");
             btn.className = "mini-btn";
@@ -1442,19 +1324,15 @@ const y = {
     confirmReplace() {
         const e = this._pendingImport;
         if (!e || !this._replaceTarget) return;
-        
         if (!confirm(s("import_replace_warn").replace("{name}", this._replaceTarget))) return;
-        
         const targetKey = this._replaceTarget.replace(/\s/g, "");
         u.usr[targetKey] = { state: {}, nums: {}, ...e.data };
         u.saveU(targetKey);
         const replaced = this._replaceTarget;
-        
         let shareMemR = {};
         try { shareMemR = JSON.parse(localStorage.getItem("mgo_share_mem") || "{}"); } catch (err) {}
         shareMemR[e.name] = replaced;
         localStorage.setItem("mgo_share_mem", JSON.stringify(shareMemR));
-        
         this._pendingImport = null;
         this._replaceTarget = null;
         this._closeImportModal();
@@ -1464,11 +1342,9 @@ const y = {
     confirmQuickUpdate() {
         const e = this._pendingImport;
         if (!e || !this._quickTarget) return;
-        
         const targetKey = this._quickTarget.replace(/\s/g, "");
         u.usr[targetKey] = { state: {}, nums: {}, ...e.data };
         u.saveU(targetKey);
-        
         const targetName = this._quickTarget;
         this._pendingImport = null;
         this._quickTarget = null;
@@ -1477,11 +1353,9 @@ const y = {
         setTimeout(() => location.reload(), 900);
     }
 };
-
 function __initApp() {
     u.init();
     y.checkImport();
-    
     document.getElementById("btn-import-confirm").onclick = () => y.confirmImport();
     document.getElementById("btn-import-quick").onclick = () => y.confirmQuickUpdate();
     document.getElementById("btn-import-replace").onclick = () => y.openReplaceStep();
@@ -1496,7 +1370,6 @@ function __initApp() {
         y._replaceTarget = null;
         y._closeImportModal();
     };
-    
     const albSlider = document.getElementById("sl-alb");
     let albTimer;
     albSlider.value = u.cfg.albums;
@@ -1511,11 +1384,9 @@ function __initApp() {
             g.renderMain();
         }, 300);
     };
-    
     g.renderMain();
     g.renderGoldEx();
     g.renderMenus();
-    
     if (!LITE_MODE) {
         const isCheat = d(u.cfg);
         if (isCheat) u.saveC();
@@ -1526,7 +1397,6 @@ function __initApp() {
             g.showToast(s("shiny_season"));
         }
     }
-    
     const clickHandler = v.handle.bind(v);
     let noteTimer;
     document.body.addEventListener("click", clickHandler);
@@ -1543,10 +1413,8 @@ function __initApp() {
             }
         }
     });
-    
     f.init();
     const __sp = document.getElementById("splash");
-    
     if (LITE_MODE) {
         requestAnimationFrame(() => setTimeout(() => {
             __sp.style.transition = "opacity 0.4s ease";
@@ -1564,12 +1432,10 @@ function __initApp() {
             requestAnimationFrame(() => requestAnimationFrame(() => {
                 __bg.style.opacity = "1";
             }));
-            
             __sp.style.transition = "opacity 0.4s ease, visibility 0.4s ease";
             __sp.style.opacity = "0";
             __sp.style.visibility = "hidden";
             __sp.style.pointerEvents = "none";
-            
             const sections = [...document.querySelectorAll(".anim-section")];
             const visible = sections.filter(el => !el.classList.contains("hidden"));
             sections.forEach(el => {
@@ -1577,7 +1443,6 @@ function __initApp() {
                 el.style.transform = "translateY(22px)";
                 el.style.transition = "none";
             });
-            
             const ease = "cubic-bezier(0.22, 1, 0.36, 1)";
             visible.forEach((el, idx) => {
                 setTimeout(() => {
@@ -1586,7 +1451,6 @@ function __initApp() {
                     el.style.transform = "translateY(0)";
                 }, 85 * idx);
             });
-            
             setTimeout(() => {
                 sections.forEach(el => {
                     el.style.removeProperty("opacity");
@@ -1600,10 +1464,8 @@ function __initApp() {
         }, 900);
     }
 }
-
 document.addEventListener("DOMContentLoaded", async () => {
     LITE_MODE = document.documentElement.className === "lite-mode";
-    
     try {
         const langFile = t === 'fr' ? 'french.txt' : 'english.txt';
         const res = await fetch(langFile);
@@ -1615,14 +1477,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch(err) {
         console.warn("Fetch failed, you may be running locally without a server.", err);
     }
-
     r();
-
     const __sv = localStorage.getItem(__MGO_PREF);
     if (!__sv) {
         document.getElementById("__hub").style.display = "flex";
         return;
     }
-    
     __initApp();
 });
