@@ -93,5 +93,9 @@
   "legend_gold": "Carte Or",
   "add_player_tooltip": "Ajouter un joueur",
   "drag_reorder": "Glisser pour réordonner",
-  "reset_tooltip": "Réinitialiser"
+  "reset_tooltip": "Réinitialiser",
+  "missions": "Missions",
+  "missions_title": "📋 Missions de la semaine",
+  "today": "Aujourd'hui",
+  "mission_ph": "Mission {n}…"
 }

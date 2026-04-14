@@ -93,5 +93,9 @@
   "legend_gold": "Gold Card",
   "add_player_tooltip": "Add a player",
   "drag_reorder": "Drag to reorder",
-  "reset_tooltip": "Reset"
+  "reset_tooltip": "Reset",
+  "missions": "Missions",
+  "missions_title": "📋 Weekly Missions",
+  "today": "Today",
+  "mission_ph": "Mission {n}…"
 }

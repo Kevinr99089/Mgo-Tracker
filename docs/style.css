@@ -109,7 +109,9 @@ body{margin:0;padding:0 0 140px;background:var(--bg);color:var(--txt);min-height
 .dock-btn svg{width:20px;height:20px;fill:currentColor}
 .dock-label{font-size:9px;font-weight:700;text-transform:uppercase;margin-top:2px}
 .dock-btn:hover{background:rgba(255,255,255,.1);color:#fff;transform:translateY(-2px)}
-.popover{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) scale(.9);width:280px;background:#0f172a;border:1px solid var(--glass-b);border-radius:16px;padding:10px;opacity:0;pointer-events:none;box-shadow:0 10px 40px rgba(0,0,0,.5);transition:.2s;z-index:2000}
+.popover{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) scale(.9);width:280px;min-width:280px;max-width:280px;background:#0f172a;border:1px solid var(--glass-b);border-radius:16px;padding:10px;opacity:0;pointer-events:none;box-shadow:0 10px 40px rgba(0,0,0,.5);transition:.2s;z-index:2000}
+.popover::before{content:'';position:absolute;bottom:-9px;left:var(--arrow-left,50%);transform:translateX(-50%);border:8px solid transparent;border-top-color:rgba(255,255,255,0.12);border-bottom:none;pointer-events:none;z-index:1}
+.popover::after{content:'';position:absolute;bottom:-7px;left:var(--arrow-left,50%);transform:translateX(-50%);border:7px solid transparent;border-top-color:#0f172a;border-bottom:none;pointer-events:none;z-index:2}
 .popover.show{opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
 .menu-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;color:var(--txt);font-size:.9rem;cursor:pointer;user-select:none}
 .menu-item:hover{background:rgba(255,255,255,.05)}
@@ -245,3 +247,13 @@ input:checked+.switch::after{transform:translateX(18px)}
 .mini-btn.danger.reset-u-btn:hover,.mini-btn.danger.reset-u-btn:active{opacity:1}
 .dock-label{font-size:10px!important}
 @media print{.legend-bar,.expand-hint{display:none!important}}
+.mod-missions-box{width:96%;max-width:680px;max-height:90vh;background:#0f172a;border:1px solid var(--glass-b);border-radius:24px;display:flex;flex-direction:column;box-shadow:0 25px 50px rgba(0,0,0,.6);transform:scale(.9);transition:.3s}
+.modal-overlay.open .mod-missions-box{transform:scale(1)}
+.missions-scroll{padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
+.mission-day-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.mission-day-card.today-card{border-color:rgba(99,102,241,.55);background:rgba(99,102,241,.07)}
+.mission-day-label{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--txt-dim)}
+.mission-day-label .today-badge{background:var(--p);color:#fff;border-radius:6px;padding:1px 6px;font-size:.65rem;margin-left:6px;font-weight:700;letter-spacing:.3px}
+.mission-row{display:flex;align-items:center;gap:8px}
+.mission-input{flex:1;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:var(--txt);font-family:var(--font);font-size:.82rem;padding:8px 12px;resize:none;min-height:48px;max-height:120px;line-height:1.5;transition:border-color .2s;width:100%}
+.mission-input:focus{outline:none;border-color:rgba(99,102,241,.6);background:rgba(0,0,0,.5)}

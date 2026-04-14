@@ -50,7 +50,7 @@ window.__pickVersion = function(v) {
     document.getElementById('__hub').style.display = 'none';
     __initApp();
 };
-const o = { VERSION: "4.1.3 (Web)", KEYS: { CFG: "mgo_cfg", USR: "mgo_u_" } };
+const o = { VERSION: "4.1.4 (Web)", KEYS: { CFG: "mgo_cfg", USR: "mgo_u_" } };
 let i = [];
 function l(e){return function(){var t=e+=1831565813;return t=Math.imul(t^t>>>15,1|t),(((t^=t+Math.imul(t^t>>>7,61|t))^t>>>14)>>>0)/4294967296}}
 function c(e){return l(e)()<.01}
@@ -350,8 +350,24 @@ const v = {
         e.stopPropagation();
         const act=a.dataset.action;
         const cmds={
-            "toggle-menu":()=>{const pm=document.getElementById("pop-menu"),pv=document.getElementById("pop-view"),wasOpen=pm.classList.contains("show");pv.classList.remove("show");wasOpen?pm.classList.remove("show"):pm.classList.add("show")},
-            "toggle-view":()=>{const pm=document.getElementById("pop-menu"),pv=document.getElementById("pop-view"),wasOpen=pv.classList.contains("show");pm.classList.remove("show");wasOpen?pv.classList.remove("show"):pv.classList.add("show")},
+            "toggle-menu":()=>{
+                const pm=document.getElementById("pop-menu"),pv=document.getElementById("pop-view"),wasOpen=pm.classList.contains("show");
+                pv.classList.remove("show");
+                if(wasOpen){pm.classList.remove("show")}else{
+                    const r_b=a.getBoundingClientRect(),cx=r_b.left+r_b.width/2,pl=window.innerWidth/2-140;
+                    pm.style.setProperty("--arrow-left",Math.max(16,Math.min(264,cx-pl))+"px");
+                    pm.classList.add("show");
+                }
+            },
+            "toggle-view":()=>{
+                const pm=document.getElementById("pop-menu"),pv=document.getElementById("pop-view"),wasOpen=pv.classList.contains("show");
+                pm.classList.remove("show");
+                if(wasOpen){pv.classList.remove("show")}else{
+                    const r_b=a.getBoundingClientRect(),cx=r_b.left+r_b.width/2,pl=window.innerWidth/2-140;
+                    pv.style.setProperty("--arrow-left",Math.max(16,Math.min(264,cx-pl))+"px");
+                    pv.classList.add("show");
+                }
+            },
             "open-users":()=>window.UserManager.open(),
             "close-users":()=>window.UserManager.close(),
             "add-user-row":()=>window.UserManager.add(),
@@ -363,6 +379,8 @@ const v = {
             "reset-all":()=>{if(confirm(s("reset_warn1"))){let lst=confirm(s("reset_warn2"))?[...u.cfg.usersList]:[s("player")+" 1"],amb=u.cfg.ambiance;i.length=0;localStorage.clear();const ts=Date.now();localStorage.setItem("mgo_cfg",JSON.stringify({albums:24,mode:"cross",gold_ids:[],gold_ex:[],hidden:[],printHidden:[],setup_done:!1,ambiance:amb,seed:ts,usersList:lst}));location.reload()}},
             "open-gold-mod":()=>{g.renderGoldGrid("gold-grid-ctn");document.getElementById("mod-gold").classList.add("open")},
             "close-gold":()=>{document.getElementById("mod-gold").classList.remove("open");g.hydrate()},
+            "open-missions":()=>MissionManager.open(),
+            "close-missions":()=>MissionManager.close(),
             "add-gold-row":()=>{u.cfg.gold_ex.push({alb:"",card:"",date:""});u.saveC();g.renderGoldEx()},
             "del-gold":()=>{confirm(s("delete_q"))&&(u.cfg.gold_ex.splice(+a.dataset.idx,1),u.saveC(),g.renderGoldEx())},
             "toggle-print-sub":()=>{const el=document.getElementById("sub-print");el.style.display="none"===el.style.display?"flex":"none"},
@@ -465,8 +483,113 @@ const y = {
         setTimeout(()=>location.reload(),900)
     }
 };
+const MissionManager = {
+    LS_DATA: 'mgo_missions_data',
+    LS_WEEK: 'mgo_missions_week',
+    _data: null,
+    _getMondayDate(from) {
+        const d = new Date(from);
+        d.setHours(0, 0, 0, 0);
+        const day = d.getDay();
+        const diff = (day === 0) ? -6 : 1 - day;
+        d.setDate(d.getDate() + diff);
+        return d;
+    },
+    _weekKey(monday) {
+        return monday.getFullYear() + '-' + String(monday.getMonth() + 1).padStart(2, '0') + '-' + String(monday.getDate()).padStart(2, '0');
+    },
+    _empty() {
+        return Array.from({length: 7}, () => ({texts: ['', '', ''], done: [false, false, false]}));
+    },
+    init() {
+        const now = new Date();
+        const monday = this._getMondayDate(now);
+        const currentKey = this._weekKey(monday);
+        const storedKey = localStorage.getItem(this.LS_WEEK);
+        if (storedKey !== currentKey) {
+            localStorage.removeItem(this.LS_DATA);
+            localStorage.setItem(this.LS_WEEK, currentKey);
+            this._data = this._empty();
+        } else {
+            try {
+                const raw = localStorage.getItem(this.LS_DATA);
+                this._data = raw ? JSON.parse(raw) : this._empty();
+            } catch(e) {
+                this._data = this._empty();
+            }
+        }
+    },
+    save() {
+        localStorage.setItem(this.LS_DATA, JSON.stringify(this._data));
+    },
+    open() {
+        if (!this._data) this.init();
+        this._render();
+        document.getElementById('mod-missions').classList.add('open');
+    },
+    close() {
+        document.getElementById('mod-missions').classList.remove('open');
+    },
+    _render() {
+        const body = document.getElementById('missions-body');
+        body.innerHTML = '';
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+        const monday = this._getMondayDate(new Date());
+        const frag = document.createDocumentFragment();
+        const lang = getBrowserLanguage();
+        const dateOpts = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+        for (let di = 0; di < 7; di++) {
+            const dayDate = new Date(monday);
+            dayDate.setDate(monday.getDate() + di);
+            const isToday = dayDate.getTime() === now.getTime();
+            let dayLabel = dayDate.toLocaleDateString(lang, dateOpts);
+            dayLabel = dayLabel.charAt(0).toUpperCase() + dayLabel.slice(1);
+            const card = document.createElement('div');
+            card.className = 'mission-day-card' + (isToday ? ' today-card' : '');
+            const lbl = document.createElement('div');
+            lbl.className = 'mission-day-label';
+            lbl.textContent = dayLabel;
+            if (isToday) {
+                const badge = document.createElement('span');
+                badge.className = 'today-badge';
+                badge.textContent = s("today");
+                lbl.appendChild(badge);
+            }
+            card.appendChild(lbl);
+            for (let mi = 0; mi < 3; mi++) {
+                const row = document.createElement('div');
+                row.className = 'mission-row';
+                const ta = document.createElement('textarea');
+                ta.className = 'mission-input';
+                ta.rows = 1;
+                ta.placeholder = s("mission_ph").replace('{n}', mi + 1);
+                ta.value = this._data[di].texts[mi] || '';
+                ta.dataset.di = di;
+                ta.dataset.mi = mi;
+                ta.addEventListener('input', () => {
+                    ta.style.height = 'auto';
+                    ta.style.height = Math.min(ta.scrollHeight, 80) + 'px';
+                    this._data[di].texts[mi] = ta.value;
+                    this.save();
+                });
+                ta.addEventListener('focus', () => {
+                    ta.style.height = 'auto';
+                    ta.style.height = Math.min(ta.scrollHeight, 80) + 'px';
+                });
+                row.appendChild(ta);
+                card.appendChild(row);
+            }
+            frag.appendChild(card);
+        }
+        body.appendChild(frag);
+    }
+};
 function __initApp(){
-    r();u.init();y.checkImport();
+    r();
+    u.init();
+    MissionManager.init();
+    y.checkImport();
     document.getElementById("btn-import-confirm").onclick=()=>y.confirmImport();
     document.getElementById("btn-import-quick").onclick=()=>y.confirmQuickUpdate();
     document.getElementById("btn-import-replace").onclick=()=>y.openReplaceStep();
