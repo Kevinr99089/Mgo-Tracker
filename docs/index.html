@@ -5,10 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0f172a">
     <meta name="description" content="MGO Tracker">
-    <title>MGO Tracker v4.1.2</title>
+    <title>MGO Tracker v4.1.3</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
+    <script>
+      (function(){
+          var v = localStorage.getItem('mgo_unified_version');
+          if(v === 'lite') document.documentElement.className = 'lite-mode';
+          else if(v === 'full') document.documentElement.className = 'full-mode';
+      })();
+    </script>
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -29,113 +36,109 @@
                 <div class="hub-dc hub-dc3"></div>
             </div>
             <h2>MGO Tracker</h2>
-            <p id="__hub-sub" data-i18n="hub_sub">Choisissez la version à lancer</p>
+            <p id="__hub-sub" data-i18n="hub_sub"></p>
             <button class="hub-btn hub-btn-full" onclick="window.__pickVersion('full')">
                 <span class="hub-btn-icon">⚡</span>
                 <span class="hub-btn-texts">
-                    <span class="hub-btn-lbl" id="__hub-lbl-full" data-i18n="hub_full">Version Complète</span>
-                    <span class="hub-btn-desc" id="__hub-desc-full" data-i18n="hub_fullDesc">Ambiance animée · Effets visuels · Toutes les fonctionnalités</span>
+                    <span class="hub-btn-lbl" id="__hub-lbl-full" data-i18n="hub_full"></span>
+                    <span class="hub-btn-desc" id="__hub-desc-full" data-i18n="hub_fullDesc"></span>
                 </span>
                 <span class="hub-btn-arr">›</span>
             </button>
             <button class="hub-btn hub-btn-lite" onclick="window.__pickVersion('lite')">
                 <span class="hub-btn-icon">🪶</span>
                 <span class="hub-btn-texts">
-                    <span class="hub-btn-lbl" id="__hub-lbl-lite" data-i18n="hub_lite">Version Lite</span>
-                    <span class="hub-btn-desc" id="__hub-desc-lite" data-i18n="hub_liteDesc">Interface légère · Démarrage rapide · Même tracker</span>
+                    <span class="hub-btn-lbl" id="__hub-lbl-lite" data-i18n="hub_lite"></span>
+                    <span class="hub-btn-desc" id="__hub-desc-lite" data-i18n="hub_liteDesc"></span>
                 </span>
                 <span class="hub-btn-arr">›</span>
             </button>
             <label class="hub-remember">
                 <input type="checkbox" id="__hub-chk">
-                <span id="__hub-lbl-remember" data-i18n="hub_remember">Mémoriser mon choix</span>
+                <span id="__hub-lbl-remember" data-i18n="hub_remember"></span>
             </label>
         </div>
     </div>
     <div class="ambient-bg" id="ambient-bg"></div>
     <div id="splash">
         <div class="sp-deck">
-            <div class="sp-c"></div>
-            <div class="sp-c">★</div>
-            <div class="sp-c"></div>
+            <div class="sp-c"></div><div class="sp-c">★</div><div class="sp-c"></div>
         </div>
         <div class="sp-title">MGO <em>Tracker</em><span>.</span></div>
-        <div class="sp-hint" data-i18n="loading">Chargement en cours…</div>
+        <div class="sp-hint" data-i18n="loading"></div>
     </div>
-    <div id="toast">Sauvegardé !</div>
+    <div id="toast"></div>
     <div id="setup-mod">
         <div class="setup-card">
-            <div class="setup-title" data-i18n="new_season">Nouvelle Saison</div>
-            <p style="text-align:center;color:var(--txt-dim);font-size:0.9rem;margin:0" data-i18n="setup_board">Configurez votre tableau pour commencer.</p>
+            <div class="setup-title" data-i18n="new_season"></div>
+            <p style="text-align:center;color:var(--txt-dim);font-size:0.9rem;margin:0" data-i18n="setup_board"></p>
             <div class="setup-grp">
-                <button class="mini-btn" data-action="open-users" style="justify-content:center;padding:10px;font-size:0.9rem" data-i18n="manage_list">👥 Gérer la liste des joueurs</button>
+                <button class="mini-btn" data-action="open-users" style="justify-content:center;padding:10px;font-size:0.9rem" data-i18n="manage_list"></button>
             </div>
             <div class="setup-grp">
-                <label><span data-i18n="num_albums">Nombre d'Albums:</span> <span id="s-alb-val" style="color:var(--p)">24</span></label>
+                <label><span data-i18n="num_albums"></span> <span id="s-alb-val" style="color:var(--p)">24</span></label>
                 <input type="range" id="s-alb" min="21" max="26" value="24" style="width:100%;accent-color:var(--p)">
             </div>
             <div class="setup-grp" style="flex:1;overflow:hidden;display:flex;flex-direction:column">
-                <label><span data-i18n="gold_cards">Cartes Or</span> <span style="font-weight:400;font-size:0.7rem;opacity:0.7" data-i18n="click_activate">(Cliquez pour activer)</span></label>
+                <label><span data-i18n="gold_cards"></span> <span style="font-weight:400;font-size:0.7rem;opacity:0.7" data-i18n="click_activate"></span></label>
                 <div id="setup-gold-grid" style="overflow-y:auto;padding:5px;flex:1;border:1px solid var(--glass-b);border-radius:12px;background:rgba(0,0,0,0.2)"></div>
             </div>
-            <button class="big-btn" id="btn-start-season" data-i18n="start_season">LANCER LA SAISON</button>
+            <button class="big-btn" id="btn-start-season" data-i18n="start_season"></button>
         </div>
     </div>
     <div class="dock-wrap">
         <div class="dock">
             <button class="dock-btn" data-action="toggle-menu">
                 <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
-                <span class="dock-label" data-i18n="menu">Menu</span>
+                <span class="dock-label" data-i18n="menu"></span>
             </button>
             <button class="dock-btn" data-action="undo">
                 <svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
-                <span class="dock-label" data-i18n="undo">Annuler</span>
+                <span class="dock-label" data-i18n="undo"></span>
             </button>
             <button class="dock-btn" data-action="open-gold-mod" style="color:var(--gold)">
                 <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                <span class="dock-label" data-i18n="gold_setup">Configurer Or</span>
+                <span class="dock-label" data-i18n="gold_setup"></span>
             </button>
             <button class="dock-btn" data-action="toggle-view">
                 <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                <span class="dock-label" data-i18n="view">Afficher</span>
+                <span class="dock-label" data-i18n="view"></span>
             </button>
         </div>
     </div>
     <div id="pop-menu" class="popover">
-        <div style="padding:10px;font-size:0.8rem;opacity:0.6;text-transform:uppercase;font-weight:700" data-i18n="menu">Menu</div>
+        <div style="padding:10px;font-size:0.8rem;opacity:0.6;text-transform:uppercase;font-weight:700" data-i18n="menu"></div>
         <div class="menu-item">
-            <span><span data-i18n="albums">Albums:</span> <b id="lbl-alb">24</b></span>
+            <span><span data-i18n="albums"></span> <b id="lbl-alb">24</b></span>
             <input type="range" id="sl-alb" min="21" max="26" style="width:100px; accent-color:var(--p)">
         </div>
-        <div class="menu-item" data-full-only style="cursor:default;user-select:none"><span data-i18n="ambiance">Ambiance</span></div>
+        <div class="menu-item" data-full-only style="cursor:default;user-select:none"><span data-i18n="ambiance"></span></div>
         <div id="amb-sel" data-full-only style="display:flex;gap:6px;padding:2px 12px 8px;justify-content:center;flex-wrap:wrap"></div>
         <hr style="border:0;border-top:1px solid var(--glass-b);margin:5px 0">
-        <div class="menu-item" data-action="open-users"><span data-i18n="manage_players">👥 Gérer les joueurs</span></div>
-        <div class="menu-item" data-action="toggle-print-sub">
-            <span data-i18n="print">🖨️ Impression</span><span style="font-size:0.8rem;opacity:0.6">▼</span>
-        </div>
+        <div class="menu-item" data-action="open-users"><span data-i18n="manage_players"></span></div>
+        <div class="menu-item" data-action="toggle-print-sub"><span data-i18n="print"></span><span style="font-size:0.8rem;opacity:0.6">▼</span></div>
         <div id="sub-print" style="display:none;flex-direction:column;gap:2px;background:rgba(0,0,0,0.2);padding:8px;border-radius:8px;margin-bottom:8px"></div>
-        <div class="menu-item" data-action="save-file"><span data-i18n="save_file">💾 Sauver vers un fichier</span></div>
-        <div class="menu-item" data-action="open-share"><span data-i18n="share_board">🔗 Partager un tableau</span></div>
-        <div class="menu-item" data-action="load"><span data-i18n="load_btn">📂 Charger</span></div>
+        <div class="menu-item" data-action="save-file"><span data-i18n="save_file"></span></div>
+        <div class="menu-item" data-action="open-share"><span data-i18n="share_board"></span></div>
+        <div class="menu-item" data-action="load"><span data-i18n="load_btn"></span></div>
         <hr style="border:0;border-top:1px solid var(--glass-b);margin:5px 0">
-        <div class="menu-item" onclick="localStorage.removeItem('mgo_unified_version');location.reload()" style="color:#94a3b8">
-            <span id="__switch-lbl" data-i18n="hub_switchLbl">⇄ Changer de version</span>
-        </div>
-        <div class="menu-item" data-action="reset-all" style="color:var(--err)"><span data-i18n="reset_all">🗑️ Tout Réinitialiser</span></div>
+        <div class="menu-item" onclick="localStorage.removeItem('mgo_unified_version');location.reload()" style="color:#94a3b8"><span id="__switch-lbl" data-i18n="hub_switchLbl"></span></div>
+        <div class="menu-item" data-action="reset-all" style="color:var(--err)"><span data-i18n="reset_all"></span></div>
     </div>
     <div id="pop-view" class="popover">
-        <div style="padding:10px;font-size:0.8rem;opacity:0.6;text-transform:uppercase;font-weight:700" data-i18n="display">Affichage</div>
+        <div style="padding:10px;font-size:0.8rem;opacity:0.6;text-transform:uppercase;font-weight:700" data-i18n="display"></div>
         <div id="view-list"></div>
     </div>
     <div class="modal-overlay" id="mod-gold">
         <div class="modal-box">
             <div class="modal-head">
-                <span style="font-weight:900;font-size:1.2rem;color:var(--gold)" data-i18n="gold_conf">👑 Configuration OR</span>
-                <button class="mini-btn" data-action="close-gold" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);border-radius:8px;padding:5px 7px;cursor:pointer;color:var(--txt-dim);transition:color .2s,background .2s,border-color .2s;display:flex;align-items:center;justify-content:center" onmouseover="this.style.color='#ef4444';this.style.borderColor='rgba(239,68,68,0.6)';this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.color='var(--txt-dim)';this.style.borderColor='rgba(255,255,255,0.18)';this.style.background='rgba(255,255,255,0.07)'"><svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button>
+                <span style="font-weight:900;font-size:1.2rem;color:var(--gold)" data-i18n="gold_conf"></span>
+                <button class="mini-btn" data-action="close-gold" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);border-radius:8px;padding:5px 7px;cursor:pointer;color:var(--txt-dim);transition:color .2s,background .2s,border-color .2s;display:flex;align-items:center;justify-content:center" onmouseover="this.style.color='#ef4444';this.style.borderColor='rgba(239,68,68,0.6)';this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.color='var(--txt-dim)';this.style.borderColor='rgba(255,255,255,0.18)';this.style.background='rgba(255,255,255,0.07)'">
+                    <svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg>
+                </button>
             </div>
             <div class="modal-body">
-                <p style="text-align:center;opacity:0.7;font-size:0.9rem" data-i18n="click_gold">Cliquez sur une case pour définir une carte en OR.</p>
+                <p style="text-align:center;opacity:0.7;font-size:0.9rem" data-i18n="click_gold"></p>
                 <div id="gold-grid-ctn"></div>
             </div>
         </div>
@@ -144,17 +147,19 @@
         <div class="modal-box">
             <div class="modal-head" style="position:relative">
                 <div style="position:absolute;left:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:3px">
-                    <button class="mini-btn" data-action="add-user-row" title="Ajouter un joueur" style="width:30px;height:30px;padding:0;font-size:1.1rem;font-weight:900;justify-content:center;border-radius:50%">+</button>
-                    <span style="font-size:9px;font-weight:700;color:var(--txt-dim);text-transform:uppercase;letter-spacing:.5px" data-i18n="add_label">Ajouter</span>
+                    <button class="mini-btn" data-action="add-user-row" data-i18n-title="add_player_tooltip" style="width:30px;height:30px;padding:0;font-size:1.1rem;font-weight:900;justify-content:center;border-radius:50%">+</button>
+                    <span style="font-size:9px;font-weight:700;color:var(--txt-dim);text-transform:uppercase;letter-spacing:.5px" data-i18n="import_add"></span>
                 </div>
-                <span style="font-weight:900;font-size:1.2rem;color:var(--p);margin:0 auto" data-i18n="manage_players">👥 Gérer les joueurs</span>
-                <button class="mini-btn" data-action="close-users" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);border-radius:8px;padding:5px 7px;cursor:pointer;color:var(--txt-dim);transition:color .2s,background .2s,border-color .2s;display:flex;align-items:center;justify-content:center" onmouseover="this.style.color='#ef4444';this.style.borderColor='rgba(239,68,68,0.6)';this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.color='var(--txt-dim)';this.style.borderColor='rgba(255,255,255,0.18)';this.style.background='rgba(255,255,255,0.07)'"><svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button>
+                <span style="font-weight:900;font-size:1.2rem;color:var(--p);margin:0 auto" data-i18n="manage_players"></span>
+                <button class="mini-btn" data-action="close-users" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);border-radius:8px;padding:5px 7px;cursor:pointer;color:var(--txt-dim);transition:color .2s,background .2s,border-color .2s;display:flex;align-items:center;justify-content:center" onmouseover="this.style.color='#ef4444';this.style.borderColor='rgba(239,68,68,0.6)';this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.color='var(--txt-dim)';this.style.borderColor='rgba(255,255,255,0.18)';this.style.background='rgba(255,255,255,0.07)'">
+                    <svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg>
+                </button>
             </div>
             <div class="modal-body" style="display:flex;flex-direction:column">
-                <p style="text-align:center;opacity:0.7;font-size:0.8rem" data-i18n="main_player_info">Le premier joueur de la liste est le joueur principal (Notes et Tableau à chiffres). Les chiffres sont réinitialisés en cas de changement de première place.</p>
+                <p style="text-align:center;opacity:0.7;font-size:0.8rem" data-i18n="main_player_info"></p>
                 <div id="users-edit-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:15px"></div>
                 <div style="display:flex;justify-content:flex-end">
-                    <button class="mini-btn" style="background:var(--ok);color:#fff;border-color:var(--ok);padding:8px 16px;font-size:0.85rem;font-weight:800" data-action="save-users" data-i18n="save_upper">ENREGISTRER</button>
+                    <button class="mini-btn" style="background:var(--ok);color:#fff;border-color:var(--ok);padding:8px 16px;font-size:0.85rem;font-weight:800" data-action="save-users" data-i18n="save_upper"></button>
                 </div>
             </div>
         </div>
@@ -180,9 +185,9 @@
                             <polyline points="34,24 30,28 34,32" fill="none" stroke="#93c5fd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
-                    <div class="user-name" style="background:none; -webkit-text-fill-color:var(--gold); color:var(--gold);display:inline-block" data-i18n="gold_trades">Échanges Gold</div>
+                    <div class="user-name" style="background:none; -webkit-text-fill-color:var(--gold); color:var(--gold);display:inline-block" data-i18n="gold_trades"></div>
                 </div>
-                <button class="mini-btn" data-action="add-gold-row" style="background:var(--gold);color:#000;border:none" data-i18n="add_upper"><b>+</b> AJOUTER</button>
+                <button class="mini-btn" data-action="add-gold-row" style="background:var(--gold);color:#000;border:none" data-i18n="add_upper"></button>
             </div>
             <div style="padding:15px">
                 <div id="gold-list"></div>
@@ -192,23 +197,25 @@
     <div class="modal-overlay" id="mod-share">
         <div class="modal-box" style="max-width:480px">
             <div class="modal-head">
-                <span style="font-weight:900;font-size:1.2rem;color:var(--p)" data-i18n="share_title">🔗 Partager un tableau</span>
-                <button class="mini-btn" data-action="close-share" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);border-radius:8px;padding:5px 7px;cursor:pointer;color:var(--txt-dim);transition:color .2s,background .2s,border-color .2s;display:flex;align-items:center;justify-content:center" onmouseover="this.style.color='#ef4444';this.style.borderColor='rgba(239,68,68,0.6)';this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.color='var(--txt-dim)';this.style.borderColor='rgba(255,255,255,0.18)';this.style.background='rgba(255,255,255,0.07)'"><svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button>
+                <span style="font-weight:900;font-size:1.2rem;color:var(--p)" data-i18n="share_title"></span>
+                <button class="mini-btn" data-action="close-share" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);border-radius:8px;padding:5px 7px;cursor:pointer;color:var(--txt-dim);transition:color .2s,background .2s,border-color .2s;display:flex;align-items:center;justify-content:center" onmouseover="this.style.color='#ef4444';this.style.borderColor='rgba(239,68,68,0.6)';this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.color='var(--txt-dim)';this.style.borderColor='rgba(255,255,255,0.18)';this.style.background='rgba(255,255,255,0.07)'">
+                    <svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg>
+                </button>
             </div>
             <div class="modal-body" style="display:flex;flex-direction:column;gap:16px">
                 <div>
-                    <label style="font-size:0.85rem;font-weight:700;color:var(--txt-dim);text-transform:uppercase;display:block;margin-bottom:8px" data-i18n="share_select">Sélectionner un tableau à partager :</label>
+                    <label style="font-size:0.85rem;font-weight:700;color:var(--txt-dim);text-transform:uppercase;display:block;margin-bottom:8px" data-i18n="share_select"></label>
                     <div id="share-player-list" style="display:flex;flex-direction:column;gap:6px"></div>
                 </div>
                 <div id="share-link-section" style="display:none;flex-direction:column;gap:8px">
-                    <label style="font-size:0.85rem;font-weight:700;color:var(--txt-dim);text-transform:uppercase" data-i18n="share_link_label">Lien de partage :</label>
+                    <label style="font-size:0.85rem;font-weight:700;color:var(--txt-dim);text-transform:uppercase" data-i18n="share_link_label"></label>
                     <div style="display:flex;gap:8px;align-items:stretch">
                         <input id="share-url-field" type="text" readonly style="flex:1;background:rgba(0,0,0,0.4);border:1px solid var(--glass-b);border-radius:8px;color:var(--txt-dim);padding:10px 12px;font-size:0.8rem;font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0">
-                        <button class="mini-btn" id="share-copy-btn" data-action="copy-share-link" style="flex-shrink:0;background:var(--p);color:#fff;border-color:var(--p)" data-i18n="share_copy">📋 Copier</button>
+                        <button class="mini-btn" id="share-copy-btn" data-action="copy-share-link" style="flex-shrink:0;background:var(--p);color:#fff;border-color:var(--p)" data-i18n="share_copy"></button>
                     </div>
                     <div style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:6px">
-                        <span style="font-size:0.82rem;color:var(--txt-dim)" data-i18n="share_hint">💡 Vous pouvez partager ce lien via WhatsApp, Discord, SMS, e-mail…</span>
-                        <span style="font-size:0.78rem;color:var(--txt-dim);opacity:0.7" data-i18n="share_hint2">La personne qui reçoit le lien pourra importer ce tableau dans son propre tracker.</span>
+                        <span style="font-size:0.82rem;color:var(--txt-dim)" data-i18n="share_hint"></span>
+                        <span style="font-size:0.78rem;color:var(--txt-dim);opacity:0.7" data-i18n="share_hint2"></span>
                     </div>
                 </div>
             </div>
@@ -217,10 +224,10 @@
     <div class="modal-overlay" id="mod-import">
         <div class="modal-box" style="max-width:420px">
             <div class="modal-head">
-                <span style="font-weight:900;font-size:1.2rem;color:var(--ok)" data-i18n="share_import_title">📥 Importer un tableau</span>
+                <span style="font-weight:900;font-size:1.2rem;color:var(--ok)" data-i18n="share_import_title"></span>
             </div>
             <div class="modal-body" style="display:flex;flex-direction:column;gap:16px">
-                <p style="margin:0;color:var(--txt-dim);font-size:0.9rem" data-i18n="share_import_msg">Un tableau partagé a été détecté :</p>
+                <p style="margin:0;color:var(--txt-dim);font-size:0.9rem" data-i18n="share_import_msg"></p>
                 <div id="import-preview" style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);border-radius:12px;padding:16px">
                     <div id="import-name" style="font-size:1.1rem;font-weight:900;color:var(--p);margin-bottom:4px"></div>
                     <div id="import-stats" style="font-size:0.82rem;color:var(--txt-dim)"></div>
@@ -228,17 +235,17 @@
                 <div id="import-step-1" style="display:flex;flex-direction:column;gap:8px">
                     <button class="big-btn" id="btn-import-quick" style="display:none;padding:12px;font-size:0.88rem;margin:0;background:linear-gradient(135deg,#16a34a,#22c55e);box-shadow:0 8px 20px rgba(34,197,94,0.35)"></button>
                     <div style="display:flex;gap:8px">
-                        <button class="big-btn" id="btn-import-confirm" style="flex:1;padding:12px;font-size:0.88rem;margin:0" data-i18n="import_add">➕ Ajouter</button>
-                        <button class="mini-btn" id="btn-import-replace" style="flex:1;padding:12px;font-size:0.88rem;justify-content:center;background:rgba(251,191,36,0.12);border-color:var(--gold);color:var(--gold)" data-i18n="import_replace_btn">🔄 Remplacer</button>
+                        <button class="big-btn" id="btn-import-confirm" style="flex:1;padding:12px;font-size:0.88rem;margin:0"></button>
+                        <button class="mini-btn" id="btn-import-replace" style="flex:1;padding:12px;font-size:0.88rem;justify-content:center;background:rgba(251,191,36,0.12);border-color:var(--gold);color:var(--gold)"></button>
                     </div>
-                    <button class="mini-btn" id="btn-import-cancel" style="width:100%;padding:10px;font-size:0.88rem;justify-content:center" data-i18n="import_cancel_btn">✖ Annuler</button>
+                    <button class="mini-btn" id="btn-import-cancel" style="width:100%;padding:10px;font-size:0.88rem;justify-content:center"></button>
                 </div>
                 <div id="import-step-2" style="display:none;flex-direction:column;gap:10px">
-                    <p style="margin:0;font-size:0.85rem;color:var(--txt-dim);text-align:center" data-i18n="import_replace_target">Sur quel joueur remplacer les données ?</p>
+                    <p style="margin:0;font-size:0.85rem;color:var(--txt-dim);text-align:center" data-i18n="import_replace_target"></p>
                     <div id="import-player-select" style="display:flex;flex-direction:column;gap:6px"></div>
                     <div style="display:flex;gap:8px">
-                        <button class="mini-btn" id="btn-import-replace-back" style="flex:1;padding:10px;justify-content:center" data-i18n="import_replace_back">← Retour</button>
-                        <button class="mini-btn" id="btn-import-replace-confirm" style="flex:1;padding:10px;justify-content:center;background:var(--ok);color:#fff;border-color:var(--ok)" disabled data-i18n="import_replace_confirm">✅ Confirmer</button>
+                        <button class="mini-btn" id="btn-import-replace-back" style="flex:1;padding:10px;justify-content:center" data-i18n="import_replace_back"></button>
+                        <button class="mini-btn" id="btn-import-replace-confirm" style="flex:1;padding:10px;justify-content:center;background:var(--ok);color:#fff;border-color:var(--ok)" disabled data-i18n="import_replace_confirm"></button>
                     </div>
                 </div>
             </div>

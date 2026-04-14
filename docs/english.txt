@@ -90,5 +90,8 @@
   "expand_hint": "⇕ Double-tap to expand ⇕",
   "legend_have": "Obtained",
   "legend_dupe": "Duplicate",
-  "legend_gold": "Gold Card"
+  "legend_gold": "Gold Card",
+  "add_player_tooltip": "Add a player",
+  "drag_reorder": "Drag to reorder",
+  "reset_tooltip": "Reset"
 }
