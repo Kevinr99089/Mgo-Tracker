@@ -1152,6 +1152,7 @@ input:checked+.switch::after {
 .lite-mode .glass-card { background: rgba(6,10,22,.93)!important; backdrop-filter: none!important; -webkit-backdrop-filter: none!important; transition: none!important; transform: none!important; transform-origin: initial!important; max-height: none!important }
 .lite-mode .glass-card.hidden { display: none!important }
 .lite-mode .glass-card.blur-active, .lite-mode .glass-card.blur-out { backdrop-filter: none!important; -webkit-backdrop-filter: none!important; animation: none!important }
+.lite-mode .glass-card.blur-active::before { display: none!important }
 .lite-mode .glass-card::before { transition: none!important }
 .lite-mode .dock { backdrop-filter: none!important; -webkit-backdrop-filter: none!important }
 .lite-mode #toast { backdrop-filter: none!important; -webkit-backdrop-filter: none!important }
