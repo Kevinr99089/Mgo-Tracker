@@ -6,7 +6,7 @@ Bienvenue sur **MGO Tracker**, une application web autonome et performante conç
 
 Que vous jouiez sur un seul compte ou que vous gériez plusieurs joueurs, cet outil offre une solution fluide, rapide et sécurisée pour mettre à jour votre progression en ligne ou hors ligne.
 
-[![MGO Tracker V4.1.4](https://img.shields.io/badge/Lancez_MGO_Tracker_V4.1.4-Créez/gérez_vos_tableaux-2563eb?style=for-the-badge)](https://kevinr99089.github.io/Mgo-Tracker/)
+[![MGO Tracker V4.1.5](https://img.shields.io/badge/Lancez_MGO_Tracker_V4.1.5-Créez/gérez_vos_tableaux-2563eb?style=for-the-badge)](https://kevinr99089.github.io/Mgo-Tracker/)
 
 ---
 
@@ -29,7 +29,7 @@ Cet outil est décliné en deux variantes, que vous pouvez retrouver dans la sec
 
 ## 🚀 Comment l'utiliser
 
-MGO Tracker étant construit comme un fichier HTML monolithique, aucune installation complexe n'est requise :
+MGO Tracker étant construit comme un fichier HTML, aucune installation complexe n'est requise :
 
 1.  **Version Web** : Cliquez simplement sur le badge ci-dessus pour visiter la page en ligne.
 2.  **Version Locale** : Allez dans l'onglet **Releases**, téléchargez le fichier `.html` (Complet ou Lite), et double-cliquez dessus pour l'ouvrir dans n'importe quel navigateur web moderne. Aucune connexion internet n'est requise pour utiliser le fichier localement !
