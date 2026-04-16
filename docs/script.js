@@ -168,9 +168,9 @@ window.UserManager = {
             n.className = "um-row" + (this._newIndices.has(n_idx) ? " um-new" : ""), n.draggable = !0, n.dataset.idx = n_idx;
             const r_val = a(t);
             n.innerHTML = `
-          <span class="um-handle" title="${a(s('drag_reorder'))}"></span>
+          <span class="um-handle" title="${a(s('drag_reorder'))}"><svg viewBox="0 0 10 16" width="10" height="16" fill="currentColor" style="display:block"><circle cx="3" cy="2.5" r="1.5"/><circle cx="7" cy="2.5" r="1.5"/><circle cx="3" cy="8" r="1.5"/><circle cx="7" cy="8" r="1.5"/><circle cx="3" cy="13.5" r="1.5"/><circle cx="7" cy="13.5" r="1.5"/></svg></span>
           <input type="text" class="g-inp um-inp" style="flex:1;border:1px solid var(--glass-b);border-radius:6px;padding:8px;color:#fff" value="${r_val}" data-idx="${n_idx}">
-          <button class="mini-btn danger um-del" data-idx="${n_idx}" ${this.tempUsers.length <= 1 ? "disabled" : ""}></button>
+          <button class="mini-btn danger um-del" data-idx="${n_idx}" ${this.tempUsers.length <= 1 ? "disabled" : ""}>×</button>
       `, n.addEventListener("dragstart", e => this._onDragStart(e, n)), n.addEventListener("dragover", e => this._onDragOver(e, n)), n.addEventListener("dragleave", e => n.classList.remove("um-drag-over")), n.addEventListener("drop", e => this._onDrop(e, n)), n.addEventListener("dragend", e => this._onDragEnd());
             const o = n.querySelector(".um-handle");
             o.addEventListener("touchstart", e => this._onTouchStart(e, n), { passive: !1 }), o.addEventListener("touchmove", e => this._onTouchMove(e), { passive: !1 }), o.addEventListener("touchend", e => this._onTouchEnd(e), { passive: !1 }), n.querySelector(".um-inp").addEventListener("change", e => this.update(+e.target.dataset.idx, e.target.value)), n.querySelector(".um-del").addEventListener("click", e => this.remove(+e.target.dataset.idx)), e.appendChild(n)
@@ -425,7 +425,7 @@ const g = {
                     }
                 }), void(p = () => { __ac.abort(); clearTimeout(F) })
             }
-        } else this.els.bg.innerHTML = '\n  <div class="shiny-screen">\n    <div class="shiny-deck">\n      <div class="shiny-c shiny-c1"></div>\n      <div class="shiny-c shiny-c2"></div>\n      <div class="shiny-c shiny-c3"></div>\n    </div>\n    <div class="shiny-logo">MGO <em>Tracker</em><span>.</span></div>\n  </div>'
+        } else this.els.bg.innerHTML = '\n  <div class="shiny-screen">\n    <div class="shiny-deck">\n      <div class="shiny-c shiny-c1"></div>\n      <div class="shiny-c shiny-c2">★</div>\n      <div class="shiny-c shiny-c3"></div>\n    </div>\n    <div class="shiny-logo">MGO <em>Tracker</em><span>.</span></div>\n  </div>'
     },
     renderMain() {
         this.els.app.innerHTML = "";
@@ -465,7 +465,7 @@ const g = {
           ${c}
           ${d}
       </div>
-      <div class="card-tools"><button class="mini-btn danger reset-u-btn" data-action="reset-u" title="${a(s('reset_tooltip'))}"></button></div>
+      <div class="card-tools"><button class="mini-btn danger reset-u-btn" data-action="reset-u" title="${a(s('reset_tooltip'))}"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg></button></div>
   <div class="expand-hint" data-i18n="expand_hint">${s('expand_hint')}</div>
   </div>
   <div style="padding:0" data-u="${i}">
@@ -574,7 +574,7 @@ const g = {
         u.cfg.gold_ex.forEach((e, n) => {
             const r = document.createElement("div");
             r.className = "gold-row";
-            r.innerHTML = `<input class="g-inp" data-f="alb" maxlength="2" inputmode="numeric" placeholder="--" value="${a(e.alb || e.album || "")}"><input class="g-inp" data-f="card" placeholder="${a(s("card"))}" value="${a(e.card || "")}"><input class="g-inp" data-f="date" maxlength="5" inputmode="numeric" placeholder="JJ/MM" value="${a(e.date || "")}"><button style="background:0 0;border:none;color:var(--err);font-weight:700;cursor:pointer" data-action="del-gold" data-idx="${n}"></button>`;
+            r.innerHTML = `<input class="g-inp" data-f="alb" maxlength="2" inputmode="numeric" placeholder="--" value="${a(e.alb || e.album || "")}"><input class="g-inp" data-f="card" placeholder="${a(s("card"))}" value="${a(e.card || "")}"><input class="g-inp" data-f="date" maxlength="5" inputmode="numeric" placeholder="JJ/MM" value="${a(e.date || "")}"><button style="background:0 0;border:none;color:var(--err);font-weight:700;cursor:pointer" data-action="del-gold" data-idx="${n}">×</button>`;
             const albInp = r.querySelector('[data-f="alb"]');
             const cardInp = r.querySelector('[data-f="card"]');
             const dateInp = r.querySelector('[data-f="date"]');
@@ -657,7 +657,7 @@ const g = {
         el.innerHTML = "";
         const hasSpecial = l(u.cfg.seed)() < .01;
         const count = hasSpecial ? 5 : 4;
-        const icons = ["<span style='display:inline-block;width:10px;height:10px;background:#fff;border-radius:50%'></span>", "<span style='display:inline-block;width:14px;height:9px;background:#fff;border-radius:3px'></span>", "<span style='display:inline-block;width:10px;height:10px;border:2.5px solid #fff;border-radius:1px;box-sizing:border-box'></span>", "<span style='display:grid;grid-template-columns:1fr 1fr;gap:2px;width:10px;height:10px'><span style='background:#fff;border-radius:50%'></span><span style='background:#fff;border-radius:50%'></span><span style='background:#fff;border-radius:50%'></span><span style='background:#fff;border-radius:50%'></span></span>", "<span style='font-size:0.85em;line-height:1'></span>"];
+        const icons = ["<span style='display:inline-block;width:10px;height:10px;background:#fff;border-radius:50%'></span>", "<span style='display:inline-block;width:14px;height:9px;background:#fff;border-radius:3px'></span>", "<span style='display:inline-block;width:10px;height:10px;border:2.5px solid #fff;border-radius:1px;box-sizing:border-box'></span>", "<span style='display:grid;grid-template-columns:1fr 1fr;gap:2px;width:10px;height:10px'><span style='background:#fff;border-radius:50%'></span><span style='background:#fff;border-radius:50%'></span><span style='background:#fff;border-radius:50%'></span><span style='background:#fff;border-radius:50%'></span></span>", "<span style='font-size:0.85em;line-height:1'>✨</span>"];
         const labels = [s("amb_0"), s("amb_1"), s("amb_2"), s("amb_3"), s("amb_4")];
         for (let i = 0; i < count; i++) {
             const btn = document.createElement("button");
@@ -879,7 +879,7 @@ const y = {
                 n = document.createElement("button");
             n.className = "mini-btn";
             n.style.cssText = "width:100%;justify-content:flex-start;padding:12px 16px;font-size:0.95rem;transition:0.2s";
-            n.innerHTML = " " + a(t);
+            n.innerHTML = "👤 " + a(t);
             n.onclick = () => {
                 e.querySelectorAll(".mini-btn").forEach(e => { e.style.background = ""; e.style.color = ""; e.style.borderColor = "" });
                 n.style.background = "var(--p)";
@@ -935,7 +935,7 @@ const y = {
     showImportIfPending() {
         const s_obj = this._pendingImport;
         if (!s_obj) return;
-        document.getElementById("import-name").textContent = " " + s_obj.name;
+        document.getElementById("import-name").textContent = "👤 " + s_obj.name;
         const checked = Object.values(s_obj.data.state || {}).filter(e => 1 === e).length,
             dupes = Object.values(s_obj.data.state || {}).filter(e => 2 === e).length;
         document.getElementById("import-stats").textContent = s("import_stats").replace("{c}", checked).replace("{d}", dupes);
@@ -953,9 +953,9 @@ const y = {
             btnQ.style.display = "none";
             this._quickTarget = null;
         } else {
-            btnC.textContent = " " + s("import_add");
+            btnC.textContent = "➕ " + s("import_add");
             btnR.style.display = "";
-            btnR.textContent = " " + s("import_replace_btn");
+            btnR.textContent = "🔄 " + s("import_replace_btn");
             if (rememberedValid) {
                 btnQ.style.display = "";
                 btnQ.textContent = s("import_btn_quick").replace("{name}", remembered);
@@ -967,9 +967,9 @@ const y = {
         }
         document.getElementById("import-step-1").style.display = "flex";
         document.getElementById("import-step-2").style.display = "none";
-        document.getElementById("btn-import-cancel").textContent = " " + s("import_cancel_btn");
-        document.getElementById("btn-import-replace-back").textContent = " " + s("import_replace_back");
-        document.getElementById("btn-import-replace-confirm").textContent = " " + s("import_replace_confirm");
+        document.getElementById("btn-import-cancel").textContent = "✖ " + s("import_cancel_btn");
+        document.getElementById("btn-import-replace-back").textContent = "← " + s("import_replace_back");
+        document.getElementById("btn-import-replace-confirm").textContent = "✅ " + s("import_replace_confirm");
         document.getElementById("mod-import").classList.add("open");
     },
     confirmImport() {
@@ -1007,7 +1007,7 @@ const y = {
             const btn = document.createElement("button");
             btn.className = "mini-btn";
             btn.style.cssText = "width:100%;justify-content:flex-start;padding:10px 14px;font-size:0.9rem;transition:0.2s";
-            btn.textContent = " " + name;
+            btn.textContent = "👤 " + name;
             btn.onclick = () => {
                 list.querySelectorAll(".mini-btn").forEach(b => { b.style.background = ""; b.style.borderColor = ""; b.style.color = "" });
                 btn.style.background = "var(--p)";
@@ -1098,7 +1098,7 @@ const MissionManager = {
         const monday = this._getMondayDate(new Date());
         const frag = document.createDocumentFragment();
         const tr_days = translations.days || ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-        const tr_months = translations.months || ['Janvier', 'Fvrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aot', 'Septembre', 'Octobre', 'Novembre', 'Dcembre'];
+        const tr_months = translations.months || ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
         for (let di = 0; di < 7; di++) {
             const dayDate = new Date(monday);
             dayDate.setDate(monday.getDate() + di);
