@@ -20,10 +20,12 @@
   "import_replace_back": "Retour",
   "import_replace_confirm": "Confirmer",
   "import_replace_warn": "Êtes-vous sûr de remplacer les données de \"{name}\" ?",
-  "imported": "importé !",
-  "updated": "mis à jour !",
-  "data_replaced": "Données remplacées pour {name} !",
+  "imported": "✅ {name} importé !",
+  "updated": "✅ {name} mis à jour !",
+  "data_replaced": "✅ Données remplacées pour {name} !",
   "import_stats": "{c} carte(s) cochée(s) · {d} doublon(s)",
+  "import_btn_update": "✅ Mettre à jour ({name})",
+  "import_btn_quick": "⚡ Mettre à jour {name}",
   "saved": "Sauvegardé !",
   "new_season": "Nouvelle Saison",
   "setup_board": "Configurez votre tableau pour commencer.",
@@ -97,5 +99,7 @@
   "missions": "Missions",
   "missions_title": "📋 Missions de la semaine",
   "today": "Aujourd'hui",
-  "mission_ph": "Mission {n}…"
+  "mission_ph": "Mission {n}…",
+  "days": ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+  "months": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
 }

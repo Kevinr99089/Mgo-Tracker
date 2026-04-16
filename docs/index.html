@@ -5,18 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0f172a">
     <meta name="description" content="MGO Tracker">
-    <title>MGO Tracker v4.1.4</title>
+    <title>MGO Tracker</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-    <script>
-      (function(){
-          var v = localStorage.getItem('mgo_unified_version');
-          if(v === 'lite') document.documentElement.className = 'lite-mode';
-          else if(v === 'full') document.documentElement.className = 'full-mode';
-      })();
-    </script>
-    <script src="script.js" defer></script>
 </head>
 <body>
     <svg style="position:absolute;width:0;height:0;pointer-events:none" aria-hidden="true">
@@ -29,29 +21,33 @@
         </defs>
     </svg>
     <div id="__hub">
+        <div class="hub-orb" style="width:38vw;height:38vw;top:-8%;left:-10%;background:radial-gradient(circle,rgba(99,102,241,.35) 0%,transparent 70%);--d:20s;--tx:6vw;--ty:8vh"></div>
+        <div class="hub-orb" style="width:30vw;height:30vw;top:55%;right:-8%;background:radial-gradient(circle,rgba(244,114,182,.28) 0%,transparent 70%);--d:16s;--tx:-8vw;--ty:-6vh"></div>
+        <div class="hub-orb" style="width:22vw;height:22vw;bottom:-5%;left:30%;background:radial-gradient(circle,rgba(251,191,36,.22) 0%,transparent 70%);--d:24s;--tx:5vw;--ty:-5vh"></div>
+        <div class="hub-orb" style="width:18vw;height:18vw;top:20%;right:5%;background:radial-gradient(circle,rgba(99,102,241,.2) 0%,transparent 70%);--d:14s;--tx:-4vw;--ty:7vh"></div>
         <div id="__hub-card">
             <div class="hub-deck">
                 <div class="hub-dc hub-dc1"></div>
-                <div class="hub-dc hub-dc2">&#127922;</div>
+                <div class="hub-dc hub-dc2">🎲</div>
                 <div class="hub-dc hub-dc3"></div>
             </div>
             <h2>MGO Tracker</h2>
             <p id="__hub-sub" data-i18n="hub_sub"></p>
-            <button class="hub-btn hub-btn-full" onclick="window.__pickVersion('full')">
-                <span class="hub-btn-icon">&#9889;</span>
+            <button class="hub-btn hub-btn-full" onclick="__pickVersion('full',this)">
+                <span class="hub-btn-icon">⚡</span>
                 <span class="hub-btn-texts">
                     <span class="hub-btn-lbl" id="__hub-lbl-full" data-i18n="hub_full"></span>
                     <span class="hub-btn-desc" id="__hub-desc-full" data-i18n="hub_fullDesc"></span>
                 </span>
-                <span class="hub-btn-arr">&#8250;</span>
+                <span class="hub-btn-arr">›</span>
             </button>
-            <button class="hub-btn hub-btn-lite" onclick="window.__pickVersion('lite')">
-                <span class="hub-btn-icon">&#129446;</span>
+            <button class="hub-btn hub-btn-lite" onclick="__pickVersion('lite',this)">
+                <span class="hub-btn-icon">🪶</span>
                 <span class="hub-btn-texts">
                     <span class="hub-btn-lbl" id="__hub-lbl-lite" data-i18n="hub_lite"></span>
                     <span class="hub-btn-desc" id="__hub-desc-lite" data-i18n="hub_liteDesc"></span>
                 </span>
-                <span class="hub-btn-arr">&#8250;</span>
+                <span class="hub-btn-arr">›</span>
             </button>
             <label class="hub-remember">
                 <input type="checkbox" id="__hub-chk">
@@ -62,7 +58,9 @@
     <div class="ambient-bg" id="ambient-bg"></div>
     <div id="splash">
         <div class="sp-deck">
-            <div class="sp-c"></div><div class="sp-c">&#9733;</div><div class="sp-c"></div>
+            <div class="sp-c"></div>
+            <div class="sp-c">★</div>
+            <div class="sp-c"></div>
         </div>
         <div class="sp-title">MGO <em>Tracker</em><span>.</span></div>
         <div class="sp-hint" data-i18n="loading"></div>
@@ -120,13 +118,17 @@
         <div id="amb-sel" data-full-only style="display:flex;gap:6px;padding:2px 12px 8px;justify-content:center;flex-wrap:wrap"></div>
         <hr style="border:0;border-top:1px solid var(--glass-b);margin:5px 0">
         <div class="menu-item" data-action="open-users"><span data-i18n="manage_players"></span></div>
-        <div class="menu-item" data-action="toggle-print-sub"><span data-i18n="print"></span><span style="font-size:0.8rem;opacity:0.6">&#9660;</span></div>
+        <div class="menu-item" data-action="toggle-print-sub">
+            <span data-i18n="print"></span><span style="font-size:0.8rem;opacity:0.6">▼</span>
+        </div>
         <div id="sub-print" style="display:none;flex-direction:column;gap:2px;background:rgba(0,0,0,0.2);padding:8px;border-radius:8px;margin-bottom:8px"></div>
         <div class="menu-item" data-action="save-file"><span data-i18n="save_file"></span></div>
         <div class="menu-item" data-action="open-share"><span data-i18n="share_board"></span></div>
         <div class="menu-item" data-action="load"><span data-i18n="load_btn"></span></div>
         <hr style="border:0;border-top:1px solid var(--glass-b);margin:5px 0">
-        <div class="menu-item" onclick="localStorage.removeItem('mgo_unified_version');location.reload()" style="color:#94a3b8"><span id="__switch-lbl" data-i18n="hub_switchLbl"></span></div>
+        <div class="menu-item" onclick="localStorage.removeItem('mgo_unified_version');location.reload()" style="color:#94a3b8">
+            <span id="__switch-lbl" data-i18n="hub_switchLbl"></span>
+        </div>
         <div class="menu-item" data-action="reset-all" style="color:var(--err)"><span data-i18n="reset_all"></span></div>
     </div>
     <div id="pop-view" class="popover">
@@ -188,11 +190,11 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 78 42" width="78" height="42">
                             <g transform="rotate(-9,14,21)">
                                 <rect x="2" y="4" width="24" height="34" rx="5" fill="#fbbf24"/>
-                                <text x="14" y="21" font-size="15" fill="rgba(255,255,255,0.9)" font-family="sans-serif" text-anchor="middle" dominant-baseline="central">&#9733;</text>
+                                <text x="14" y="21" font-size="15" fill="rgba(255,255,255,0.9)" font-family="sans-serif" text-anchor="middle" dominant-baseline="central">★</text>
                             </g>
                             <g transform="rotate(9,64,21)">
                                 <rect x="52" y="4" width="24" height="34" rx="5" fill="#2563eb"/>
-                                <text x="64" y="21" font-size="14" fill="white" font-family="sans-serif" text-anchor="middle" dominant-baseline="central">&#9830;</text>
+                                <text x="64" y="21" font-size="14" fill="white" font-family="sans-serif" text-anchor="middle" dominant-baseline="central">♦</text>
                             </g>
                             <line x1="30" y1="14" x2="48" y2="14" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
                             <polyline points="44,10 48,14 44,18" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -253,18 +255,19 @@
                         <button class="big-btn" id="btn-import-confirm" style="flex:1;padding:12px;font-size:0.88rem;margin:0"></button>
                         <button class="mini-btn" id="btn-import-replace" style="flex:1;padding:12px;font-size:0.88rem;justify-content:center;background:rgba(251,191,36,0.12);border-color:var(--gold);color:var(--gold)"></button>
                     </div>
-                    <button class="mini-btn" id="btn-import-cancel" style="width:100%;padding:10px;font-size:0.88rem;justify-content:center" data-i18n="import_cancel_btn"></button>
+                    <button class="mini-btn" id="btn-import-cancel" style="width:100%;padding:10px;font-size:0.88rem;justify-content:center"></button>
                 </div>
                 <div id="import-step-2" style="display:none;flex-direction:column;gap:10px">
                     <p style="margin:0;font-size:0.85rem;color:var(--txt-dim);text-align:center" data-i18n="import_replace_target"></p>
                     <div id="import-player-select" style="display:flex;flex-direction:column;gap:6px"></div>
                     <div style="display:flex;gap:8px">
-                        <button class="mini-btn" id="btn-import-replace-back" style="flex:1;padding:10px;justify-content:center" data-i18n="import_replace_back"></button>
-                        <button class="mini-btn" id="btn-import-replace-confirm" style="flex:1;padding:10px;justify-content:center;background:var(--ok);color:#fff;border-color:var(--ok)" disabled data-i18n="import_replace_confirm"></button>
+                        <button class="mini-btn" id="btn-import-replace-back" style="flex:1;padding:10px;justify-content:center"></button>
+                        <button class="mini-btn" id="btn-import-replace-confirm" style="flex:1;padding:10px;justify-content:center;background:var(--ok);color:#fff;border-color:var(--ok)" disabled></button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="script.js" defer></script>
 </body>
 </html>
