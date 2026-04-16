@@ -1,21 +1,13 @@
-// ==========================================
-// CONFIGURATION DES LANGUES
-// ==========================================
-// Ajoute simplement de nouvelles langues ici : 'code': 'fichier.txt'
+
 const I18N_FILES = {
     'fr': 'french.txt',
     'en': 'english.txt',
 };
-
 const __MGO_PREF = 'mgo_unified_version';
 let LITE_MODE = document.documentElement.className === 'lite-mode';
-
 let currentLang = (navigator.language || 'fr').split('-')[0];
 if (!I18N_FILES[currentLang]) currentLang = 'en';
-
 let translations = {};
-
-// Fonction de chargement asynchrone des traductions
 async function initI18n() {
     try {
         const response = await fetch(I18N_FILES[currentLang]);
@@ -25,19 +17,15 @@ async function initI18n() {
         console.error("Failed to load translations, falling back to empty object", err);
         translations = {};
     }
-    r(); // Applique les traductions au DOM initial
+    r();
 }
-
 function s(key) {
     return translations[key] || key;
 }
-
 function a(e) {
     return (e + "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
-
 const n_noHTML = new Set(["add_upper"]);
-
 function r() {
     document.querySelectorAll("[data-i18n]").forEach(e => {
         const t = e.dataset.i18n;
@@ -45,17 +33,14 @@ function r() {
         n_noHTML.has(t) ? e.innerHTML = val : e.textContent = val;
     });
 }
-
 function __pickVersion(v, btn) {
     LITE_MODE = v === 'lite';
     if (document.getElementById('__hub-chk').checked) localStorage.setItem(__MGO_PREF, v);
     else localStorage.removeItem(__MGO_PREF);
-    
     document.documentElement.className = LITE_MODE ? 'lite-mode' : 'full-mode';
     const hub = document.getElementById('__hub');
     const card = document.getElementById('__hub-card');
     const splash = document.getElementById('splash');
-    
     if (btn) {
         const rect = btn.getBoundingClientRect();
         const vw = window.innerWidth, vh = window.innerHeight;
@@ -70,12 +55,10 @@ function __pickVersion(v, btn) {
         document.body.appendChild(el);
         card.style.transition = 'opacity 0.3s ease';
         card.style.opacity = '0';
-        
         requestAnimationFrame(() => {
             el.style.transition = 'transform 0.55s cubic-bezier(0.4,0,0.2,1),border-radius 0.55s ease';
             el.style.transform = 'scale(' + scale + ')';
             el.style.borderRadius = '0';
-            
             setTimeout(() => {
                 splash.style.cssText = 'opacity:0;z-index:10000;display:flex;transition:none';
                 requestAnimationFrame(() => {
@@ -83,12 +66,10 @@ function __pickVersion(v, btn) {
                     splash.style.opacity = '1';
                 });
             }, 350);
-            
             setTimeout(() => {
                 el.style.transition = 'opacity 0.4s ease';
                 el.style.opacity = '0';
             }, 400);
-            
             setTimeout(() => {
                 el.remove();
                 hub.style.display = 'none';
@@ -102,26 +83,21 @@ function __pickVersion(v, btn) {
         __initApp();
     }
 }
-
 const o = { VERSION: "4.1.5 (Web)" };
 let i = [];
-
 function l(e) {
     return function() {
         var t = e += 1831565813;
         return t = Math.imul(t ^ t >>> 15, 1 | t), (((t ^= t + Math.imul(t ^ t >>> 7, 61 | t)) ^ t >>> 14) >>> 0) / 4294967296
     }
 }
-
 function c(e) {
     return l(e)() < .01
 }
-
 function d(e) {
     const t = c(e.seed) ? 4 : 3;
     return null == e.ambiance || "number" != typeof e.ambiance || e.ambiance < 0 || !Number.isInteger(e.ambiance) ? (e.ambiance = 0, null) : e.ambiance > t ? 4 !== e.ambiance || c(e.seed) ? (e.ambiance = 0, "cheat_easter") : (e.ambiance = 0, "cheat_shiny") : null
 }
-
 const u = {
     cfg: { albums: 24, mode: "cross", gold_ids: [], gold_ex: [], hidden: [], printHidden: [], setup_done: !1, ambiance: 0, seed: Date.now(), usersList: [] },
     usr: {},
@@ -171,7 +147,6 @@ const u = {
     },
     resetUser(e) { this.usr[e] && (this.usr[e].state = {}, this.usr[e].nums = {}, this.invalidateDupes(), this.saveU(e)) }
 };
-
 window.UserManager = {
     tempUsers: [],
     _newIndices: new Set(),
@@ -273,12 +248,9 @@ window.UserManager = {
         g.showToast(s("players_updated"))
     }
 };
-
 let m = null,
     p = null;
-
 function h() { m && (cancelAnimationFrame(m), m = null), p && (p(), p = null) }
-
 const g = {
     els: { app: document.getElementById("gen-cards"), toast: document.getElementById("toast"), bg: document.getElementById("ambient-bg") },
     showToast(e) { this.els.toast.textContent = e, this.els.toast.classList.add("show"), clearTimeout(this._toastTimer), this._toastTimer = setTimeout(() => this.els.toast.classList.remove("show"), 2e3) },
@@ -348,7 +320,6 @@ const g = {
                 N.className = "lava-canvas", A.appendChild(N), this.els.bg.appendChild(A);
                 const R = N.getContext("2d");
                 let B, U, O;
-
                 function a_resize() {
                     O = Math.min(window.devicePixelRatio || 1, 2), B = A.clientWidth, U = A.clientHeight, N.width = B * O * .5, N.height = U * O * .5, N.style.width = B + "px", N.style.height = U + "px", R.scale(.5 * O, .5 * O)
                 }
@@ -367,20 +338,16 @@ const g = {
                 }
                 let F, V = { x: -9999, y: -9999, active: !1 },
                     z = null;
-
                 function n_down(e) {
                     const t = e.touches ? e.touches[0] : e;
                     z = A.getBoundingClientRect(), V.x = t.clientX - z.left, V.y = t.clientY - z.top, V.active = !0
                 }
-
                 function r_move(e) {
                     if (!V.active || !z) return;
                     const t = e.touches ? e.touches[0] : e;
                     V.x = t.clientX - z.left, V.y = t.clientY - z.top
                 }
-
                 function o_up() { V.active = !1, z = null }
-
                 function i_resize() {
                     clearTimeout(F), F = setTimeout(() => {
                         R.setTransform(1, 0, 0, 1, 0, 0), a_resize(), J = .5 * O, j.forEach(e => { e.x = Math.min(e.x, B), e.y = Math.min(e.y, U) })
@@ -705,7 +672,6 @@ const g = {
         }
     }
 };
-
 const v = {
     _lastClickCell: null,
     _lastClickTime: 0,
@@ -889,7 +855,6 @@ const v = {
         d[c_action] && d[c_action]()
     }
 };
-
 const f = {
     init() {
         const e = document.getElementById("s-alb"),
@@ -897,7 +862,6 @@ const f = {
         g.renderGoldGrid("setup-gold-grid"), e.oninput = e => { t.textContent = e.target.value, u.cfg.albums = +e.target.value, u.saveC(), g.renderGoldGrid("setup-gold-grid") }, document.getElementById("btn-start-season").onclick = () => { u.cfg.setup_done = !0, u.saveC(), document.getElementById("setup-mod").classList.remove("open"), g.renderMenus(), g.renderMain(), g.showToast(s("good_season")) }
     }
 };
-
 const y = {
     _selected: null,
     openModal() {
@@ -1084,7 +1048,6 @@ const y = {
         setTimeout(() => location.reload(), 900)
     }
 };
-
 const MissionManager = {
     LS_DATA: 'mgo_missions_data',
     LS_WEEK: 'mgo_missions_week',
@@ -1176,7 +1139,6 @@ const MissionManager = {
         body.appendChild(frag);
     }
 };
-
 function __initApp() {
     u.init(), MissionManager.init(), y.checkImport(), document.getElementById("btn-import-confirm").onclick = () => y.confirmImport();
     document.getElementById("btn-import-quick").onclick = () => y.confirmQuickUpdate();
@@ -1232,13 +1194,9 @@ function __initApp() {
         }, 900)
     }
 }
-
 document.addEventListener("DOMContentLoaded", async () => {
     LITE_MODE = document.documentElement.className === "lite-mode";
-    
-    // Attendre que les traductions soient chargées AVANT de lancer l'app
     await initI18n();
-
     const __sv = localStorage.getItem(__MGO_PREF);
     if (!__sv) {
         document.getElementById("__hub").style.display = "flex";

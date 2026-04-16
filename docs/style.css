@@ -1302,7 +1302,6 @@ input:checked+.switch::after {
     user-select: none
 }
 .hub-remember input { accent-color: #6366f1; cursor: pointer }
-
 @keyframes hub-orb-move {
     0% { transform: translate(0,0) scale(1) }
     50% { transform: translate(var(--tx),var(--ty)) scale(1.12) }
@@ -1389,7 +1388,6 @@ input:checked+.switch::after {
 .legend-swatch.s-gold-dot { width: 11px; height: 11px; border-radius: 3px; background: transparent; border: 2px solid var(--gold); flex-shrink: 0; box-shadow: 0 0 5px rgba(251,191,36,.5) }
 .mini-btn.danger.reset-u-btn { opacity: .55; transition: opacity .2s,background .2s!important }
 .mini-btn.danger.reset-u-btn:hover, .mini-btn.danger.reset-u-btn:active { opacity: 1 }
-
 .mod-missions-box {
     width: 96%;
     max-width: 680px;

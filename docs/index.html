@@ -6,10 +6,8 @@
     <meta name="theme-color" content="#0f172a">
     <meta name="description" content="MGO Tracker">
     <title>MGO Tracker</title>
-    
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,13 +20,11 @@
             </filter>
         </defs>
     </svg>
-
     <div id="__hub">
         <div class="hub-orb" style="width:38vw;height:38vw;top:-8%;left:-10%;background:radial-gradient(circle,rgba(99,102,241,.35) 0%,transparent 70%);--d:20s;--tx:6vw;--ty:8vh"></div>
         <div class="hub-orb" style="width:30vw;height:30vw;top:55%;right:-8%;background:radial-gradient(circle,rgba(244,114,182,.28) 0%,transparent 70%);--d:16s;--tx:-8vw;--ty:-6vh"></div>
         <div class="hub-orb" style="width:22vw;height:22vw;bottom:-5%;left:30%;background:radial-gradient(circle,rgba(251,191,36,.22) 0%,transparent 70%);--d:24s;--tx:5vw;--ty:-5vh"></div>
         <div class="hub-orb" style="width:18vw;height:18vw;top:20%;right:5%;background:radial-gradient(circle,rgba(99,102,241,.2) 0%,transparent 70%);--d:14s;--tx:-4vw;--ty:7vh"></div>
-        
         <div id="__hub-card">
             <div class="hub-deck">
                 <div class="hub-dc hub-dc1"></div>
@@ -37,7 +33,6 @@
             </div>
             <h2>MGO Tracker</h2>
             <p id="__hub-sub" data-i18n="hub_sub"></p>
-            
             <button class="hub-btn hub-btn-full" onclick="__pickVersion('full',this)">
                 <span class="hub-btn-icon">&#9889;</span>
                 <span class="hub-btn-texts">
@@ -46,7 +41,6 @@
                 </span>
                 <span class="hub-btn-arr">&rsaquo;</span>
             </button>
-            
             <button class="hub-btn hub-btn-lite" onclick="__pickVersion('lite',this)">
                 <span class="hub-btn-icon">&#129718;</span>
                 <span class="hub-btn-texts">
@@ -55,16 +49,13 @@
                 </span>
                 <span class="hub-btn-arr">&rsaquo;</span>
             </button>
-            
             <label class="hub-remember">
                 <input type="checkbox" id="__hub-chk">
                 <span id="__hub-lbl-remember" data-i18n="hub_remember"></span>
             </label>
         </div>
     </div>
-
     <div class="ambient-bg" id="ambient-bg"></div>
-    
     <div id="splash">
         <div class="sp-deck">
             <div class="sp-c"></div><div class="sp-c">&#9733;</div><div class="sp-c"></div>
@@ -72,9 +63,7 @@
         <div class="sp-title">MGO <em>Tracker</em><span>.</span></div>
         <div class="sp-hint" data-i18n="loading"></div>
     </div>
-    
     <div id="toast" data-i18n="saved"></div>
-    
     <div id="setup-mod">
         <div class="setup-card">
             <div class="setup-title" data-i18n="new_season"></div>
@@ -93,7 +82,6 @@
             <button class="big-btn" id="btn-start-season" data-i18n="start_season"></button>
         </div>
     </div>
-    
     <div class="dock-wrap">
         <div class="dock">
             <button class="dock-btn" data-action="toggle-menu">
@@ -118,7 +106,6 @@
             </button>
         </div>
     </div>
-
     <div id="pop-menu" class="popover">
         <div style="padding:10px;font-size:0.8rem;opacity:0.6;text-transform:uppercase;font-weight:700" data-i18n="menu"></div>
         <div class="menu-item">
@@ -146,12 +133,10 @@
             <span data-i18n="reset_all"></span>
         </div>
     </div>
-
     <div id="pop-view" class="popover">
         <div style="padding:10px;font-size:0.8rem;opacity:0.6;text-transform:uppercase;font-weight:700" data-i18n="display"></div>
         <div id="view-list"></div>
     </div>
-
     <div class="modal-overlay" id="mod-gold">
         <div class="modal-box">
             <div class="modal-head">
@@ -166,7 +151,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal-overlay" id="mod-missions">
         <div class="mod-missions-box">
             <div class="modal-head">
@@ -178,7 +162,6 @@
             <div class="missions-scroll" id="missions-body"></div>
         </div>
     </div>
-
     <div class="modal-overlay" id="mod-users">
         <div class="modal-box">
             <div class="modal-head" style="position:relative">
@@ -200,7 +183,6 @@
             </div>
         </div>
     </div>
-
     <div class="app-container" id="main-app">
         <div id="gen-cards"></div>
         <div class="glass-card gold-area anim-section" data-sec="Gold" id="sec-gold">
@@ -231,7 +213,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal-overlay" id="mod-share">
         <div class="modal-box" style="max-width:480px">
             <div class="modal-head">
@@ -259,7 +240,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal-overlay" id="mod-import">
         <div class="modal-box" style="max-width:420px">
             <div class="modal-head">
@@ -290,7 +270,6 @@
             </div>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
