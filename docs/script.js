@@ -711,7 +711,7 @@ const v = {
     _getPopovers() { return this._popovers || (this._popovers = document.querySelectorAll('.popover')); },
     handle(e) {
         const t = e.target, a = t.closest('[data-action]'), n = t.closest('.cell-wrap'), r = t.closest('.glass-card');
-        if (!document.contains(t) || t.closest('.popover') || t.closest('.dock')) this._getPopovers().forEach(e => e.classList.remove('show'));
+        if (document.contains(t) && !t.closest('.popover') && !t.closest('.dock')) this._getPopovers().forEach(e => e.classList.remove('show'));
         if (n && 'INPUT' !== t.tagName) {
             if ('dblclick' === e.type) return e.stopPropagation(), void e.preventDefault();
             const t = Date.now();
