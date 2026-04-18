@@ -6,7 +6,7 @@ Welcome to **MGO Tracker**, a powerful, standalone web application designed to h
 
 Whether you play on a single account or manage multiple players, this tool provides a seamless, fast, and secure way to keep your progress updated offline or online.
 
-[![MGO Tracker V4.1.5](https://img.shields.io/badge/Open_MGO_Tracker_V4.1.5-Create/Manage_your_boards-2563eb?style=for-the-badge)](https://kevinr99089.github.io/Mgo-Tracker/)
+[![MGO Tracker V4.1.6](https://img.shields.io/badge/Open_MGO_Tracker_V4.1.6-Create/Manage_your_boards-2563eb?style=for-the-badge)](https://kevinr99089.github.io/Mgo-Tracker/)
 
 ---
 
