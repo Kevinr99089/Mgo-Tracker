@@ -1,4 +1,3 @@
-
 (function () {
     var v = localStorage.getItem('mgo_unified_version');
     if (v === 'lite') document.documentElement.className = 'lite-mode';
@@ -355,21 +354,52 @@ const g = {
                 return void (p = () => { _app0.destroy(true, { children: true, texture: true, baseTexture: true }); });
             }
             if (1 === t) {
-                const y = ['linear-gradient(145deg,#3b41d8,#6468f5)', 'linear-gradient(145deg,#c77b10,#f0aa22)', 'linear-gradient(145deg,#b8233b,#eb3a5f)', 'linear-gradient(145deg,#0e766e,#14b8a6)', 'linear-gradient(145deg,#7c3aed,#a855f7)', 'linear-gradient(145deg,#065f86,#0ea5e9)'];
-                const b = 5;
-                for (let _ = 0; _ < b; _++) {
-                    const E = document.createElement('div');
-                    E.className = 'f-obj f-card';
-                    const L = 18 + 22 * e(), w = .65 + .25 * e(), C = 60 * e() - 30;
-                    E.style.cssText = `width:${L}vw;height:${L / w}vw;top:${85 * e() - 5}%;left:${85 * e() - 5}%;background:${y[Math.floor(e() * y.length)]};will-change:auto;box-shadow:0 4px 14px rgba(0,0,0,.35)`;
-                    E.style.setProperty('--d', 20 + 18 * e() + 's');
-                    E.style.setProperty('--tx', 20 * e() - 10 + 'vw');
-                    E.style.setProperty('--ty', 20 * e() - 10 + 'vh');
-                    E.style.setProperty('--r0', C + 'deg');
-                    E.style.setProperty('--r1', C + 40 * e() - 20 + 'deg');
-                    this.els.bg.appendChild(E);
+                const _app1 = new PIXI.Application({ resizeTo: this.els.bg, backgroundAlpha: 0, antialias: true, resolution: 1, autoDensity: true });
+                _app1.view.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none';
+                this.els.bg.appendChild(_app1.view);
+                const _grads = [['#3b41d8','#6468f5'],['#c77b10','#f0aa22'],['#b8223b','#eb3a5f'],['#0e766e','#14b8a6'],['#7c3aed','#a855f7'],['#065f86','#0ea5e9']];
+                const _N1 = 5, _cards1 = [];
+                const _TW = 256, _TH = Math.round(_TW * 1.4);
+                for (let _i = 0; _i < _N1; _i++) {
+                    const _gc = _grads[Math.floor(e() * _grads.length)];
+                    const _oc = document.createElement('canvas');
+                    _oc.width = _TW; _oc.height = _TH;
+                    const _cx = _oc.getContext('2d');
+                    const _r = 16;
+                    _cx.beginPath();
+                    _cx.moveTo(_r, 0); _cx.lineTo(_TW - _r, 0); _cx.quadraticCurveTo(_TW, 0, _TW, _r);
+                    _cx.lineTo(_TW, _TH - _r); _cx.quadraticCurveTo(_TW, _TH, _TW - _r, _TH);
+                    _cx.lineTo(_r, _TH); _cx.quadraticCurveTo(0, _TH, 0, _TH - _r);
+                    _cx.lineTo(0, _r); _cx.quadraticCurveTo(0, 0, _r, 0);
+                    _cx.closePath(); _cx.clip();
+                    const _grd = _cx.createLinearGradient(0, 0, _TW, _TH);
+                    _grd.addColorStop(0, _gc[0]); _grd.addColorStop(1, _gc[1]);
+                    _cx.fillStyle = _grd; _cx.fillRect(0, 0, _TW, _TH);
+                    const _sh = _cx.createLinearGradient(0, 0, _TW * .7, _TH * .7);
+                    _sh.addColorStop(0, 'rgba(255,255,255,0.18)'); _sh.addColorStop(1, 'rgba(255,255,255,0)');
+                    _cx.fillStyle = _sh; _cx.fillRect(0, 0, _TW, _TH);
+                    _cx.strokeStyle = 'rgba(255,255,255,0.18)'; _cx.lineWidth = 2; _cx.stroke();
+                    const _bt = new PIXI.BaseTexture(_oc), _tex = new PIXI.Texture(_bt), _spr = new PIXI.Sprite(_tex);
+                    _spr.anchor.set(.5); _spr.alpha = .45;
+                    _app1.stage.addChild(_spr);
+                    const _vwPx = window.innerWidth, _sz = (30 + 25 * e()) / 100 * _vwPx;
+                    _spr.width = _sz; _spr.height = _sz * 1.4;
+                    const _sx = (85 * e() - 10) / 100, _sy = (85 * e() - 10) / 100;
+                    const _tx = (20 * e() - 10) / 100, _ty = (20 * e() - 10) / 100;
+                    const _r0 = (40 * e() - 20) * Math.PI / 180, _r1 = (40 * e() - 20) * Math.PI / 180;
+                    const _dur = (20 + 15 * e()) * 1e3, _ph = e() * Math.PI * 2;
+                    _cards1.push({ spr: _spr, sx: _sx, sy: _sy, tx: _tx, ty: _ty, r0: _r0, r1: _r1, dur: _dur, ph: _ph, sz: _sz });
                 }
-                return;
+                _app1.ticker.add(() => {
+                    const _now = performance.now(), _W = _app1.screen.width, _H = _app1.screen.height;
+                    for (const _c of _cards1) {
+                        const _p = (Math.sin(_now / _c.dur * Math.PI * 2 + _c.ph) + 1) / 2;
+                        _c.spr.x = _c.sx * _W + _c.tx * _W * _p;
+                        _c.spr.y = _c.sy * _H + _c.ty * _H * _p;
+                        _c.spr.rotation = _c.r0 + (_c.r1 - _c.r0) * _p;
+                    }
+                });
+                return void (p = () => { _app1.destroy(true, { children: true, texture: true, baseTexture: true }); });
             }
             if (2 === t) {
                 const S = 6;
