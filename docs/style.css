@@ -1,3 +1,5 @@
+html.is-shiney #splash { background: radial-gradient(circle at center, #502704 0%, #0f0500 100%) !important; }
+html.is-shiney .sp-c { box-shadow: 0 0 20px rgba(251,191,36,.6) !important; }
 :root{--bg:#050511;--glass:rgba(15,23,42,0.25);--glass-b:rgba(255,255,255,0.1);--txt:#f8fafc;--txt-dim:#94a3b8;--p:#6366f1;--a:#f472b6;--gold:#fbbf24;--err:#ef4444;--ok:#22c55e;--r-l:24px;--r-s:8px;--font:'SF Pro Display',system-ui,-apple-system,sans-serif;--shd:0 8px 32px rgba(0,0,0,0.4);--ease:cubic-bezier(0.25,0.8,0.25,1);--lite-bg:radial-gradient(circle at 20% 28%,rgba(99,102,241,.32) 0%,transparent 52%),radial-gradient(circle at 78% 18%,rgba(244,114,182,.26) 0%,transparent 48%),radial-gradient(circle at 58% 78%,rgba(6,182,212,.2) 0%,transparent 44%),radial-gradient(circle at 12% 82%,rgba(251,191,36,.16) 0%,transparent 38%),radial-gradient(circle at 88% 62%,rgba(79,70,229,.24) 0%,transparent 48%)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;outline:0}
 body{margin:0;padding:0 0 140px;background:var(--bg);color:var(--txt);min-height:100vh;font-family:var(--font);overflow-x:hidden;overscroll-behavior-y:none}
@@ -144,7 +146,7 @@ input:checked+.switch{background:var(--p)} input:checked+.switch::after{transfor
 .lite-mode .dock,.lite-mode #toast,.lite-mode .modal-box,.lite-mode .mod-missions-box,.lite-mode .setup-card{backdrop-filter:none!important;background:rgba(15,23,42,0.95)!important}
 .lite-mode .popover{backdrop-filter:none!important;background:rgba(15,23,42,0.95)!important;transition:opacity .2s, transform .2s !important}
 .lite-mode .f-obj,.lite-mode .glass-card::before{display:none!important}
-.lite-mode .sp-c, .lite-mode .sp-title, .lite-mode .sp-hint {animation:none!important;opacity:1!important;transform:translateY(0) rotate(var(--er,0deg))!important;}
+.lite-mode .sp-c, .lite-mode .sp-title, .lite-mode .sp-hint {animation:none!important;opacity:1;transform:translateY(0) rotate(var(--er,0deg))!important;}
 [data-full-only]{display:none} .full-mode [data-full-only]{display:revert}
 #__hub{position:fixed;inset:0;z-index:9999;background:#050511;background-image:radial-gradient(circle at 20% 25%,rgba(99,102,241,.28) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(244,114,182,.22) 0%,transparent 48%);display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px}
 #__hub-card{background:rgba(10,14,30,0.55);border:1px solid #6366f1;border-radius:28px;padding:36px 28px;max-width:410px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(18px)}

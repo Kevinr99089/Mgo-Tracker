@@ -48,7 +48,7 @@
   "amb_1": "Floating Cards",
   "amb_2": "Neon Frames",
   "amb_3": "Lava Lamp",
-  "amb_4": "✨ SPECIAL ✨",
+  "amb_4": "✨ Shiny Season ✨",
   "reset_player_q": "Reset {name}?",
   "sub": "Choose version",
   "full": "Full Version",
@@ -56,5 +56,7 @@
   "lite": "Lite Version",
   "liteDesc": "Light interface · Fast startup · Same tracker",
   "switchToLite": "⇄ Switch to Lite Version",
-  "switchToFull": "⇄ Switch to Full Version"
+  "switchToFull": "⇄ Switch to Full Version",
+  "cheat_1": "Little rascal :/",
+  "cheat_2": "Looking for easter eggs?"
 }

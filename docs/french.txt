@@ -48,7 +48,7 @@
   "amb_1": "Cartes Flottantes",
   "amb_2": "Cadres Néons",
   "amb_3": "Lampe à Lave",
-  "amb_4": "✨ SPÉCIAL ✨",
+  "amb_4": "✨ Saison Shiney ✨",
   "reset_player_q": "Réinitialiser {name} ?",
   "sub": "Choisissez la version",
   "full": "Version Complète",
@@ -56,5 +56,7 @@
   "lite": "Version Lite",
   "liteDesc": "Interface légère · Démarrage rapide · Même tracker",
   "switchToLite": "⇄ Passer à la version Lite",
-  "switchToFull": "⇄ Passer à la version Complète"
+  "switchToFull": "⇄ Passer à la version Complète",
+  "cheat_1": "Petit Coquin :/",
+  "cheat_2": "On cherche des easter-egg ?"
 }
