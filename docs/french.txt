@@ -57,6 +57,6 @@
   "liteDesc": "Interface légère · Démarrage rapide · Même tracker",
   "switchToLite": "⇄ Passer à la version Lite",
   "switchToFull": "⇄ Passer à la version Complète",
-  "cheat_1": "Petit Coquin :/",
-  "cheat_2": "On cherche des easter-egg ?"
+  "cheat_1": "Petit coquin ;)",
+  "cheat_2": "On recherche des easter-eggs supplémentaires ?"
 }
