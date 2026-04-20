@@ -57,6 +57,6 @@
   "liteDesc": "Light interface · Fast startup · Same tracker",
   "switchToLite": "⇄ Switch to Lite Version",
   "switchToFull": "⇄ Switch to Full Version",
-  "cheat_1": "Little rascal :/",
-  "cheat_2": "Looking for easter eggs?"
+  "cheat_1": "Nice try ;)",
+  "cheat_2": "Looking for extra easter eggs?"
 }
