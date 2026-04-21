@@ -34,17 +34,15 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            const workflows = ["CD.yml", "pages/pages-build-deployment"];
+            const workflows = await github.paginate(
+              github.rest.actions.listRepoWorkflows,
+              { owner, repo, per_page: 100 }
+            );
             for (const wf of workflows) {
-              let runs;
-              try {
-                const res = await github.rest.actions.listWorkflowRuns({
-                  owner, repo, workflow_id: wf, per_page: 100
-                });
-                runs = res.data.workflow_runs;
-              } catch (e) {
-                continue;
-              }
+              const runs = await github.paginate(
+                github.rest.actions.listWorkflowRuns,
+                { owner, repo, workflow_id: wf.id, per_page: 100 }
+              );
               if (runs.length <= 4) continue;
               runs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
               for (const r of runs.slice(4)) {
@@ -53,3 +51,4 @@ jobs:
                 });
               }
             }
+  
