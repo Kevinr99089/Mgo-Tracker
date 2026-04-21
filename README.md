@@ -12,7 +12,7 @@ Whether you play on a single account or manage multiple players, this tool provi
 
 ## 📦 Versions Available
 
-This tool is available in two variants, which you can find in the [Releases](../../releases) section as single-file monolithic HTML downloads:
+This tool is available as a single-file monolithic HTML download in the [Releases](../../releases) section, and includes two built-in variants:
 
 * **MGO Tracker (Full)**: The complete experience featuring dynamic, animated backgrounds (Ambiance feature including Cosmic Orbs, Floating Cards, Neon Frames, and Lava Lamp).
 * **MGO Tracker Lite**: A streamlined, lightweight version optimized for performance and low-end devices, featuring a static aesthetic background without heavy animations.
@@ -29,10 +29,10 @@ This tool is available in two variants, which you can find in the [Releases](../
 
 ## 🚀 How to Use
 
-Since MGO Tracker is built as a HTML file, installation is entirely optional:
+Since MGO Tracker is built as a single HTML file, installation is entirely optional:
 
 1.  **Web Version**: Simply click the badge above to visit the Live Page.
-2.  **Local Version**: Go to the **Releases** tab, download either the Full or Lite `.html` file, and double-click it to open it in any modern web browser. No internet connection is required to use the local file!
+2.  **Local Version**: Go to the **Releases** tab, download the `.html` file, and double-click it to open it in any modern web browser. No internet connection is required to use the local file!
 
 ## 🛠️ Technical Info
 
