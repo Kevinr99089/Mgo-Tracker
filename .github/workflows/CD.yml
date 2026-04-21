@@ -1,9 +1,6 @@
-name: Cleanup old deployments
+name: Cleanup
 
 on:
-  workflow_run:
-    workflows: ["CD.yml"]
-    types: [completed]
   workflow_dispatch:
 
 jobs:
@@ -11,38 +8,48 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       deployments: write
+      actions: write
 
     steps:
-      - name: Delete old deployments
+      - name: Delete old deployments (keep 1)
         uses: actions/github-script@v7
         with:
           script: |
             const { owner, repo } = context.repo;
-
             const deployments = await github.paginate(
               github.rest.repos.listDeployments,
               { owner, repo, per_page: 100 }
             );
-
-            if (deployments.length <= 1) {
-              console.log("nothing to delete.");
-              return;
+            if (deployments.length <= 1) return;
+            deployments.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            for (const d of deployments.slice(1)) {
+              await github.rest.repos.createDeploymentStatus({
+                owner, repo, deployment_id: d.id, state: "inactive"
+              });
+              await github.rest.repos.deleteDeployment({ owner, repo, deployment_id: d.id });
             }
 
-            deployments.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-            const toDelete = deployments.slice(1);
-
-            for (const deployment of toDelete) {
-              await github.rest.repos.createDeploymentStatus({
-                owner, repo,
-                deployment_id: deployment.id,
-                state: "inactive"
-              });
-
-              await github.rest.repos.deleteDeployment({
-                owner, repo,
-                deployment_id: deployment.id
-              });
-
-              console.log(`Cleaned : #${deployment.id}`);
+      - name: Delete old runs (keep 4)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const workflows = ["CD.yml", "pages/pages-build-deployment"];
+            for (const wf of workflows) {
+              let runs;
+              try {
+                const res = await github.rest.actions.listWorkflowRuns({
+                  owner, repo, workflow_id: wf, per_page: 100
+                });
+                runs = res.data.workflow_runs;
+              } catch (e) {
+                continue;
+              }
+              if (runs.length <= 4) continue;
+              runs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+              for (const r of runs.slice(4)) {
+                await github.rest.actions.deleteWorkflowRun({
+                  owner, repo, run_id: r.id
+                });
+              }
             }
