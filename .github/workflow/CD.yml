@@ -1,0 +1,48 @@
+name: Cleanup old deployments
+
+on:
+  workflow_run:
+    workflows: ["CD.yml"]
+    types: [completed]
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      deployments: write
+
+    steps:
+      - name: Delete old deployments
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+
+            const deployments = await github.paginate(
+              github.rest.repos.listDeployments,
+              { owner, repo, per_page: 100 }
+            );
+
+            if (deployments.length <= 1) {
+              console.log("nothing to delete.");
+              return;
+            }
+
+            deployments.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            const toDelete = deployments.slice(1);
+
+            for (const deployment of toDelete) {
+              await github.rest.repos.createDeploymentStatus({
+                owner, repo,
+                deployment_id: deployment.id,
+                state: "inactive"
+              });
+
+              await github.rest.repos.deleteDeployment({
+                owner, repo,
+                deployment_id: deployment.id
+              });
+
+              console.log(`Cleaned : #${deployment.id}`);
+            }
