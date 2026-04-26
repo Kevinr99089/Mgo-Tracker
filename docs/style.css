@@ -209,7 +209,7 @@ input:checked+.switch{background:var(--p)} input:checked+.switch::after{transfor
   body,html{height:auto!important;min-height:0!important;overflow:visible!important;background:#fff!important;color:#000!important;print-color-adjust:exact;zoom:88%}
   #setup-mod,#splash,#toast,.ambient-bg,.card-tools,.dock-wrap,.mini-btn,.modal-overlay,.popover,.user-avatar,.legend-bar,.expand-hint{display:none!important}
   .app-container{max-width:100%!important;margin:0!important;padding:0!important;width:100%!important}
-  .glass-card,.glass-card.hidden{display:block!important;opacity:1!important;visibility:visible!important;max-height:none!important;transform:none!important;background:#fff!important;box-shadow:none!important;border:2px solid #222!important;border-radius:12px!important;margin-bottom:2px!important;break-inside:avoid;padding:0!important}
+  .glass-card,.glass-card.hidden{display:block!important;opacity:1!important;visibility:visible!important;max-height:none!important;transform:none!important;background:#fff!important;box-shadow:none!important;border:2px solid #222!important;border-radius:12px!important;margin-bottom:2px!important;break-inside:avoid;padding:0!important;width:100%!important;margin-left:0!important}
   .glass-card.print-hidden,.glass-card::before{display:none!important}
   .card-header{background:#fff!important;border-bottom:2px solid #000!important;padding:2px 8px!important;min-height:auto!important}
   .user-info{gap:10px!important;width:100%;display:flex!important;align-items:flex-end!important;justify-content:space-between!important}
