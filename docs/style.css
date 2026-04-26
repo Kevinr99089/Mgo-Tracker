@@ -216,8 +216,9 @@ input:checked+.switch{background:var(--p)} input:checked+.switch::after{transfor
   .user-name{display:block!important;font-size:.95rem!important;font-weight:900!important;text-transform:uppercase;background:linear-gradient(to right,var(--p),var(--a))!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;white-space:nowrap!important}
   .user-note{display:inline-block!important;background:none!important;border:1px dashed #999!important;border-radius:4px!important;color:#000!important;padding:2px 6px!important;font-size:.85rem!important;margin-left:auto!important;width:auto!important;field-sizing:content!important;min-width:30px!important;max-width:60%!important}
   .grid-scroll{display:block!important;padding:0!important;overflow:visible!important}
-  .track-row{display:flex!important;width:100!important;border-bottom:2px solid #000!important} .track-row:last-child{border-bottom:none!important}
+  .track-row{display:flex!important;width:100%!important;border-bottom:2px solid #000!important} .track-row:last-child{border-bottom:none!important}
   .alb-col{flex:0 0 auto!important;border-right:2px solid #000!important;padding:0!important;margin:0!important}
+  .glass-card.expanded .alb-col{flex:0 0 auto!important;width:var(--col-w)!important}
   .alb-head{color:#000!important;font-size:.65rem!important;font-weight:800!important;padding:1px 0!important;border-bottom:1px solid #ccc!important;background:#fff!important;margin:0!important}
   .alb-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:0!important;width:100%!important}
   .cell-wrap{width:100%!important;aspect-ratio:unset!important;height:0!important;padding-top:55%!important;border-right:1px solid #ccc!important;border-bottom:1px solid #ccc!important;border-radius:0!important;background:0 0!important;margin:0!important;border-top:none!important;border-left:none!important}
