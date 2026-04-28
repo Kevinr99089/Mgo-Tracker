@@ -83,7 +83,7 @@
   "share_cards": "zaznaczona/e karta/y",
   "share_dupes": "duplikat(y)",
   "share_link_prompt": "Link do udostępnienia:",
-  "shiney_title": "Szczęśliwy <em>Sezon</em><span>☆</span>",
+  "shiney_title": "Szczęśliwy <em>Sezon</em><span>✦</span>",
   "shiney_hint": "Powodzenia!",
   "ambiance_error": "⚠️ Nie można załadować klimatu (problem z połączeniem)",
   "today_badge": "Dziś",

@@ -83,7 +83,7 @@
   "share_cards": "işaretli kart",
   "share_dupes": "kopya",
   "share_link_prompt": "Paylaşım bağlantısı:",
-  "shiney_title": "Şanslı <em>Sezon</em><span>☆</span>",
+  "shiney_title": "Şanslı <em>Sezon</em><span>✦</span>",
   "shiney_hint": "İyi şanslar!",
   "ambiance_error": "⚠️ Ambiyans yüklenemedi (bağlantı sorunu)",
   "today_badge": "Bugün",

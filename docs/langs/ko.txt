@@ -83,7 +83,7 @@
   "share_cards": "선택된 카드",
   "share_dupes": "중복",
   "share_link_prompt": "공유 링크:",
-  "shiney_title": "행운의 <em>시즌</em><span>☆</span>",
+  "shiney_title": "행운의 <em>시즌</em><span>✦</span>",
   "shiney_hint": "행운을 빕니다!",
   "ambiance_error": "⚠️ 분위기를 불러올 수 없습니다 (연결 문제)",
   "today_badge": "오늘",

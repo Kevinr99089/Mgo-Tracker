@@ -83,7 +83,7 @@
   "share_cards": "carta/e selezionata/e",
   "share_dupes": "duplicato/i",
   "share_link_prompt": "Link di condivisione:",
-  "shiney_title": "Stagione <em>Fortunata</em><span>☆</span>",
+  "shiney_title": "Stagione <em>Fortunata</em><span>✦</span>",
   "shiney_hint": "Buona fortuna!",
   "ambiance_error": "⚠️ Impossibile caricare l'atmosfera (problema di connessione)",
   "today_badge": "Oggi",

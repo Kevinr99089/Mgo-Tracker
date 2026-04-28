@@ -83,7 +83,7 @@
   "share_cards": "チェック済みカード",
   "share_dupes": "重複",
   "share_link_prompt": "シェアリンク：",
-  "shiney_title": "ラッキー<em>シーズン</em><span>☆</span>",
+  "shiney_title": "ラッキー<em>シーズン</em><span>✦</span>",
   "shiney_hint": "幸運を！",
   "ambiance_error": "⚠️ アンビアンスを読み込めません（接続エラー）",
   "today_badge": "今日",

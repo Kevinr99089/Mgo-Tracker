@@ -83,7 +83,7 @@
   "share_cards": "بطاقة محددة",
   "share_dupes": "مكرر",
   "share_link_prompt": "رابط المشاركة:",
-  "shiney_title": "موسم <em>محظوظ</em><span>☆</span>",
+  "shiney_title": "موسم <em>محظوظ</em><span>✦</span>",
   "shiney_hint": "حظاً موفقاً!",
   "ambiance_error": "⚠️ تعذر تحميل الأجواء (مشكلة في الاتصال)",
   "today_badge": "اليوم",

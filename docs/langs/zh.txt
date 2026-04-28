@@ -83,7 +83,7 @@
   "share_cards": "张已勾选卡片",
   "share_dupes": "张重复",
   "share_link_prompt": "分享链接：",
-  "shiney_title": "幸运<em>赛季</em><span>☆</span>",
+  "shiney_title": "幸运<em>赛季</em><span>✦</span>",
   "shiney_hint": "祝你好运！",
   "ambiance_error": "⚠️ 无法加载氛围（连接问题）",
   "today_badge": "今天",

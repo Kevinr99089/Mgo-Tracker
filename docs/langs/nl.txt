@@ -83,7 +83,7 @@
   "share_cards": "aangevinkte kaart(en)",
   "share_dupes": "duplicaat/duplicaten",
   "share_link_prompt": "Deellink:",
-  "shiney_title": "Gelukkig <em>Seizoen</em><span>☆</span>",
+  "shiney_title": "Gelukkig <em>Seizoen</em><span>✦</span>",
   "shiney_hint": "Veel geluk!",
   "ambiance_error": "⚠️ Kan sfeer niet laden (verbindingsprobleem)",
   "today_badge": "Vandaag",

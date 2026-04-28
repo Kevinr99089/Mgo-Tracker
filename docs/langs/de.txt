@@ -83,7 +83,7 @@
   "share_cards": "markierte Karte(n)",
   "share_dupes": "Duplikat(e)",
   "share_link_prompt": "Link teilen:",
-  "shiney_title": "Glücks-<em>Saison</em><span>☆</span>",
+  "shiney_title": "Glücks-<em>Saison</em><span>✦</span>",
   "shiney_hint": "Viel Glück!",
   "ambiance_error": "⚠️ Ambiente konnte nicht geladen werden (Verbindungsproblem)",
   "today_badge": "Heute",

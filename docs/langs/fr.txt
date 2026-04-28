@@ -83,7 +83,7 @@
   "share_cards": "carte(s) cochée(s)",
   "share_dupes": "doublon(s)",
   "share_link_prompt": "Lien de partage :",
-  "shiney_title": "Saison <em>Chanceuse</em><span>☆</span>",
+  "shiney_title": "Saison <em>Chanceuse</em><span>✦</span>",
   "shiney_hint": "Bonne Chance !",
   "ambiance_error": "⚠️ Impossible de charger l'ambiance (problème de connexion)",
   "today_badge": "Aujourd'hui",

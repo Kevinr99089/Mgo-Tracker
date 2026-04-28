@@ -83,7 +83,7 @@
   "share_cards": "張已勾選卡片",
   "share_dupes": "張重複",
   "share_link_prompt": "分享連結：",
-  "shiney_title": "幸運<em>賽季</em><span>☆</span>",
+  "shiney_title": "幸運<em>賽季</em><span>✦</span>",
   "shiney_hint": "祝你好運！",
   "ambiance_error": "⚠️ 無法載入氛圍（連線問題）",
   "today_badge": "今天",

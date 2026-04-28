@@ -83,7 +83,7 @@
   "share_cards": "kad ditanda",
   "share_dupes": "pendua",
   "share_link_prompt": "Pautan kongsi:",
-  "shiney_title": "Musim <em>Bertuah</em><span>☆</span>",
+  "shiney_title": "Musim <em>Bertuah</em><span>✦</span>",
   "shiney_hint": "Semoga bernasib baik!",
   "ambiance_error": "⚠️ Tidak dapat memuatkan suasana (masalah sambungan)",
   "today_badge": "Hari ini",

@@ -83,7 +83,7 @@
   "share_cards": "การ์ดที่เลือก",
   "share_dupes": "ซ้ำ",
   "share_link_prompt": "ลิงก์แชร์:",
-  "shiney_title": "ฤดูกาล<em>โชคดี</em><span>☆</span>",
+  "shiney_title": "ฤดูกาล<em>โชคดี</em><span>✦</span>",
   "shiney_hint": "ขอให้โชคดี!",
   "ambiance_error": "⚠️ ไม่สามารถโหลดบรรยากาศได้ (ปัญหาการเชื่อมต่อ)",
   "today_badge": "วันนี้",

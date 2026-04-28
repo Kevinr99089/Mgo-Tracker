@@ -83,7 +83,7 @@
   "share_cards": "carta(s) marcada(s)",
   "share_dupes": "duplicata(s)",
   "share_link_prompt": "Link de compartilhamento:",
-  "shiney_title": "Temporada <em>da Sorte</em><span>☆</span>",
+  "shiney_title": "Temporada <em>da Sorte</em><span>✦</span>",
   "shiney_hint": "Boa Sorte!",
   "ambiance_error": "⚠️ Não foi possível carregar o ambiente (problema de conexão)",
   "today_badge": "Hoje",

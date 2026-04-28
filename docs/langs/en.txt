@@ -83,7 +83,7 @@
   "share_cards": "checked card(s)",
   "share_dupes": "duplicate(s)",
   "share_link_prompt": "Share link:",
-  "shiney_title": "Lucky <em>Season</em><span>☆</span>",
+  "shiney_title": "Lucky <em>Season</em><span>✦</span>",
   "shiney_hint": "Good Luck!",
   "ambiance_error": "⚠️ Unable to load ambiance (connection issue)",
   "today_badge": "Today",
