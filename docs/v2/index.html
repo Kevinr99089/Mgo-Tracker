@@ -177,21 +177,21 @@ const Missions = {
     },
     init() {
         const key = this.gk(new Date());
-        const storedKey = localStorage.getItem('v212_missions_week');
+        const storedKey = localStorage.getItem('mgo_missions_week');
         if (storedKey !== key) {
-            localStorage.removeItem('v212_missions_data');
-            localStorage.setItem('v212_missions_week', key);
+            localStorage.removeItem('mgo_missions_data');
+            localStorage.setItem('mgo_missions_week', key);
             this._d = Array.from({length: 7}, () => ({texts: ['', '', '']}));
         } else {
             try {
-                this._d = JSON.parse(localStorage.getItem('v212_missions_data')) || Array.from({length: 7}, () => ({texts: ['', '', '']}));
+                this._d = JSON.parse(localStorage.getItem('mgo_missions_data')) || Array.from({length: 7}, () => ({texts: ['', '', '']}));
             } catch(e) {
                 this._d = Array.from({length: 7}, () => ({texts: ['', '', '']}));
             }
         }
     },
     save() {
-        localStorage.setItem('v212_missions_data', JSON.stringify(this._d));
+        localStorage.setItem('mgo_missions_data', JSON.stringify(this._d));
     },
     open() {
         if (!this._d) this.init();
