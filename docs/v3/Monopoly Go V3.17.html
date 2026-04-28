@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MGO Tracker - V3.17 (Moteur V4)</title>
+<style>
+:root{--primary:#818cf8;--bg:#0f172a;--card:#1e293b;--txt:#f1f5f9;--mut:#94a3b8;--bd:#334155;--g-bg:#854d0e;--g-txt:#fcd34d;--x1:#f8f9fa;--x2:#f87171;--sep:#475569;--shd:0 10px 15px -3px rgba(0,0,0,0.5);--rad:8px;--ok:#22c55e;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt);padding-bottom:120px;transition:background .3s}
+.splash{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s,visibility .6s}
+.splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+.splash-logo{font-size:3.5rem;font-weight:900;color:var(--primary);letter-spacing:-2px;animation:pulse 2s infinite;display:flex;align-items:baseline;gap:5px}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.8}}
+.fan{position:relative;width:80px;height:100px;margin-bottom:25px;display:flex;justify-content:center;align-items:flex-end}
+.s-card{position:absolute;width:60px;height:84px;border-radius:6px;border:2px solid #fff;box-shadow:0 4px 15px rgba(0,0,0,.2);opacity:0;will-change:transform,opacity}
+.sc-1{background:#4f46e5;animation:d-l .8s .2s cubic-bezier(.34,1.56,.64,1) forwards;z-index:1}
+.sc-2{background:#ef4444;animation:d-r .8s .3s cubic-bezier(.34,1.56,.64,1) forwards;z-index:1}
+.sc-3{background:linear-gradient(135deg,#ffd700,#f59e0b);border-color:#fffbeb;animation:d-c .8s .4s cubic-bezier(.34,1.56,.64,1) forwards;z-index:5;display:flex;align-items:center;justify-content:center}
+.sc-3::after{content:'★';font-size:2rem;color:#fff}
+@keyframes d-l{0%{transform:translateY(40px);opacity:0}100%{transform:translate(-30px,10px) rotate(-20deg);opacity:1}}
+@keyframes d-r{0%{transform:translateY(40px);opacity:0}100%{transform:translate(30px,10px) rotate(20deg);opacity:1}}
+@keyframes d-c{0%{transform:translateY(40px) scale(.8);opacity:0}100%{transform:translateY(-15px) scale(1.15);opacity:1}}
+.bar{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);width:96%;max-width:700px;background:rgba(30,41,59,.95);backdrop-filter:blur(10px);padding:8px 15px;border-radius:50px;box-shadow:0 10px 30px rgba(0,0,0,.5);display:flex;justify-content:space-between;align-items:center;z-index:1000;border:1px solid var(--bd)}
+.grp{display:flex;gap:4px;align-items:center;position:relative;}
+.ico{background:0 0;border:none;cursor:pointer;font-size:20px;padding:8px;border-radius:50%;color:var(--mut);transition:all .2s;display:flex;align-items:center;justify-content:center;position:relative}
+.ico:hover{background:var(--bg);color:var(--primary);transform:scale(1.1)}
+.ico[data-lbl]::after{content:attr(data-lbl);position:absolute;bottom:-18px;font-size:10px;font-weight:700;opacity:0;transition:.2s;color:var(--txt);pointer-events:none;white-space:nowrap}
+.ico:hover::after{opacity:1;bottom:-15px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:10000;display:none;align-items:flex-start;justify-content:center;backdrop-filter:blur(5px);overflow-y:auto;padding:20px}
+.modal.show{display:flex}
+.m-cont{background:var(--bg);width:100%;max-width:1400px;border-radius:12px;border:1px solid var(--bd);display:flex;flex-direction:column;box-shadow:0 0 40px rgba(0,0,0,.5)}
+.m-head{padding:15px;background:var(--card);border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;border-radius:12px 12px 0 0;position:sticky;top:0;z-index:50}
+.m-tit{font-weight:900;color:var(--primary);font-size:1.1rem}
+.m-tit.gold{color:var(--g-txt)}
+.m-body{padding:15px;flex:1}
+.btn-gm{background:var(--g-bg);color:var(--g-txt);font-weight:800;border:1px solid var(--g-txt);padding:5px 12px;border-radius:20px;font-size:.85rem;cursor:pointer;transition:transform .2s}
+.btn-gm:hover{transform:scale(1.05)}
+.ctn{width:100%;max-width:1900px;margin:0 auto;padding:5px;display:flex;flex-direction:column;gap:10px}
+.card{background:var(--card);border-radius:var(--rad);box-shadow:var(--shd);overflow:visible;border:1px solid var(--bd);position:relative;width:100%;transition:all 0.3s ease}
+.card.hide{display:none!important}
+.head{padding:6px 10px;background:var(--bg);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px;border-radius:var(--rad) var(--rad) 0 0;overflow:hidden;cursor:zoom-in;user-select:none}
+.tit{font-weight:900;font-size:.95rem;color:var(--primary);text-transform:uppercase;letter-spacing:.5px}
+.t-wrap{padding:5px 2px;width:100%;position:relative}
+table.trk{width:100%;border-collapse:separate;border-spacing:1px;table-layout:fixed}
+.trk th{font-size:.65rem;color:var(--mut);font-weight:800;text-transform:uppercase;padding-bottom:2px;text-align:center;vertical-align:bottom;white-space:nowrap;overflow:hidden;border-right:2px solid var(--sep)}
+.trk th:last-child{border-right:none}
+.trk td{width:100%;height:auto;background:var(--bg);border-radius:4px;cursor:pointer;position:relative;text-align:center;vertical-align:middle;border:1px solid var(--bd);padding:0;transition:transform .1s}
+.trk td:nth-child(3n){border-right:3px solid var(--sep);margin-right:2px}
+.trk td:last-child{border-right:1px solid var(--bd)}
+.spc,th.emp{border:none!important;background:0 0!important;box-shadow:none!important;pointer-events:none}
+@media(hover:hover){.trk td:not(.spc):hover{transform:scale(1.1);z-index:30;border-color:var(--primary);box-shadow:0 6px 15px rgba(0,0,0,.25)}}
+td[data-bg="1"]{background:var(--g-bg)!important;border-color:var(--g-txt)!important}
+.sq{width:100%;padding-top:100%;height:0;pointer-events:none;transition:padding-top 0.3s ease}
+.box{position:absolute;inset:0;font-size:clamp(10px,2.5vw,22px);font-weight:900;line-height:1;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.5);transition:all .15s cubic-bezier(.175,.885,.32,1.275);z-index:5;pointer-events:none}
+#gold-wrap.hide{display:block!important;max-height:0!important;overflow:hidden!important;padding:0!important;margin:0!important;border:0!important;visibility:hidden!important}
+td[data-st="1"] .box{opacity:1;transform:scale(1);color:var(--x1)}
+td[data-st="2"] .box{opacity:1;transform:scale(1);color:var(--x2)}
+@keyframes brth{0%,100%{opacity:.25}50%{opacity:1}}
+td.alert::before{content:'';position:absolute;inset:2px;border-radius:4px;border:3px solid var(--primary);pointer-events:none;z-index:2;animation:brth 10s ease-in-out infinite}
+.mnum .box{display:flex!important;z-index:1}
+.mnum td[data-st="1"] .box,.mnum td[data-st="2"] .box{opacity:.2!important}
+.unum{width:100%;height:100%;border:none;background:0 0;text-align:center;font-weight:900;color:var(--primary);outline:0;display:none;padding:0;margin:0;position:absolute;inset:0;z-index:5;font-size:clamp(10px,2.5vw,20px)}
+.mnum .unum{display:block}
+.gold-sec{background:linear-gradient(135deg,#451a03 0,#78350f 100%);border-color:#92400e}
+.g-list{padding:8px;display:flex;flex-direction:column;gap:6px}
+.g-row{display:flex;gap:6px;align-items:center;background:rgba(0,0,0,.3);padding:6px;border-radius:8px;border:1px dashed var(--g-txt);animation:fi .3s ease}
+@keyframes fi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.g-inp{background:0 0;border:none;border-bottom:1px solid var(--g-txt);color:var(--txt);font-weight:700;padding:4px;font-size:.85rem;text-align:center}
+.g-inp:focus{outline:none;border-bottom:2px solid var(--primary)}
+.btn-add{background:var(--g-bg);color:var(--g-txt);border:1px solid var(--g-txt);width:28px;height:28px;border-radius:50%;font-weight:900;font-size:1.2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .2s}
+.btn-del{background:0 0;border:none;color:var(--x2);font-weight:900;cursor:pointer;font-size:1.1rem;opacity:.7}
+.g-cnt{font-size:.75rem;font-weight:800;color:var(--g-txt);background:var(--g-bg);padding:3px 8px;border-radius:8px;border:1px solid var(--g-txt);box-shadow:0 1px 2px rgba(0,0,0,.1);white-space:nowrap}
+.circle{width:38px;height:38px;border-radius:50%;background:conic-gradient(var(--primary) calc(var(--p)*1%),var(--bd) 0);position:relative;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;color:var(--txt)}
+.circle::after{content:'';position:absolute;inset:4px;background:var(--bg);border-radius:50%;z-index:1}
+.circle span{position:relative;z-index:2}
+.drop{position:absolute;bottom:120%;left:0;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px;min-width:250px;box-shadow:0 15px 40px rgba(0,0,0,.5);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .2s;z-index:1001}
+.drop.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;cursor:pointer;border-radius:6px;font-size:.9rem;font-weight:600}
+.item:hover{background:var(--bg)}
+.item input[type=checkbox]{display:none}
+.tgl{width:36px;height:20px;background:var(--bd);border-radius:20px;position:relative;transition:.3s}
+.tgl::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:.3s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+input:checked+.tgl{background:var(--primary)}
+input:checked+.tgl::after{transform:translateX(16px)}
+.act{font-size:.7rem;padding:3px 8px;border-radius:6px;border:1px solid var(--bd);background:var(--card);color:var(--txt);cursor:pointer;font-weight:700;transition:background .2s}
+.act:hover{background:var(--bg)}
+.red{color:#ef4444;border-color:#fca5a5;background:#450a0a}
+.red:hover{background:#7f1d1d}
+.note{background:0 0;border:none;border-bottom:1px solid var(--bd);color:var(--txt);font-weight:700;width:250px;font-size:.9rem}
+.slide{padding:5px 12px;display:flex;flex-direction:column;gap:5px}
+.s-lbl{font-size:.9rem;font-weight:700;display:flex;justify-content:space-between}
+input[type=range]{width:100%;accent-color:var(--primary);cursor:pointer;height:6px}
+.card.zoom-mode {
+  border: 2px solid var(--primary);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+.card.zoom-mode .head {
+  cursor: zoom-out;
+  background: var(--bg);
+  border-bottom-color: var(--primary);
+}
+.card.zoom-mode .sq {
+  padding-top: 200%;
+}
+.card.zoom-mode .box {
+  font-size: 1.5rem;
+  opacity: 0;
+  transform: scale(1);
+}
+.card.zoom-mode td[data-st="1"] .box,
+.card.zoom-mode td[data-st="2"] .box {
+  opacity: 1;
+}
+.p-row {display:flex; gap:10px; align-items:center; background:var(--card); padding:8px; border-radius:8px; border:1px solid var(--bd); animation:fi .3s ease}
+.p-inp {flex:1; background:0 0; border:none; border-bottom:1px solid var(--primary); color:var(--txt); font-weight:700; padding:6px; font-size:1rem}
+.p-inp:focus {outline:none; border-bottom:2px solid var(--primary)}
+.btn-ord {background:0 0; border:none; color:var(--mut); font-size:0.7rem; cursor:pointer; padding:0 2px;}
+.btn-ord:hover:not(:disabled) {color:var(--primary)}
+.m-day {background:var(--card); border:1px solid var(--bd); border-radius:8px; padding:10px; display:flex; flex-direction:column; gap:8px}
+.m-day.today {border-color:var(--primary); background:rgba(99,102,241,0.1)}
+.m-day-lbl {font-size:.8rem; font-weight:800; text-transform:uppercase; color:var(--mut); display:flex; justify-content:space-between}
+.today-badge {background:var(--primary); color:#fff; border-radius:4px; padding:2px 6px; font-size:.65rem; font-weight:700}
+.m-input {background:var(--bg); border:1px solid var(--bd); border-radius:6px; color:var(--txt); font-family:inherit; font-size:.85rem; padding:8px; resize:vertical; min-height:40px; line-height:1.4; width:100%}
+.m-input:focus {outline:none; border-color:var(--primary)}
+#toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-20px);background:rgba(15,23,42,.98);border:1px solid rgba(255,255,255,.12);color:#fff;padding:10px 20px;border-radius:12px;font-weight:700;font-size:.9rem;box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;visibility:hidden;transition:.3s;z-index:9999;text-align:center}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible}
+@media print{
+#gold-wrap.hide{max-height:none!important;overflow:visible!important;visibility:visible!important;padding:0!important;margin-bottom:2px!important;border:1px solid #000!important}
+.card.hide{display:block!important}
+@page{margin:5mm;size:A4}
+.hide{display:block!important}
+body{margin:0;padding:0;background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;zoom:100%}
+:root{--primary:#4f46e5!important;--bg:#fff!important;--card:#fff!important;--txt:#000!important;--mut:#6b7280!important;--bd:#e5e7eb!important;--g-bg:#ffd700!important;--g-txt:#b45309!important;--x1:#212529!important;--x2:#dc2626!important;--sep:#94a3b8!important;--shd:none!important}
+.gold-sec{background:linear-gradient(135deg,#fffbeb 0,#fef3c7 100%)!important;border-color:var(--bd)!important}
+.g-row{background:rgba(255,255,255,.7)!important}
+.bar,.splash,.modal,#btn-og,.rst,.btn-mm,.g-cnt,.circle,.btn-add,.btn-del,.alert::before,.p-hide{display:none!important}
+.box{display:none!important}
+td[data-bg="1"]{background:var(--g-bg)!important;border-color:var(--g-txt)!important}
+.note{border:none!important;border-bottom:1px solid #000!important;color:#000!important;width:100%!important;background:0 0!important;display:block!important;height:auto!important;min-width:250px!important}
+#g-lst{display:grid!important;grid-template-columns:1fr 1fr;gap:3px 10px;padding:2px!important}
+.ctn{display:block!important;width:100%;padding:0}
+.card{break-inside:avoid;margin-bottom:2px;border:1px solid #000!important;box-shadow:none!important;display:block}
+.sq{padding-top:55%!important}
+.card.p-hide{display:none!important}
+.head{padding:4px 8px;min-height:auto}
+.tit{font-size:.85rem}
+table.trk{border-collapse:collapse;border-spacing:0;border:1px solid #000!important}
+.trk th{border:1px solid #000!important;color:#000!important}
+.trk td{border:1px solid #ccc!important}
+.trk td:nth-child(3n){border-right:1px solid #000!important}
+.trk td:first-child{border-left:1px solid #000!important}
+}
+</style>
+</head>
+<body>
+<div id="splash" class="splash">
+    <div class="fan"><div class="s-card sc-1"></div><div class="s-card sc-2"></div><div class="s-card sc-3"></div></div>
+    <div class="splash-logo">MGO Tracker<span style="color:var(--g-txt)">.</span></div>
+</div>
+<div id="toast"></div>
+<div class="modal" id="g-modal">
+    <div class="m-cont">
+        <div class="m-head"><div class="m-tit gold">👑 Config Gold</div><button class="act" id="close-g">FERMER ✖</button></div>
+        <div class="m-body">
+            <div class="ctn" style="padding:0;flex:1">
+                <p style="text-align:center;font-size:.85rem;margin:5px 0 10px 0;opacity:.7">Touchez les cases pour les définir en <b>OR</b>.</p>
+                <div id="g-cfg"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="m-missions">
+    <div class="m-cont" style="max-width:800px">
+        <div class="m-head"><div class="m-tit">📋 Missions de la semaine</div><button class="act close-m">FERMER ✖</button></div>
+        <div class="m-body" id="missions-body" style="display:flex;flex-direction:column;gap:10px;"></div>
+    </div>
+</div>
+<div class="modal" id="m-players">
+    <div class="m-cont" style="max-width:600px">
+        <div class="m-head"><div class="m-tit">👥 Gérer les joueurs</div><button class="act close-p">FERMER ✖</button></div>
+        <div class="m-body" style="display:flex;flex-direction:column;gap:10px;">
+            <p style="font-size:0.85rem;color:var(--mut);margin:0;text-align:center;">Modifiez l'ordre avec les flèches, ajoutez ou supprimez vos comptes. Validez pour enregistrer.</p>
+            <div id="players-list" style="display:flex;flex-direction:column;gap:5px;max-height:50vh;overflow-y:auto;padding:5px;"></div>
+            <button class="btn-gm" id="btn-add-player" style="margin-top:10px;">+ Ajouter un joueur</button>
+            <button class="btn-gm" id="btn-save-players" style="margin-top:5px;background:var(--ok);color:#fff;border-color:var(--ok);">✅ Enregistrer les modifications</button>
+        </div>
+    </div>
+</div>
+<div class="bar">
+    <div class="grp">
+        <button class="ico" id="b-menu" data-lbl="Menu">☰</button>
+        <div class="drop" id="menu-main">
+            <div class="slide"><div class="s-lbl"><span>Albums</span><span id="s-val">24</span></div><input type="range" id="alb-sl" min="21" max="26" step="1"></div>
+            <hr style="border:0;border-top:1px solid var(--bd);margin:8px 0">
+            <div class="item" id="b-p-menu" style="justify-content:space-between"><span>🖨️ Impression</span><span>▼</span></div>
+            <div id="p-sub" style="display:none;background:rgba(0,0,0,.15);padding:8px;margin:0 5px 5px 5px;border-radius:6px;border:1px solid var(--bd)">
+                <div id="p-togs" style="display:flex;flex-direction:column;gap:2px"></div>
+                <button class="act" id="b-print" style="width:100%;margin-top:10px;padding:6px;font-size:.85rem;border-color:var(--primary);color:var(--primary);background:var(--bg)">Imprimer 🖨️</button>
+            </div>
+            <hr style="border:0;border-top:1px solid var(--bd);margin:8px 0">
+            <div class="item" id="b-exp">💾 Sauvegarder</div>
+            <div class="item" id="b-imp">📂 Charger</div>
+            <div class="item" style="color:#ef4444" id="b-rst">🗑️ TOUT Effacer</div>
+        </div>
+        <button class="ico" id="b-undo" data-lbl="Annuler">↩️</button>
+        <button class="ico" id="b-missions-btn" data-lbl="Missions">📋</button>
+    </div>
+    <button class="btn-gm" id="btn-og" style="white-space:nowrap;">👑 Config Or</button>
+    <div class="grp">
+        <button class="ico" id="b-players-btn" data-lbl="Joueurs">👥</button>
+        <button class="ico" id="b-view" data-lbl="Afficher">👁️</button>
+        <div class="drop" id="menu-view" style="right:0;left:auto;bottom:120%"></div>
+    </div>
+</div>
+<div class="ctn" id="gen-ctn"></div>
+<div class="ctn">
+    <div class="card gold-sec anim" data-sec="Gold" id="gold-wrap">
+        <div class="head" style="background:0 0;border-color:var(--g-txt)">
+            <div class="tit" style="color:var(--g-txt)">⚡ Échanges Gold</div>
+            <button class="btn-add" id="b-add-g">+</button>
+        </div>
+        <div class="g-list" id="g-lst"></div>
+    </div>
+</div>
+<script>
+const App = {
+    cfg: {
+        theme: true,
+        albums: 24,
+        mode: "cross",
+        gold_ids: [],
+        gold_ex: [],
+        hidden: [],
+        printHidden: [],
+        usersList: ["Joueur 1"]
+    },
+    usr: {},
+    K_CFG: "mgo_cfg",
+    K_USR: "mgo_u_",
+    init: function() {
+        const c = localStorage.getItem(this.K_CFG);
+        if(c) {
+            try {
+                const loaded = JSON.parse(c);
+                this.cfg = Object.assign({}, this.cfg, loaded);
+                if(!this.cfg.usersList || this.cfg.usersList.length === 0) {
+                    this.cfg.usersList = ["Joueur 1"];
+                }
+            } catch(e) { console.error("Config reset"); }
+        }
+        this.cfg.usersList.forEach(s => {
+            const id = s.replace(/\s/g, "");
+            const d = localStorage.getItem(this.K_USR + id);
+            this.usr[id] = d ? JSON.parse(d) : {state: {}, nums: {}, note: ""};
+            if(this.usr[id].note === "") delete this.usr[id].note;
+            if(!this.usr[id].nums) this.usr[id].nums = {};
+        });
+    },
+    saveC: function() { localStorage.setItem(this.K_CFG, JSON.stringify(this.cfg)) },
+    saveU: function(id) { if(this.usr[id]) localStorage.setItem(this.K_USR + id, JSON.stringify(this.usr[id])) },
+    setG: function(id, isG) {
+        const s = new Set(this.cfg.gold_ids);
+        if(isG) s.add(id); else s.delete(id);
+        this.cfg.gold_ids = Array.from(s); this.saveC();
+    },
+    setCell: function(u, c, v) {
+        if(!this.usr[u]) return;
+        if(v === 0) delete this.usr[u].state[c]; else this.usr[u].state[c] = v;
+        this.saveU(u);
+    },
+    setNum: function(u, c, n) {
+        if(!this.usr[u]) return;
+        if(!n) delete this.usr[u].nums[c]; else this.usr[u].nums[c] = n;
+        this.saveU(u);
+    },
+    setNt: function(u, t) {
+        if(this.usr[u]) {
+            if(!t) delete this.usr[u].note; else this.usr[u].note = t;
+            this.saveU(u);
+        }
+    },
+    rstU: function(u) {
+        if(this.usr[u]) {
+            this.usr[u] = {state: {}, nums: {}};
+            this.saveU(u);
+        }
+    },
+    fullRst: function() {
+        localStorage.clear();
+        this.cfg = {theme: true, albums: 24, mode: "cross", gold_ids: [], gold_ex: [], hidden: [], printHidden: [], usersList: ["Joueur 1"]};
+        this.saveC();
+        location.reload();
+    },
+    imp: function(j) {
+        if(j.config && j.users) {
+            this.cfg = j.config;
+            if(!this.cfg.usersList) this.cfg.usersList = Object.keys(j.users);
+            this.usr = j.users;
+            this.saveC();
+            Object.keys(this.usr).forEach(u => this.saveU(u));
+            return true;
+        }
+        return false;
+    },
+    exp: function() {
+        return { version: "3.1.7 (Web)", config: this.cfg, users: this.usr };
+    }
+};
+const hist = [];
+const ctn = document.getElementById("gen-ctn");
+let albC = 24;
+App.init();
+const Missions = {
+    _d: null,
+    gk: function(d) {
+        const nd = new Date(d); nd.setHours(0,0,0,0);
+        const dy = nd.getDay(); nd.setDate(nd.getDate() + (dy === 0 ? -6 : 1 - dy));
+        return nd.getFullYear() + '-' + String(nd.getMonth()+1).padStart(2,'0') + '-' + String(nd.getDate()).padStart(2,'0');
+    },
+    init: function() {
+        const k = this.gk(new Date()), sk = localStorage.getItem('mgo_missions_week');
+        if(sk !== k) {
+            localStorage.removeItem('mgo_missions_data');
+            localStorage.setItem('mgo_missions_week', k);
+            this._d = Array.from({length: 7}, () => ({texts: ['','','']}));
+        } else {
+            try {
+                this._d = JSON.parse(localStorage.getItem('mgo_missions_data')) || Array.from({length: 7}, () => ({texts: ['','','']}));
+            } catch(e) {
+                this._d = Array.from({length: 7}, () => ({texts: ['','','']}));
+            }
+        }
+    },
+    save: function() { localStorage.setItem('mgo_missions_data', JSON.stringify(this._d)); },
+    render: function() {
+        const b = document.getElementById('missions-body');
+        b.innerHTML = '';
+        const now = new Date(); now.setHours(0,0,0,0);
+        const md = new Date(now); md.setDate(md.getDate() + (md.getDay() === 0 ? -6 : 1 - md.getDay()));
+        const loc = navigator.language || 'fr-FR';
+        const fmtDay = new Intl.DateTimeFormat(loc, {weekday: 'long'});
+        const fmtMonth = new Intl.DateTimeFormat(loc, {month: 'long'});
+        const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+        for(let i=0; i<7; i++) {
+            const d = new Date(md); d.setDate(md.getDate() + i);
+            const it = d.getTime() === now.getTime();
+            const c = document.createElement('div');
+            c.className = 'm-day' + (it ? ' today' : '');
+            c.innerHTML = `<div class="m-day-lbl">${cap(fmtDay.format(d))} ${d.getDate()} ${cap(fmtMonth.format(d))} ${it ? `<span class="today-badge">Aujourd'hui</span>` : ''}</div>`;
+            for(let m=0; m<3; m++) {
+                const ta = document.createElement('textarea');
+                ta.className = 'm-input';
+                ta.rows = 1;
+                ta.placeholder = `Mission ${m+1}...`;
+                ta.value = this._d[i].texts[m] || '';
+                ta.oninput = () => {
+                    ta.style.height = 'auto';
+                    ta.style.height = Math.min(ta.scrollHeight, 80) + 'px';
+                    this._d[i].texts[m] = ta.value;
+                    this.save();
+                };
+                ta.onfocus = () => ta.oninput();
+                c.appendChild(ta);
+            }
+            b.appendChild(c);
+        }
+    }
+};
+const PlayerManager = {
+    tu: [],
+    open: function() {
+        this.tu = App.cfg.usersList.map(name => ({ orig: name, curr: name }));
+        this.render();
+        document.getElementById("m-players").classList.add("show");
+    },
+    render: function() {
+        const c = document.getElementById("players-list");
+        c.innerHTML = "";
+        this.tu.forEach((p, i) => {
+            const r = document.createElement("div");
+            r.className = "p-row";
+            r.innerHTML = `
+                <div style="display:flex;flex-direction:column;gap:2px;">
+                    <button class="btn-ord" data-dir="-1" data-idx="${i}" ${i === 0 ? "disabled style='opacity:0.3'" : ""}>▲</button>
+                    <button class="btn-ord" data-dir="1" data-idx="${i}" ${i === this.tu.length - 1 ? "disabled style='opacity:0.3'" : ""}>▼</button>
+                </div>
+                <input type="text" class="p-inp" value="${p.curr.replace(/"/g, '&quot;')}" data-idx="${i}">
+                <button class="btn-del" data-idx="${i}" ${this.tu.length <= 1 ? "disabled style='opacity:0.3;cursor:not-allowed'" : ""}>✕</button>
+            `;
+            r.querySelector(".p-inp").onchange = e => {
+                this.tu[+e.target.dataset.idx].curr = e.target.value.trim() || `Joueur ${i+1}`;
+            };
+            r.querySelector(".btn-del").onclick = e => {
+                if(this.tu.length > 1) {
+                    this.tu.splice(+e.target.dataset.idx, 1);
+                    this.render();
+                }
+            };
+            r.querySelectorAll(".btn-ord").forEach(btn => {
+                btn.onclick = e => {
+                    const idx = +e.target.dataset.idx;
+                    const dir = +e.target.dataset.dir;
+                    if(idx + dir >= 0 && idx + dir < this.tu.length) {
+                        const temp = this.tu[idx];
+                        this.tu[idx] = this.tu[idx + dir];
+                        this.tu[idx + dir] = temp;
+                        this.render();
+                    }
+                };
+            });
+            c.appendChild(r);
+        });
+    },
+    add: function() {
+        const newName = `Joueur ${this.tu.length + 1}`;
+        this.tu.push({ orig: "", curr: newName });
+        this.render();
+        const c = document.getElementById("players-list");
+        c.scrollTop = c.scrollHeight;
+    },
+    save: function() {
+        const newUsersList = [];
+        const newUsr = {};
+        this.tu.forEach(p => {
+            const ok = p.orig.replace(/\s/g, "");
+            const nk = p.curr.replace(/\s/g, "");
+            newUsersList.push(p.curr);
+            if(ok && App.usr[ok]) {
+                newUsr[nk] = App.usr[ok];
+            } else {
+                newUsr[nk] = {state: {}, nums: {}};
+            }
+        });
+        Object.keys(App.usr).forEach(ok => {
+            if(!newUsr[ok]) {
+                try { localStorage.removeItem(App.K_USR + ok); } catch(e) {}
+            }
+        });
+        App.usr = newUsr;
+        const mainId = newUsersList[0].replace(/\s/g, "");
+        if(App.cfg.usersList[0]) {
+            const oldMainId = App.cfg.usersList[0].replace(/\s/g, "");
+            if(mainId !== oldMainId && App.usr[mainId]) {
+                App.usr[mainId].nums = {};
+            }
+        }
+        App.cfg.usersList = newUsersList;
+        App.saveC();
+        Object.keys(App.usr).forEach(u => App.saveU(u));
+        document.getElementById("m-players").classList.remove("show");
+        showToast("Joueurs mis à jour !");
+        rTbl();
+    }
+};
+function showToast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 3000);
+}
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+        const s = document.getElementById('splash');
+        if(s) { s.classList.add('hide'); setTimeout(() => s.remove(), 600) }
+    }, 1200);
+    albC = App.cfg.albums || 24;
+    const sl = document.getElementById("alb-sl");
+    sl.value = albC;
+    document.getElementById("s-val").textContent = albC;
+    Missions.init();
+    function rTbl() {
+        ctn.innerHTML = "";
+        const top = Math.ceil(albC / 2), bot = albC - top, startB = top + 1;
+        App.cfg.usersList.forEach((s, idx) => {
+            const id = s.replace(/\s/g, "");
+            const isM = (idx === 0);
+            const nt = App.usr[id]?.note || "";
+            let tools = isM ? `<input type="text" class="note" placeholder="Note..." value="${nt}" data-u="${id}"><button class="act btn-mm">${App.cfg.mode === 'number' ? 'XXX' : '123'}</button><button class="act red rst">✕</button>` : `<button class="act red rst">✕</button>`;
+            let h = `
+            <div class="card anim" data-sec="${id}">
+                <div class="head" title="Double-clic pour agrandir">
+                    <div class="tit"><span>${s}</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                        ${tools}
+                        <div class="g-cnt" title="Gold">0 / 0</div>
+                        <div class="circle" style="--p:0"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="t-wrap">
+                    <table class="trk ${isM && App.cfg.mode === 'number' ? 'mnum' : ''}" data-s="${id}">
+                        <thead><tr>${genH(1, top)}</tr></thead>
+                        <tbody>${genR(1, top, id, isM)}</tbody>
+                        <thead style="border-top:2px solid var(--bd)"><tr>${genH(startB, bot, top)}</tr></thead>
+                        <tbody>${genR(startB, bot, id, top, isM)}</tbody>
+                    </table>
+                </div>
+            </div>`;
+            ctn.insertAdjacentHTML("beforeend", h);
+        });
+        hyd(); updAll(); updAlt(); vis(); genPM();
+    }
+    function genH(s, c, m) {
+        let h = "";
+        for(let i=0; i<c; i++) h += `<th colspan="3">Album ${s+i}</th>`;
+        if(m && c<m) for(let k=0; k<m-c; k++) h += `<th colspan="3" class="emp"></th>`;
+        return h;
+    }
+    function genR(s, c, sec, mRef, isM) {
+        let max = typeof mRef === 'number' ? mRef : null;
+        let m = typeof mRef === 'boolean' ? mRef : (typeof isM === 'boolean' ? isM : false);
+        let t = "";
+        for(let r=0; r<3; r++) {
+            t += "<tr>";
+            for(let i=0; i<c; i++) {
+                const a = s+i;
+                for(let k=0; k<3; k++) {
+                    const uID = getID(a, r*3+k);
+                    t += `<td class="cell" data-uid="${uID}" data-m="${m}"><div class="sq"></div><div class="box">X</div></td>`;
+                }
+            }
+            if(max && c<max) for(let k=0; k<(max-c)*3; k++) t += `<td class="spc"></td>`;
+            t += "</tr>";
+        }
+        return t;
+    }
+    function getID(a, i) { return ((a-1)*9)+i; }
+    function hyd() {
+        const gs = new Set(App.cfg.gold_ids);
+        document.querySelectorAll(".cell").forEach(c => {
+            const uid = parseInt(c.dataset.uid);
+            const s = c.closest("table").dataset.s;
+            const m = c.dataset.m === "true";
+            const st = App.usr[s]?.state[uid] || 0;
+            c.dataset.st = st;
+            c.dataset.bg = gs.has(uid) ? "1" : "0";
+            if(m) {
+                let i = c.querySelector(".unum");
+                if(!i) {
+                    i = document.createElement("input");
+                    i.className = "unum"; i.inputMode = "numeric"; i.maxLength = 1;
+                    i.addEventListener("input", e => App.setNum(s, uid, e.target.value));
+                    c.appendChild(i);
+                }
+                i.value = App.usr[s]?.nums[uid] || "";
+            }
+        });
+        document.querySelectorAll(".note").forEach(n => n.addEventListener("input", e => App.setNt(e.target.dataset.u, e.target.value)));
+    }
+    ctn.addEventListener("click", e => {
+        const c = e.target.closest(".cell");
+        if(c) {
+            const s = c.closest("table").dataset.s;
+            const uid = c.dataset.uid;
+            const m = c.dataset.m === "true";
+            if(m && App.cfg.mode === "number") { if(e.target.tagName !== "INPUT") c.querySelector("input").focus(); return; }
+            if(e.target.tagName === "INPUT") return;
+            const o = parseInt(c.dataset.st || "0"), n = (o+1)%3;
+            App.setCell(s, uid, n);
+            hist.push({t: "cell", s: s, u: uid, o: o}); if(hist.length>50) hist.shift();
+            c.dataset.st = n; updT(c.closest(".card")); updAlt(); return;
+        }
+        if(e.target.closest(".rst")) {
+            const cd = e.target.closest(".card"), nm = cd.querySelector(".tit span").textContent, id = cd.dataset.sec;
+            if(confirm(`Réinitialiser TOUTE la progression pour ${nm} ?`)) { App.rstU(id); hyd(); updAll(); }
+            return;
+        }
+        if(e.target.closest(".btn-mm")) {
+            const n = App.cfg.mode === "cross" ? "number" : "cross";
+            App.cfg.mode = n; App.saveC();
+            e.target.closest(".btn-mm").textContent = n === "number" ? "XXX" : "123";
+            const t = ctn.querySelector("table.trk[data-s]");
+            if(n === "number") t.classList.add("mnum"); else t.classList.remove("mnum");
+        }
+    });
+    ctn.addEventListener("dblclick", e => {
+        const h = e.target.closest(".head");
+        if(h) {
+            const c = h.closest(".card");
+            const isZ = c.classList.contains("zoom-mode");
+            document.querySelectorAll(".card.zoom-mode").forEach(x => x.classList.remove("zoom-mode"));
+            if(!isZ) {
+                c.classList.add("zoom-mode");
+                setTimeout(() => c.scrollIntoView({behavior: "smooth", block: "center"}), 100);
+            }
+        }
+    });
+    function updAlt() {
+        const r = new Set();
+        Object.values(App.usr).forEach(u => { Object.keys(u.state).forEach(k => { if(u.state[k] === 2) r.add(parseInt(k)); }) });
+        const ac = document.getElementsByClassName('cell');
+        for(let i=0; i<ac.length; i++) {
+            const c = ac[i], u = parseInt(c.dataset.uid);
+            if(r.has(u) && c.dataset.st === "0") c.classList.add('alert'); else c.classList.remove('alert');
+        }
+    }
+    function updT(w) {
+        if(!w) return;
+        let n=0, gc=0, gt=0;
+        w.querySelectorAll('.cell').forEach(td => {
+            const c = (td.dataset.st === "1" || td.dataset.st === "2"), g = (td.dataset.bg === "1");
+            if(c) n++; if(g) { gt++; if(c) gc++; }
+        });
+        const tot = (App.cfg.albums || 24)*9, p = (n/tot)*100;
+        const cir = w.querySelector(".circle");
+        if(cir) { cir.style.setProperty('--p', p); cir.querySelector("span").textContent = n; }
+        const cnt = w.querySelector(".g-cnt");
+        if(cnt) cnt.textContent = `${gc} / ${gt}`;
+    }
+    function updAll() { document.querySelectorAll(".card").forEach(updT); }
+    const gLst = document.getElementById("g-lst");
+    function rGL() {
+        gLst.innerHTML = "";
+        App.cfg.gold_ex.forEach((i, idx) => {
+            const r = document.createElement("div"); r.className = "g-row"; r.dataset.idx = idx;
+            r.innerHTML = `<input class="g-inp" data-f="alb" style="width:15%" placeholder="Alb" value="${i.alb||''}"><input class="g-inp" data-f="card" style="width:55%" placeholder="Nom..." value="${i.card||''}"><input class="g-inp" data-f="date" style="width:25%" placeholder="Date" value="${i.date||''}"><button class="btn-del">✖</button>`;
+            gLst.appendChild(r);
+        });
+    }
+    gLst.addEventListener("click", e => {
+        if(e.target.classList.contains("btn-del")) {
+            const i = e.target.closest(".g-row").dataset.idx;
+            if(confirm("Supprimer cette ligne ?")) { App.cfg.gold_ex.splice(i,1); App.saveC(); rGL(); }
+        }
+    });
+    gLst.addEventListener("input", e => {
+        if(e.target.classList.contains("g-inp")) {
+            const i = e.target.closest(".g-row").dataset.idx, f = e.target.dataset.f;
+            App.cfg.gold_ex[i][f] = e.target.value; App.saveC();
+        }
+    });
+    document.getElementById("b-add-g").addEventListener("click", () => { App.cfg.gold_ex.push({alb:"",card:"",date:""}); App.saveC(); rGL(); });
+    rGL();
+    const mod = document.getElementById("g-modal");
+    document.getElementById("btn-og").onclick = () => { rGM(); mod.classList.add("show"); };
+    document.getElementById("close-g").onclick = () => { mod.classList.remove("show"); hyd(); updAll(); };
+    function rGM() {
+        const gc = document.getElementById("g-cfg"); gc.innerHTML = "";
+        const top = Math.ceil(App.cfg.albums / 2), bot = App.cfg.albums - top, sb = top + 1;
+        let h = `<div class="card" style="margin:0;box-shadow:none;border:none"><div class="t-wrap"><table class="trk"><thead><tr>${genH(1, top)}</tr></thead><tbody>${genGR(1, top)}</tbody><thead style="border-top:2px solid var(--bd)"><tr>${genH(sb, bot, top)}</tr></thead><tbody>${genGR(sb, bot, top)}</tbody></table></div></div>`;
+        gc.innerHTML = h;
+        gc.querySelectorAll(".m-cell").forEach(td => {
+            td.addEventListener("click", () => {
+                const u = parseInt(td.dataset.uid), g = App.cfg.gold_ids.includes(u);
+                App.setG(u, !g);
+                if(!g) { td.style.backgroundColor = "var(--g-bg)"; td.style.borderColor = "var(--g-txt)"; }
+                else { td.style.backgroundColor = ""; td.style.borderColor = ""; }
+            });
+        });
+    }
+    function genGR(s, c, m) {
+        let t = "";
+        for(let r=0; r<3; r++) {
+            t += "<tr>";
+            for(let i=0; i<c; i++) {
+                const a = s+i;
+                for(let k=0; k<3; k++) {
+                    const u = getID(a, r*3+k), g = App.cfg.gold_ids.includes(u);
+                    t += `<td class="m-cell" data-uid="${u}" ${g ? 'style="background-color:var(--g-bg);border-color:var(--g-txt)"' : ''}><div class="sq"></div></td>`;
+                }
+            }
+            if(m && c<m) for(let k=0; k<(m-c)*3; k++) t += `<td class="spc"></td>`;
+            t += "</tr>";
+        }
+        return t;
+    }
+    sl.addEventListener("input", e => { App.cfg.albums = parseInt(e.target.value); albC = App.cfg.albums; document.getElementById("s-val").textContent = App.cfg.albums; App.saveC(); rTbl(); });
+    const tM = (b, m) => { const x = document.getElementById(b), y = document.getElementById(m); x.addEventListener('click', e => { e.stopPropagation(); const o = y.classList.contains('show'); document.querySelectorAll('.drop').forEach(d => d.classList.remove('show')); if(!o) y.classList.add('show'); }); };
+    tM('b-menu', 'menu-main'); tM('b-view', 'menu-view');
+    document.addEventListener('click', () => { document.querySelectorAll('.drop').forEach(d => d.classList.remove('show')); });
+    document.querySelectorAll('.drop').forEach(d => d.addEventListener('click', e => e.stopPropagation()));
+    document.getElementById("b-p-menu").onclick = e => { e.stopPropagation(); const s = document.getElementById("p-sub"); s.style.display = s.style.display === "none" ? "block" : "none"; };
+    function genPM() {
+        const pc = document.getElementById("p-togs"); pc.innerHTML = "";
+        const vm = document.getElementById("menu-view"); vm.innerHTML = "";
+        const attP = (chk, tid) => {
+            chk.addEventListener('change', e => {
+                let el = tid === "Gold" ? document.getElementById("gold-wrap") : document.querySelector(`.card[data-sec="${tid}"]`);
+                if(el) { if(!e.target.checked) el.classList.add("p-hide"); else el.classList.remove("p-hide"); }
+            });
+        };
+        const tV = (id, sh) => {
+            let h = App.cfg.hidden; if(!sh) { if(!h.includes(id)) h.push(id); } else { h = h.filter(x => x !== id); }
+            App.cfg.hidden = h; App.saveC();
+            const w = id === "Gold" ? document.getElementById("gold-wrap") : document.querySelector(`.anim[data-sec="${id}"]`);
+            if(w) { if(!sh) w.classList.add("hide"); else w.classList.remove("hide"); }
+        };
+        App.cfg.usersList.forEach(s => {
+            const id = s.replace(/\s/g, "");
+            const lp = document.createElement("label"); lp.className = "item"; lp.style.padding = "4px 8px";
+            lp.innerHTML = `<span style="font-size:.85rem">${s}</span><input type="checkbox" checked><div class="tgl" style="transform:scale(.8)"></div>`;
+            attP(lp.querySelector("input"), id); pc.appendChild(lp);
+            const lv = document.createElement("label"); lv.className = "item";
+            lv.innerHTML = `<span>${s}</span><input type="checkbox" checked><div class="tgl"></div>`;
+            lv.querySelector("input").addEventListener("change", e => tV(id, e.target.checked)); vm.appendChild(lv);
+        });
+        const glp = document.createElement("label"); glp.className = "item"; glp.style.padding = "4px 8px";
+        glp.innerHTML = `<span style="font-size:.85rem">Gold</span><input type="checkbox" checked><div class="tgl" style="transform:scale(.8)"></div>`;
+        attP(glp.querySelector("input"), "Gold"); pc.appendChild(glp);
+        const glv = document.createElement("label"); glv.className = "item";
+        glv.innerHTML = `<span>Gold</span><input type="checkbox" checked><div class="tgl"></div>`;
+        glv.querySelector("input").addEventListener("change", e => tV("Gold", e.target.checked)); vm.appendChild(glv);
+    }
+    document.getElementById("b-print").onclick = () => window.print();
+    function vis() {
+        const h = App.cfg.hidden || [];
+        App.cfg.usersList.forEach(s => {
+            const id = s.replace(/\s/g, ""), ish = h.includes(id);
+            const i = document.querySelectorAll("#menu-view .item span");
+            i.forEach(sp => { if(sp.textContent === s) sp.nextElementSibling.checked = !ish; });
+            const w = document.querySelector(`.anim[data-sec="${id}"]`);
+            if(w) { if(ish) w.classList.add("hide"); else w.classList.remove("hide"); }
+        });
+        const gh = h.includes("Gold");
+        const gi = document.querySelectorAll("#menu-view .item span");
+        gi.forEach(sp => { if(sp.textContent === "Gold") sp.nextElementSibling.checked = !gh; });
+        if(gh) document.getElementById("gold-wrap").classList.add("hide");
+    }
+    document.getElementById("b-undo").onclick = () => {
+        const l = hist.pop(); if(!l) return;
+        if(l.t === "cell") {
+            App.setCell(l.s, l.u, l.o);
+            const c = document.querySelector(`.trk[data-s="${l.s}"] td[data-uid="${l.u}"]`);
+            if(c) { c.dataset.st = l.o; updT(c.closest(".card")); updAlt(); }
+            showToast("Annulé");
+        }
+    };
+    document.getElementById("b-rst").onclick = () => {
+        if(confirm("⚠ ATTENTION : TOUT EFFACER ? \n\nCela supprimera TOUTES les données (Cartes cochées, Notes, Config Gold, Nombre d'albums, etc.) et remettra l'application à zero.")) {
+            App.fullRst();
+        }
+    };
+    document.getElementById("b-exp").onclick = () => {
+        const d = App.exp(), a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([JSON.stringify(d)], {type: "application/json"}));
+        a.download = "Mgo_Backup_V4.2.0_(Web).json";
+        a.click();
+        showToast("Fichier téléchargé");
+    };
+    document.getElementById("b-imp").onclick = () => {
+        const i = document.createElement("input"); i.type = "file";
+        i.onchange = e => {
+            const r = new FileReader;
+            r.onload = ev => {
+                try {
+                    const d = JSON.parse(ev.target.result);
+                    if(App.imp(d)) location.reload(); else alert("Erreur Fichier");
+                } catch(x) { alert("Erreur Fichier") }
+            };
+            r.readAsText(e.target.files[0]);
+        };
+        i.click();
+    };
+    document.getElementById("b-missions-btn").onclick = () => {
+        Missions.render();
+        document.getElementById("m-missions").classList.add("show");
+    };
+    document.querySelector(".close-m").onclick = () => document.getElementById("m-missions").classList.remove("show");
+    document.getElementById("b-players-btn").onclick = () => PlayerManager.open();
+    document.querySelector(".close-p").onclick = () => document.getElementById("m-players").classList.remove("show");
+    document.getElementById("btn-add-player").onclick = () => PlayerManager.add();
+    document.getElementById("btn-save-players").onclick = () => PlayerManager.save();
+    rTbl();
+});
+</script>
+</body>
+</html>
