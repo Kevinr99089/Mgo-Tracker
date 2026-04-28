@@ -91,5 +91,14 @@
   "legend_have": "مجموعة",
   "legend_dupe": "مكرر",
   "legend_gold": "بطاقة ذهبية",
-  "expand_hint": "⇕ انقر مرتين للتوسيع ⇕"
+  "expand_hint": "⇕ انقر مرتين للتوسيع ⇕",
+  "keep_players_lbl": "الاحتفاظ بقائمة اللاعبين الحالية",
+  "dialog_title_default": "⚠️ تحذير",
+  "btn_cancel": "✕ إلغاء",
+  "btn_confirm": "✅ تأكيد",
+  "btn_ok": "✅ OK",
+  "cancel_edit_msg": "هل تريد إلغاء تعديلاتك؟",
+  "cancel_edit_continue": "✏️ متابعة",
+  "btn_reset_confirm": "🗑️ إعادة تعيين",
+  "date_placeholder": "يي/شش"
 }

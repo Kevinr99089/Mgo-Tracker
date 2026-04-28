@@ -91,5 +91,14 @@
   "legend_have": "Zebrana",
   "legend_dupe": "Duplikat",
   "legend_gold": "Złota karta",
-  "expand_hint": "⇕ Podwójne dotknięcie, aby rozwinąć ⇕"
+  "expand_hint": "⇕ Podwójne dotknięcie, aby rozwinąć ⇕",
+  "keep_players_lbl": "Zachowaj bieżącą listę graczy",
+  "dialog_title_default": "⚠️ Uwaga",
+  "btn_cancel": "✕ Anuluj",
+  "btn_confirm": "✅ Potwierdź",
+  "btn_ok": "✅ OK",
+  "cancel_edit_msg": "Czy chcesz anulować zmiany?",
+  "cancel_edit_continue": "✏️ Kontynuuj",
+  "btn_reset_confirm": "🗑️ Resetuj",
+  "date_placeholder": "DD/MM"
 }

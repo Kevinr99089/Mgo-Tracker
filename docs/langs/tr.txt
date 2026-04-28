@@ -91,5 +91,14 @@
   "legend_have": "Toplandı",
   "legend_dupe": "Kopya",
   "legend_gold": "Altın kart",
-  "expand_hint": "⇕ Büyütmek için çift tıklayın ⇕"
+  "expand_hint": "⇕ Büyütmek için çift tıklayın ⇕",
+  "keep_players_lbl": "Mevcut oyuncu listesini koru",
+  "dialog_title_default": "⚠️ Dikkat",
+  "btn_cancel": "✕ İptal",
+  "btn_confirm": "✅ Onayla",
+  "btn_ok": "✅ OK",
+  "cancel_edit_msg": "Değişikliklerinizi iptal etmek istiyor musunuz?",
+  "cancel_edit_continue": "✏️ Devam Et",
+  "btn_reset_confirm": "🗑️ Sıfırla",
+  "date_placeholder": "GG/AA"
 }

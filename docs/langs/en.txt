@@ -91,5 +91,14 @@
   "legend_have": "Collected",
   "legend_dupe": "Duplicate",
   "legend_gold": "Gold card",
-  "expand_hint": "⇕ Double-tap to expand ⇕"
+  "expand_hint": "⇕ Double-tap to expand ⇕",
+  "keep_players_lbl": "Keep the current player list",
+  "dialog_title_default": "⚠️ Warning",
+  "btn_cancel": "✕ Cancel",
+  "btn_confirm": "✅ Confirm",
+  "btn_ok": "✅ OK",
+  "cancel_edit_msg": "Do you want to cancel your changes?",
+  "cancel_edit_continue": "✏️ Continue",
+  "btn_reset_confirm": "🗑️ Reset",
+  "date_placeholder": "DD/MM"
 }

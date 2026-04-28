@@ -91,5 +91,14 @@
   "legend_have": "Verzameld",
   "legend_dupe": "Duplicaat",
   "legend_gold": "Gouden kaart",
-  "expand_hint": "⇕ Dubbeltik om uit te vouwen ⇕"
+  "expand_hint": "⇕ Dubbeltik om uit te vouwen ⇕",
+  "keep_players_lbl": "Huidige spelerlijst behouden",
+  "dialog_title_default": "⚠️ Let op",
+  "btn_cancel": "✕ Annuleren",
+  "btn_confirm": "✅ Bevestigen",
+  "btn_ok": "✅ OK",
+  "cancel_edit_msg": "Wil je je wijzigingen annuleren?",
+  "cancel_edit_continue": "✏️ Doorgaan",
+  "btn_reset_confirm": "🗑️ Resetten",
+  "date_placeholder": "DD/MM"
 }

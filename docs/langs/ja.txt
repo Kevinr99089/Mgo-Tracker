@@ -91,5 +91,14 @@
   "legend_have": "所持",
   "legend_dupe": "重複",
   "legend_gold": "ゴールドカード",
-  "expand_hint": "⇕ ダブルタップで拡大 ⇕"
+  "expand_hint": "⇕ ダブルタップで拡大 ⇕",
+  "keep_players_lbl": "現在のプレイヤーリストを保持",
+  "dialog_title_default": "⚠️ 警告",
+  "btn_cancel": "✕ キャンセル",
+  "btn_confirm": "✅ 確認",
+  "btn_ok": "✅ OK",
+  "cancel_edit_msg": "変更を破棄しますか？",
+  "cancel_edit_continue": "✏️ 続ける",
+  "btn_reset_confirm": "🗑️ リセット",
+  "date_placeholder": "DD/MM"
 }

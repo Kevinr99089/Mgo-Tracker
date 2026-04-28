@@ -91,5 +91,14 @@
   "legend_have": "Ottenuta",
   "legend_dupe": "Duplicato",
   "legend_gold": "Carta dorata",
-  "expand_hint": "⇕ Doppio tocco per espandere ⇕"
+  "expand_hint": "⇕ Doppio tocco per espandere ⇕",
+  "keep_players_lbl": "Conserva la lista attuale dei giocatori",
+  "dialog_title_default": "⚠️ Attenzione",
+  "btn_cancel": "✕ Annulla",
+  "btn_confirm": "✅ Conferma",
+  "btn_ok": "✅ OK",
+  "cancel_edit_msg": "Vuoi annullare le modifiche?",
+  "cancel_edit_continue": "✏️ Continua",
+  "btn_reset_confirm": "🗑️ Ripristina",
+  "date_placeholder": "GG/MM"
 }

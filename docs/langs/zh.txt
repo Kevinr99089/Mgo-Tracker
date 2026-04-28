@@ -91,5 +91,14 @@
   "legend_have": "已获得",
   "legend_dupe": "重复",
   "legend_gold": "黄金卡片",
-  "expand_hint": "⇕ 双击放大 ⇕"
+  "expand_hint": "⇕ 双击放大 ⇕",
+  "keep_players_lbl": "保留当前玩家列表",
+  "dialog_title_default": "⚠️ 注意",
+  "btn_cancel": "✕ 取消",
+  "btn_confirm": "✅ 确认",
+  "btn_ok": "✅ OK",
+  "cancel_edit_msg": "您要取消更改吗？",
+  "cancel_edit_continue": "✏️ 继续",
+  "btn_reset_confirm": "🗑️ 重置",
+  "date_placeholder": "DD/MM"
 }

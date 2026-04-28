@@ -91,5 +91,14 @@
   "legend_have": "Dikumpul",
   "legend_dupe": "Pendua",
   "legend_gold": "Kad emas",
-  "expand_hint": "⇕ Ketik dua kali untuk besarkan ⇕"
+  "expand_hint": "⇕ Ketik dua kali untuk besarkan ⇕",
+  "keep_players_lbl": "Kekalkan senarai pemain semasa",
+  "dialog_title_default": "⚠️ Amaran",
+  "btn_cancel": "✕ Batal",
+  "btn_confirm": "✅ Sahkan",
+  "btn_ok": "✅ OK",
+  "cancel_edit_msg": "Adakah anda mahu membatalkan perubahan?",
+  "cancel_edit_continue": "✏️ Teruskan",
+  "btn_reset_confirm": "🗑️ Set Semula",
+  "date_placeholder": "HH/BB"
 }

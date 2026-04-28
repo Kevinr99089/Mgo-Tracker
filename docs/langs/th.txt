@@ -91,5 +91,14 @@
   "legend_have": "เก็บแล้ว",
   "legend_dupe": "ซ้ำ",
   "legend_gold": "การ์ดทอง",
-  "expand_hint": "⇕ แตะสองครั้งเพื่อขยาย ⇕"
+  "expand_hint": "⇕ แตะสองครั้งเพื่อขยาย ⇕",
+  "keep_players_lbl": "เก็บรายชื่อผู้เล่นปัจจุบันไว้",
+  "dialog_title_default": "⚠️ คำเตือน",
+  "btn_cancel": "✕ ยกเลิก",
+  "btn_confirm": "✅ ยืนยัน",
+  "btn_ok": "✅ OK",
+  "cancel_edit_msg": "คุณต้องการยกเลิกการเปลี่ยนแปลงหรือไม่?",
+  "cancel_edit_continue": "✏️ ดำเนินการต่อ",
+  "btn_reset_confirm": "🗑️ รีเซ็ต",
+  "date_placeholder": "DD/MM"
 }

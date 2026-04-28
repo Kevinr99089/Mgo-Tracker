@@ -91,5 +91,14 @@
   "legend_have": "Gesammelt",
   "legend_dupe": "Duplikat",
   "legend_gold": "Goldkarte",
-  "expand_hint": "⇕ Doppeltippen zum Erweitern ⇕"
+  "expand_hint": "⇕ Doppeltippen zum Erweitern ⇕",
+  "keep_players_lbl": "Aktuelle Spielerliste behalten",
+  "dialog_title_default": "⚠️ Achtung",
+  "btn_cancel": "✕ Abbrechen",
+  "btn_confirm": "✅ Bestätigen",
+  "btn_ok": "✅ OK",
+  "cancel_edit_msg": "Möchten Sie Ihre Änderungen verwerfen?",
+  "cancel_edit_continue": "✏️ Weiter",
+  "btn_reset_confirm": "🗑️ Zurücksetzen",
+  "date_placeholder": "TT/MM"
 }
