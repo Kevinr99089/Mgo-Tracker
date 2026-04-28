@@ -26,7 +26,7 @@ body{margin:0;padding:0 0 140px;background:var(--bg);color:var(--txt);min-height
 .sp-c:nth-child(3){background:linear-gradient(145deg,#b8233b,#e8365c);transform:translateY(30px) rotate(18deg);transform-origin:bottom center;animation-delay:.28s;--er:18deg;margin-left:-18px;z-index:1}
 @keyframes canim{to{opacity:1;transform:translateY(0) rotate(var(--er,0))}}
 .sp-title{position:relative;z-index:10;font-size:1.9rem;font-weight:900;letter-spacing:-.5px;color:var(--txt);animation:fup .5s var(--ease) .45s both}
-.sp-title em{font-style:normal;color:var(--p)} .sp-title span{color:var(--gold)}
+.sp-title em{font-style:normal;color:var(--p)} .sp-title span{color:var(--gold)} html.is-shiney .sp-title span{font-size:.6em;vertical-align:middle}
 .sp-hint{position:relative;z-index:10;font-size:.78rem;color:var(--txt-dim);animation:fup .5s var(--ease) .65s both}
 @keyframes fup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .app-container{max-width:1400px;margin:0 auto;padding:10px}
