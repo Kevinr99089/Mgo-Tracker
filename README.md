@@ -24,7 +24,7 @@ This tool is available as a single-file monolithic HTML download in the [Release
 > When publishing them on GitHub, these versions were adapted to match V4's architecture: player names are now stored in `LocalStorage`, and features introduced in V4 have been backported while preserving the original look and feel of each version. Note: These versions are available only in French.
 >
 > * **V2** — [Live Page](https://kevinr99089.github.io/Mgo-Tracker/v2)
-> * **V3** — [Live Page](https://kevinr99089.github.io/Mgo-Tracker/V3)
+> * **V3** — [Live Page](https://kevinr99089.github.io/Mgo-Tracker/v3)
 
 ## ✨ Features
 
