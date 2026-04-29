@@ -39,6 +39,7 @@ Since MGO Tracker is built as a single HTML file, installation is entirely optio
 * Built entirely with pure HTML, CSS, and Vanilla JavaScript.
 * Zero dependencies, zero external database tracking.
 * The Releases versions is bundled into a single file for maximum portability.
+* AI-assisted (by Gemini and Claude) · Designed and directed by me.
 
 ---
 
