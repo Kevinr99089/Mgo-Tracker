@@ -17,6 +17,15 @@ Cet outil est disponible en téléchargement sous forme d'un unique fichier HTML
 * **MGO Tracker (Complet)** : L'expérience complète incluant des arrière-plans dynamiques et animés (Fonctionnalité "Ambiance" avec Orbes Cosmiques, Cartes Flottantes, Cadres Néons, etc.).
 * **MGO Tracker Lite** : Une version allégée et optimisée pour les performances et les appareils plus modestes, proposant un fond statique esthétique sans animations lourdes.
 
+> ### 🗂️ Versions Anciennes
+>
+> Avant la V4, les versions précédentes du MGO Tracker étaient conçues pour un usage local uniquement — les noms des joueurs étaient codés directement dans le fichier source. Elles n'étaient pas destinées à être publiées.
+>
+> En les rendant publiques sur GitHub, ces versions ont été adaptées à l'architecture de la V4 : les noms sont désormais stockés dans le `LocalStorage`, et les fonctionnalités introduites en V4 ont été intégrées tout en conservant l'apparence originale de chaque version. Remarque : ces versions ne sont disponibles qu'en français.
+>
+> * **V2** — [Page en ligne](https://kevinr99089.github.io/Mgo-Tracker/v2)
+> * **V3** — [Page en ligne](https://kevinr99089.github.io/Mgo-Tracker/V3)
+
 ## ✨ Fonctionnalités
 
 * **100% Hors Ligne & Privé** : Cet outil fonctionne de manière totalement autonome hors ligne. Vos données restent à 100% privées et exclusivement sur votre appareil. Il n'y a aucune base de données externe, aucun pistage (tracking) et aucune collecte de données. Toutes les informations sont sauvegardées localement dans votre navigateur (`LocalStorage`), avec la possibilité d'exporter votre progression dans un fichier de sauvegarde `.json` pour le recharger à tout moment.
