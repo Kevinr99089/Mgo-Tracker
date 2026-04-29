@@ -291,6 +291,9 @@ input:checked+.switch{background:var(--p)} input:checked+.switch::after{transfor
 #setup-gold-grid{overflow-y:auto;padding:5px;flex:1;border:1px solid var(--glass-b);border-radius:12px;background:rgba(0,0,0,0.2)}
 #sl-alb{width:100px; accent-color:var(--p)}
 #amb-sel{display:flex;gap:4px;justify-content:flex-end;flex-wrap:wrap}
+.amb-tog{width:100%;height:22px;margin-top:4px;border-radius:5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;font-size:0.68rem;font-weight:700;letter-spacing:0.3px;transition:0.2s}
+.amb-tog.is-anim{border:1.5px solid rgba(99,102,241,0.5);background:rgba(99,102,241,0.12);color:var(--p)}
+.amb-tog.is-static{border:1.5px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.55)}
 #sub-print{display:none;flex-direction:column;gap:2px;background:rgba(0,0,0,0.2);padding:8px;border-radius:8px;margin-bottom:8px}
 #btn-version-switch{color:#94a3b8}
 #players-edit-head{display:none}
