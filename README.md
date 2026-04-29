@@ -17,6 +17,15 @@ This tool is available as a single-file monolithic HTML download in the [Release
 * **MGO Tracker (Full)**: The complete experience featuring dynamic, animated backgrounds (Ambiance feature including Cosmic Orbs, Floating Cards, Neon Frames, and Lava Lamp).
 * **MGO Tracker Lite**: A streamlined, lightweight version optimized for performance and low-end devices, featuring a static aesthetic background without heavy animations.
 
+> ### 🗂️ Legacy Versions
+>
+> Before V4, earlier iterations of MGO Tracker were built for personal, local use only — with player names hardcoded directly into the source. They were never intended for public release.
+>
+> When publishing them on GitHub, these versions were adapted to match V4's architecture: player names are now stored in `LocalStorage`, and features introduced in V4 have been backported while preserving the original look and feel of each version. Note: These versions are available only in French.
+>
+> * **V2** — [Live Page](https://kevinr99089.github.io/Mgo-Tracker/v2)
+> * **V3** — [Live Page](https://kevinr99089.github.io/Mgo-Tracker/V3)
+
 ## ✨ Features
 
 * **100% Offline & Private**: This tool works completely offline. Your data remains 100% private and stays entirely on your device. There are no external databases, absolutely no tracking, and zero data collection. All data is saved locally in your browser (`LocalStorage`), and you can export your progress to a `.json` backup file to load it anytime.
