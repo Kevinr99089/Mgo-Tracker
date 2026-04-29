@@ -24,7 +24,7 @@ Cet outil est disponible en téléchargement sous forme d'un unique fichier HTML
 > En les rendant publiques sur GitHub, ces versions ont été adaptées à l'architecture de la V4 : les noms sont désormais stockés dans le `LocalStorage`, et les fonctionnalités introduites en V4 ont été intégrées tout en conservant l'apparence originale de chaque version. Remarque : ces versions ne sont disponibles qu'en français.
 >
 > * **V2** — [Page en ligne](https://kevinr99089.github.io/Mgo-Tracker/v2)
-> * **V3** — [Page en ligne](https://kevinr99089.github.io/Mgo-Tracker/V3)
+> * **V3** — [Page en ligne](https://kevinr99089.github.io/Mgo-Tracker/v3)
 
 ## ✨ Fonctionnalités
 
