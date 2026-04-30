@@ -44,6 +44,7 @@ jobs:
                 { owner, repo, workflow_id: wf.id, per_page: 100 }
               );
               for (const r of runs) {
+                if (["in_progress", "queued", "waiting", "requested"].includes(r.status)) continue;
                 await github.rest.actions.deleteWorkflowRun({
                   owner, repo, run_id: r.id
                 });
