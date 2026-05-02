@@ -41,14 +41,12 @@ body{margin:0;padding:0 0 85px;background:transparent;color:var(--txt);min-heigh
 .sp-hint{position:relative;z-index:10;font-size:.78rem;color:var(--txt-dim);animation:fup .5s var(--ease) .65s both}
 @keyframes fup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .app-container{max-width:1400px;margin:0 auto;padding:10px}
-.glass-card{background:var(--glass);border:1px solid var(--glass-b);border-radius:var(--r-l);box-shadow:var(--shd);overflow:hidden;position:relative;transition:max-height .4s var(--ease),transform .4s var(--ease),opacity .3s,margin-bottom .4s var(--ease),box-shadow .4s var(--ease),width .4s var(--ease),margin-left .4s var(--ease),border-radius .4s var(--ease);max-height:2000px;opacity:1;margin-bottom:12px;transform-origin:center top;touch-action:manipulation;contain:layout style;will-change:max-height,opacity,transform;width:100%}
+.glass-card{background:var(--glass);border:1px solid var(--glass-b);border-radius:var(--r-l);box-shadow:var(--shd);overflow:hidden;position:relative;transition:opacity .3s,transform .4s var(--ease),box-shadow .4s var(--ease),max-height .4s var(--ease),margin-bottom .4s var(--ease),backdrop-filter .35s var(--ease),-webkit-backdrop-filter .35s var(--ease);max-height:3000px;opacity:1;margin-bottom:12px;transform-origin:center top;touch-action:manipulation;contain:layout style;width:100%}
 .glass-card.hidden{opacity:0;max-height:0;margin-bottom:0;transform:scale(.95) translateY(-20px);pointer-events:none}
 .glass-card::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.3);border-radius:inherit;z-index:-1;pointer-events:none;transition:background .35s var(--ease)}
-.glass-card.blur-active{backdrop-filter:blur(10px);animation:blur-fade-in .35s var(--ease)}
-.glass-card.blur-active::before{background:rgba(0,0,0,.5)}
-.glass-card.blur-out{animation:blur-fade-out .25s var(--ease) forwards}
-@keyframes blur-fade-in{from{backdrop-filter:blur(0px)}to{backdrop-filter:blur(10px)}}
-@keyframes blur-fade-out{from{backdrop-filter:blur(10px)}to{backdrop-filter:blur(0px)}}
+.glass-card.blur-active{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.glass-card.blur-active::before{background:rgba(0,0,0,.48)}
+.glass-card.blur-out{backdrop-filter:none;-webkit-backdrop-filter:none}
 .glass-card.expanded{border:2px solid var(--p);transform:none;z-index:10;box-shadow:0 30px 60px rgba(0,0,0,.6);width:100%;margin-left:0;contain:none}
 @media(max-width:768px){.glass-card.expanded{width:100vw;margin-left:calc(-50vw + 50%)}}
 .glass-card.transitioning *{transition:none!important}
@@ -221,7 +219,6 @@ input:checked+.switch{background:var(--p)} input:checked+.switch::after{transfor
 .legend-swatch.s-dupe{background:rgba(239,68,68,.75);border:1px solid var(--err)}
 .legend-swatch.s-gold-dot{width:11px;height:11px;border-radius:3px;background:transparent;border:2px solid var(--gold);flex-shrink:0;box-shadow:0 0 5px rgba(251,191,36,.5)}
 .reset-u-btn{opacity:.55;transition:opacity .2s,background .2s!important} .reset-u-btn:hover,.reset-u-btn:active{opacity:1}
-/* === APP HEADER === */
 #app-header{display:flex;align-items:center;gap:10px;padding:8px 14px;min-height:52px;background:rgba(10,10,22,0.6);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.11);border-radius:14px;margin-bottom:12px;position:sticky;top:10px;z-index:200;box-shadow:0 4px 20px rgba(0,0,0,.4)}
 .app-hdr-left{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
 .app-hdr-deck{display:flex;align-items:center;height:28px;flex-shrink:0;opacity:0;transition:opacity .25s ease}
@@ -239,7 +236,6 @@ input:checked+.switch{background:var(--p)} input:checked+.switch::after{transfor
 .app-hdr-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .hdr-stat{display:flex;align-items:center;gap:4px;font-size:.7rem;font-weight:700;color:var(--txt-dim)}
 .hdr-stat-val{color:var(--txt);font-weight:800}
-/* === PLAYER BADGE === */
 .card-header{padding:8px 12px;min-height:46px}
 .ua-badge{display:flex;align-items:center;gap:8px;flex:1;min-width:0;overflow:hidden}
 .ua-init{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--p),var(--a));display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(99,102,241,.4)}
@@ -249,10 +245,8 @@ input:checked+.switch{background:var(--p)} input:checked+.switch::after{transfor
 .ua-bcount{font-size:.68rem;font-weight:700;color:var(--txt-dim);white-space:nowrap;flex-shrink:0}
 .ua-bgold{font-size:.68rem;font-weight:700;color:var(--gold);white-space:nowrap;flex-shrink:0}
 .ua-bpct{font-size:.72rem;font-weight:800;white-space:nowrap;flex-shrink:0}
-/* === PROGRESS BAR === */
 .player-progress-wrap{height:3px;background:rgba(255,255,255,.06)}
 .player-progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--p),var(--a));transition:width .6s var(--ease),background .5s}
-/* === GOLD TRADES MODAL === */
 #mod-gold-trades .modal-box{max-width:760px;max-height:68vh;display:flex;flex-direction:column}
 #mod-gold-trades .modal-head span{font-weight:900;font-size:1.1rem;color:var(--gold)}
 #mod-gold-trades .gold-content{flex:1;overflow-y:auto;padding:15px}
@@ -379,23 +373,9 @@ input:checked+.switch{background:var(--p)} input:checked+.switch::after{transfor
 #dialog-msg{white-space:pre-line;margin:0;line-height:1.5;font-size:.85rem;color:var(--txt-dim)}
 #dialog-chk-wrap{padding:0 16px;display:none}
 #dialog-btns{padding:8px 16px 16px;display:flex;flex-direction:row;gap:8px;flex-wrap:wrap}
-/* === Firefox Performance Fixes === */
-html.is-firefox .glass-card{will-change:auto!important;contain:layout style paint!important}
-html.is-firefox .glass-card.blur-active{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(8,12,28,.97)!important;animation:none!important}
-html.is-firefox .glass-card.blur-out{animation:none!important}
-html.is-firefox .cell-wrap{transition:background .12s,border-color .12s!important}
-html.is-firefox .dock{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(6,6,18,.97)!important}
-html.is-firefox .popover{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(8,8,24,.98)!important}
-html.is-firefox .modal-box{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(8,8,24,.98)!important}
-html.is-firefox #toast{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(6,6,18,.97)!important}
-html.is-firefox #app-header{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(8,8,24,.98)!important}
-html.is-firefox .setup-card{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(6,6,20,.99)!important}
-html.is-firefox #__hub-card{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(6,6,20,.99)!important}
-html.is-firefox .glass-card::before{display:none!important}
-html.lite-mode .glass-card{will-change:auto!important}
 </style>
 <script>
-try{const v=localStorage.getItem('mgo_unified_version');if(v)document.documentElement.classList.add(v+'-mode');const c=JSON.parse(localStorage.getItem('mgo_cfg'));if(c&&c.ambiance===4){const Rnd=(s)=>function(){var t=s+=1831565813;return t=Math.imul(t^t>>>15,1|t),(((t^=t+Math.imul(t^t>>>7,61|t))^t>>>14)>>>0)/4294967296};if(Rnd(c.seed||Date.now())()<0.01)document.documentElement.classList.add('is-shiney');}}catch(e){}
+try{const v=localStorage.getItem('mgo_unified_version');if(v)document.documentElement.classList.add(v+'-mode');const c=JSON.parse(localStorage.getItem('mgo_cfg'));if(c&&c.seed){const Rnd=(s)=>function(){var t=s+=1831565813;return t=Math.imul(t^t>>>15,1|t),(((t^=t+Math.imul(t^t>>>7,61|t))^t>>>14)>>>0)/4294967296};if(Rnd(c.seed)()<0.01)document.documentElement.classList.add('is-shiney');}}catch(e){}
 </script>
 </head>
 <body>
@@ -495,13 +475,20 @@ function __playShineySplash(isFast = false) {
   document.documentElement.classList.add('is-shiney');
   const spt = Q(".sp-title")[0], sph = Q(".sp-hint")[0];
   setTimeout(() => {
-      if(spt) { spt.style.transition = "opacity 0.25s ease"; spt.style.opacity = "0"; }
-      if(sph) { sph.style.transition = "opacity 0.25s ease"; sph.style.opacity = "0"; }
+      [spt, sph].forEach(el => {
+        if(!el) return;
+        const cur = getComputedStyle(el).opacity;
+        el.style.animation = "none";
+        el.style.opacity = cur;
+        void el.offsetHeight;
+      });
+      if(spt){spt.style.transition="opacity 0.3s ease";spt.style.opacity="0";}
+      if(sph){sph.style.transition="opacity 0.25s ease";sph.style.opacity="0";}
       setTimeout(() => {
           if(spt) { spt.innerHTML = T('shiney_title'); spt.style.opacity = "1"; }
           if(sph) { sph.textContent = T('shiney_hint'); sph.style.opacity = "1"; }
-      }, 250);
-  }, isFast ? 150 : 600);
+      }, 300);
+  }, isFast ? 150 : 1050);
 }
 function __flyDeckToHeader(sp,onDone){
   const spDeck=sp&&sp.querySelector(".sp-deck"),hdrDeck=E("app-hdr-deck");
@@ -641,36 +628,22 @@ const UI={
       }
       const a=new PIXI.Application({resizeTo:bg,backgroundAlpha:0,antialias:m===1,resolution:1,autoDensity:!0});a.view.style.cssText="position:absolute;inset:0;width:100%;height:100%;pointer-events:none";bg.appendChild(a.view);
       const o=[];
-      /* --- MODE 0 : Orbes cosmiques ---
-         cx/cy = centre d'oscillation, tx/ty ±15%, sin symétrique (-1→+1). */
       if(m===0){for(let i=0;i<7;i++){const sz=45+40*r(),rgb=c[~~(r()*c.length)],cx2=(10+75*r())/100,cy2=(10+75*r())/100,tx=(30*r()-15)/100,ty=(30*r()-15)/100,d=(18+16*r())*1e3,ph=r()*Math.PI*2,ts=256,oc=C('canvas');oc.width=oc.height=ts;const cx3=oc.getContext('2d'),grd=cx3.createRadialGradient(128,128,0,128,128,128);grd.addColorStop(0,`rgba(${rgb},1)`);grd.addColorStop(.68,`rgba(${rgb},.15)`);grd.addColorStop(1,`rgba(${rgb},0)`);cx3.fillStyle=grd;cx3.fillRect(0,0,ts,ts);const spr=new PIXI.Sprite(new PIXI.Texture(new PIXI.BaseTexture(oc)));spr.anchor.set(.5);spr.alpha=.55;a.stage.addChild(spr);o.push({spr,cx:cx2,cy:cy2,tx,ty,d,ph,sz})}}
       else if(m===1){const grads=[["#3b41d8","#6468f5"],["#c77b10","#f0aa22"],["#b8223b","#eb3a5f"],["#0e766e","#14b8a6"],["#7c3aed","#a855f7"]];for(let i=0;i<5;i++){const gc=grads[~~(r()*grads.length)],TW=256,TH=358,oc=C("canvas");oc.width=TW;oc.height=TH;const cx2=oc.getContext("2d");cx2.beginPath();cx2.roundRect(0,0,TW,TH,16);cx2.clip();const grd=cx2.createLinearGradient(0,0,TW,TH);grd.addColorStop(0,gc[0]);grd.addColorStop(1,gc[1]);cx2.fillStyle=grd;cx2.fillRect(0,0,TW,TH);cx2.strokeStyle="rgba(255,255,255,0.18)";cx2.lineWidth=2;cx2.stroke();const spr=new PIXI.Sprite(new PIXI.Texture(new PIXI.BaseTexture(oc)));spr.anchor.set(.5);spr.alpha=.45;a.stage.addChild(spr);const sz=(30+25*r())/100*window.innerWidth;spr.width=sz;spr.height=sz*1.4;o.push({spr,sx:(85*r()-10)/100,sy:(85*r()-10)/100,tx:(20*r()-10)/100,ty:(20*r()-10)/100,r0:(40*r()-20)*Math.PI/180,r1:(40*r()-20)*Math.PI/180,d:(20+15*r())*1e3,ph:r()*Math.PI*2});}}
-      /* --- MODE 3 : Lampe à lave — Pixi WebGL + sprites à gradient radial ---
-         On remplace les beginFill solides par une texture blanche partagée
-         (gradient radial blanc→transparent, teintée via .tint par blob).
-         Les sprites semi-transparents se composent en source-over : leurs bords
-         doux se mélangent naturellement avant le filtre goo → vrai transfert de
-         couleur au contact, tout en restant 100% GPU/WebGL. */
       else if(m===3){
         bg.style.background='#020204';
         const goo=new PIXI.Container(),blur=new PIXI.BlurFilter(16,4);blur.padding=200;
         const thresh=new PIXI.Filter(null,"varying vec2 vTextureCoord;uniform sampler2D uSampler;void main(){vec4 c=texture2D(uSampler,vTextureCoord);vec3 rgb=(c.a>0.001)?c.rgb/c.a:vec3(0.0);float a=clamp(c.a*22.0-9.0,0.0,1.0);gl_FragColor=vec4(rgb*a,a);}");thresh.padding=200;
         goo.filters=[blur,thresh];a.stage.addChild(goo);
-        /* Texture partagée : gradient radial blanc, même courbe d'opacité que V4.08 */
         const TS=256,ot=C("canvas");ot.width=ot.height=TS;const ct=ot.getContext("2d");
         const gt=ct.createRadialGradient(128,128,0,128,128,128);
         gt.addColorStop(0,"rgba(255,255,255,0.95)");gt.addColorStop(.4,"rgba(255,255,255,0.7)");
         gt.addColorStop(.7,"rgba(255,255,255,0.3)");gt.addColorStop(1,"rgba(255,255,255,0)");
         ct.fillStyle=gt;ct.fillRect(0,0,TS,TS);
         const shTex=new PIXI.Texture(new PIXI.BaseTexture(ot));
-        /* 3 ou 4 couleurs pour plus de vie */
         const nP=3+~~(2*r()),D=[...c].sort(()=>r()-.5),pal=D.slice(0,nP).map(x=>{const p=x.split(',');return(+p[0]<<16)|(+p[1]<<8)|+p[2]});
         const blobs=[];
         for(let i=0;i<10;i++){const ny=r(),spr=new PIXI.Sprite(shTex);spr.anchor.set(.5);goo.addChild(spr);const col=pal[~~(r()*pal.length)];spr.tint=col;blobs.push({spr,x:r()*(a.screen.width||window.innerWidth),y:ny*(a.screen.height||window.innerHeight),vx:0,vy:0,r:35+55*r(),baseR:35+55*r(),col,ph:r()*Math.PI*2,fq:.08+.12*r(),df:.04*(r()-.5),tp:1-ny,ti:.12+.18*r()});}
-        /* Timestep fixe : physique à 1/60s par step, indépendant du rAF.
-           Si le navigateur throttle, on rattrape en plusieurs micro-steps par frame
-           au lieu d'un grand saut → plus de freeze visible.
-           Accumulator cappé à 8 steps pour éviter la spirale de mort. */
         const BUOY=5.0,DAMP=0.988,FIXED_DT=1/60,MAX_SPD=FIXED_DT*48;
         let acc=0,lt=0;
         function physStep(n){const ds=FIXED_DT,W=a.screen.width,H=a.screen.height;for(let i=0;i<10;i++){const b=blobs[i];const bias=0.15+0.7*(0.5+0.5*Math.sin(n*0.0002+b.ph));b.tp+=(b.y/H-b.tp)*b.ti*ds;b.vy-=(b.tp-bias)*BUOY*ds;b.ph+=b.fq*ds;b.vx+=0.4*Math.sin(b.ph+1.7*i)*ds+b.df*ds*1.5;for(let j=i+1;j<10;j++){const b2=blobs[j],dx=b2.x-b.x,dy=b2.y-b.y,dd=Math.sqrt(dx*dx+dy*dy)+1,mn=.35*(b.r+b2.r);if(dd<mn){const f=.08*(mn-dd)*ds,nx=dx/dd,ny=dy/dd;b.vx-=nx*f;b.vy-=ny*f;b2.vx+=nx*f;b2.vy+=ny*f}}b.vx*=DAMP;b.vy*=DAMP;const spd=Math.sqrt(b.vx*b.vx+b.vy*b.vy);if(spd>MAX_SPD){const sc=MAX_SPD/spd;b.vx*=sc;b.vy*=sc;}b.x+=b.vx;b.y+=b.vy;const pd=.3*b.r;if(b.x<b.r){b.vx=Math.abs(b.vx)*.3;b.x=b.r;}if(b.x>W-b.r){b.vx=-Math.abs(b.vx)*.3;b.x=W-b.r;}if(b.y<-pd){b.vy=Math.abs(b.vy)*.3;b.y=-pd;}if(b.y>H+pd){b.vy=-Math.abs(b.vy)*.3;b.y=H+pd;}b.r=b.baseR+Math.sin(6e-4*n+2.1*i)*b.baseR*.06;}}
@@ -752,7 +725,7 @@ const Actions={
     'toggle-players':()=>{const p1=E("pop-menu"),p2=E("pop-players");const bm=D.querySelector('[data-action="toggle-menu"]'),bp=D.querySelector('[data-action="toggle-players"]');if(p2.classList.contains("show")){p2.classList.remove("show");PlayerManager.close();bp?.classList.remove("active")}else{p1.classList.remove("show");p2.classList.add("show");bp?.classList.add("active");bm?.classList.remove("active")}},
     'open-players':()=>PlayerManager.open(),'cancel-players':()=>{const cl=()=>{if(E("setup-mod").classList.contains("open")){E("pop-players").classList.remove("show");setTimeout(()=>PlayerManager.close(),250)}else{PlayerManager.close()}};if(JSON.stringify(PlayerManager.tu)!==JSON.stringify(State.cfg.usersList)){UI.dialog({keep:!0,title:T("dialog_title_default"),msg:T("cancel_edit_msg"),buttons:[{label:T("cancel_edit_continue"),cb:null},{label:T("btn_cancel"),cls:"danger",cb:cl},{label:T("save_users_btn"),cls:"primary",cb:()=>PlayerManager.save()}]})}else{cl()}},'add-player':()=>PlayerManager.add(),'save-players':()=>PlayerManager.save(),
     'undo':()=>{const l=(window._hist||[]).pop();if(l){State.updC(l.u,l.c,l.v);UI.hyd();UI.toast(T("undone"));UI.uUndoBtn()}else return},
-    'mode-toggle':()=>{State.cfg.mode=State.cfg.mode==="number"?"cross":"number";State.saveC();UI.renderMain()},
+    'mode-toggle':()=>{const exp=[...Q(".glass-card.expanded")].map(c=>({s:c.dataset.sec,b:c.classList.contains("blur-active")}));State.cfg.mode=State.cfg.mode==="number"?"cross":"number";State.saveC();UI.renderMain();exp.forEach(({s,b})=>{const c=D.querySelector(`.glass-card[data-sec="${s}"]`);if(c){c.classList.add("expanded");if(b)c.classList.add("blur-active")}});},
     'reset-u':()=>{const cd=a.closest(".glass-card"),u=cd.dataset.sec,nm=cd.querySelector(".ua-name").textContent;UI.confirm(T("reset_player_q").replace("{name}",nm),()=>{State.usr[u].state={};State.usr[u].nums={};State.saveU(u);State._dC=null;UI.hyd();UI.toast(T("reset_done"))})},
     'reset-all':()=>{UI.dialog({title:T("reset_all"),msg:T("reset_warn1"),checkbox:{label:T("keep_players_lbl"),checked:true},buttons:[{label:T("btn_cancel"),cls:"",cb:null},{label:T("btn_reset_confirm"),cls:"danger",cb:()=>{const kp=document.getElementById("dialog-chk")?.checked!==false;const ul=kp?[...State.cfg.usersList]:[`${T('player')} 1`];LS.clear();LS.setItem("mgo_cfg",JSON.stringify({albums:24,mode:"cross",gold_ids:[],gold_ex:[],hidden:[],printHidden:[],setup_done:!1,ambiance:0,ambStatic:!1,seed:Date.now(),usersList:ul}));location.reload()}}]})},
     'open-gold-mod':()=>{Q(".popover").forEach(p=>p.classList.remove("show"));PlayerManager.close();UI.gGrid("gold-grid-ctn");E("mod-gold").classList.add("open")},'close-gold':()=>{E("mod-gold").classList.remove("open");UI.hyd()},
@@ -779,9 +752,9 @@ function __initApp(fromHub=false){
   E("btn-import-confirm").onclick=()=>Share.cI();E("btn-import-quick").onclick=()=>Share.cQ();
   E("btn-import-replace").onclick=()=>Share.oR();E("btn-import-replace-back").onclick=()=>{E("import-step-1").style.display="flex";E("import-step-2").style.display="none";Share._rt=null};
   E("btn-import-replace-confirm").onclick=()=>Share.cR();E("btn-import-cancel").onclick=()=>{Share._pi=null;Share._rt=null;Share.cls()};
-  const sa=E("sl-alb");sa.value=State.cfg.albums;E("lbl-alb").textContent=State.cfg.albums;sa.oninput=e=>{E("lbl-alb").textContent=e.target.value;State.cfg.albums=+e.target.value;State._gC=null;State.saveC();UI.renderMain()};
-  UI.renderMain();UI.mns();UI.uUndoBtn();
-  if(!LITE_MODE){UI.ambSel();UI.amb();}
+  const sa=E("sl-alb");sa.value=State.cfg.albums;E("lbl-alb").textContent=State.cfg.albums;sa.oninput=e=>{const exp=[...Q(".glass-card.expanded")].map(c=>({s:c.dataset.sec,b:c.classList.contains("blur-active")}));E("lbl-alb").textContent=e.target.value;State.cfg.albums=+e.target.value;State._gC=null;State.saveC();UI.renderMain();exp.forEach(({s,b})=>{const c=D.querySelector(`.glass-card[data-sec="${s}"]`);if(c){c.classList.add("expanded");if(b)c.classList.add("blur-active")}});};
+  UI.uUndoBtn();
+  if(!LITE_MODE){UI.ambSel();}
   const ah=Actions.handle.bind(Actions);D.body.addEventListener("click",ah);D.body.addEventListener("dblclick",ah);
   D.body.addEventListener("input",e=>{if(e.target.classList.contains("user-note")){const u=e.target.dataset.uid;if(State.usr[u]){const v=e.target.value;if(v)State.usr[u].note=v;else delete State.usr[u].note;clearTimeout(window._tn);window._tn=setTimeout(()=>State.saveU(u),400)}}});
   const iA=E("s-alb"),iV=E("s-alb-val");UI.gGrid("setup-gold-grid");iA.oninput=e=>{iV.textContent=e.target.value;State.cfg.albums=+e.target.value;State.saveC();UI.gGrid("setup-gold-grid")};
@@ -789,6 +762,7 @@ function __initApp(fromHub=false){
   const isShiney = cnt === 5;
   const delay = isShiney ? (LITE_MODE ? 1000 : 1800) : 500;
   if(!fromHub && isShiney) __playShineySplash(LITE_MODE);
+  setTimeout(()=>{UI.renderMain();UI.mns();},300);
   const sp=E("splash");
   if(LITE_MODE){
     requestAnimationFrame(()=>setTimeout(()=>{
@@ -801,15 +775,20 @@ function __initApp(fromHub=false){
     const bg=E("ambient-bg");
     setTimeout(()=>{
         if(!sp) return;
-        __flyDeckToHeader(sp,()=>{
-          sp.style.transition="opacity 0.35s ease, visibility 0.35s ease";
-          sp.style.opacity="0";sp.style.visibility="hidden";sp.style.pointerEvents="none";
-          setTimeout(()=>{UI.amb();requestAnimationFrame(()=>requestAnimationFrame(()=>bg.style.opacity="1"))},500);
-          const s=[...Q(".anim-section")].filter(e=>!e.classList.contains("hidden"));
-          Q(".anim-section").forEach(e=>{e.style.opacity="0";e.style.transform="translateY(22px)";e.style.transition="none"});
+        const s=[...Q(".anim-section")].filter(e=>!e.classList.contains("hidden"));
+        Q(".anim-section").forEach(e=>{e.style.opacity="0";e.style.transform="translateY(22px)";e.style.transition="none"});
+        __flyDeckToHeader(sp,()=>{});
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
           s.forEach((e,i)=>setTimeout(()=>{e.style.transition="opacity 450ms var(--ease), transform 450ms var(--ease)";e.style.opacity="1";e.style.transform="translateY(0)"},75*i));
-          setTimeout(()=>{Q(".anim-section").forEach(e=>{e.style.cssText=""});sp.remove();if(!State.cfg.setup_done)E("setup-mod").classList.add("open");Share.show()},75*s.length+450+80);
-        });
+        }));
+        setTimeout(()=>{
+          sp.style.transition="opacity 0.55s ease, visibility 0.55s ease";
+          sp.style.opacity="0";sp.style.visibility="hidden";sp.style.pointerEvents="none";
+          setTimeout(()=>{
+            UI.amb();requestAnimationFrame(()=>requestAnimationFrame(()=>bg.style.opacity="1"));
+            setTimeout(()=>{Q(".anim-section").forEach(e=>{e.style.cssText=""});sp.remove();if(!State.cfg.setup_done)E("setup-mod").classList.add("open");Share.show()},75*s.length+450+80);
+          },550);
+        },200);
     }, delay + 200);
   }
 }
