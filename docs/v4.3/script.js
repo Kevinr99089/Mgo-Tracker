@@ -353,8 +353,24 @@ const Share={
   cQ(){if(!this._pi||!this._qt)return;const t=this._qt.replace(/\s/g,"");State.usr[t]={state:{},nums:{},...this._pi.data};State.saveU(t);UI.toast((T('toast_updated')||'').replace('{name}',this._qt));this._pi=null;this._qt=null;this.cls();setTimeout(()=>location.reload(),900)}
 };
 const Missions={
-  _d:null, gk(d){const nd=new Date(d);nd.setHours(0,0,0,0);const dy=nd.getDay();nd.setDate(nd.getDate()+(dy===0?-6:1-dy));return nd.getFullYear()+'-'+String(nd.getMonth()+1).padStart(2,'0')+'-'+String(nd.getDate()).padStart(2,'0')},
-  init(){const _df=()=>Array.from({length:7},()=>({texts:['','','']}));const k=this.gk(new Date()),sk=LS.getItem('mgo_missions_week');if(sk!==k){LS.removeItem('mgo_missions_data');LS.setItem('mgo_missions_week',k);this._d=_df()}else{try{this._d=JSON.parse(LS.getItem('mgo_missions_data'))||_df()}catch(e){this._d=_df()}}},
-  save(){LS.setItem('mgo_missions_data',JSON.stringify(this._d))},
-  open(){if(!this._d)this.init();const b=E('missions-body');b.innerHTML='';const now=new Date();now.setHours(0,0,0,0);const md=new Date(now);md.setDate(md.getDate()+(md.getDay()===0?-6:1-md.getDay()));const loc=navigator.language||'fr-FR';const fmtDay=new Intl.DateTimeFormat(loc,{weekday:'long'});const fmtMonth=new Intl.DateTimeFormat(loc,{month:'long'});const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);for(let i=0;i<7;i++){const d=new Date(md);d.setDate(md.getDate()+i);const it=d.getTime()===now.getTime(),c=C('div');c.className='mission-day-card'+(it?' today-card':'');c.innerHTML=`<div class="mission-day-label">${cap(fmtDay.format(d))} ${d.getDate()} ${cap(fmtMonth.format(d))} ${d.getFullYear()} ${it?`<span class="today-badge">${T('today_badge')||''}</span>`:''}</div>`;for(let m=0;m<3;m++){const r=C('div');r.className='mission-row';const ta=C('textarea');ta.className='mission-input';ta.rows=1;ta.placeholder=(T('mission_placeholder')||'').replace('{n}',m+1);ta.value=this._d[i].texts[m]||'';ta.oninput=()=>{ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,80)+'px';this._d[i].texts[m]=ta.value;this.save()};ta.onfocus=()=>ta.oninput();r.appendChild(ta);c.appendChild(r)}b.appendChild(c)}E('mod-missions').classList.add('open')}
+  _d:null,_nd:null,_woff:0,
+  gk(d){const nd=new Date(d);nd.setHours(0,0,0,0);const dy=nd.getDay();nd.setDate(nd.getDate()+(dy===0?-6:1-dy));return nd.getFullYear()+'-'+String(nd.getMonth()+1).padStart(2,'0')+'-'+String(nd.getDate()).padStart(2,'0')},
+  wkd(off){const d=new Date();d.setDate(d.getDate()+(off||0)*7);return this.gk(d)},
+  df(){return Array.from({length:7},()=>({texts:['','','']}))},
+  load(wk){try{return JSON.parse(LS.getItem('mgo_missions_data_'+wk))||this.df()}catch(e){return this.df()}},
+  init(){const ok=LS.getItem('mgo_missions_week'),od=LS.getItem('mgo_missions_data');if(ok&&od){const ck=this.gk(new Date());if(ok===ck)LS.setItem('mgo_missions_data_'+ok,od);LS.removeItem('mgo_missions_week');LS.removeItem('mgo_missions_data')}this._d=this.load(this.wkd(0));this._nd=this.load(this.wkd(1))},
+  save(){LS.setItem('mgo_missions_data_'+this.wkd(this._woff),JSON.stringify(this._woff===0?this._d:this._nd))},
+  open(){
+    if(!this._d)this.init();
+    const b=E('missions-body');b.innerHTML='';
+    const nav=C('div');nav.style.cssText='display:flex;gap:8px;margin-bottom:8px';
+    const mkBtn=(lbl,off)=>{const btn=C('button');btn.className='mini-btn';btn.style.cssText='flex:1;padding:8px 4px;font-size:.8rem;'+(this._woff===off?'background:var(--p);color:#fff;border-color:var(--p)':'');btn.textContent=lbl;btn.onclick=()=>{this._woff=off;this.open()};return btn};
+    nav.appendChild(mkBtn(T('missions_week_current'),0));nav.appendChild(mkBtn(T('missions_week_next'),1));b.appendChild(nav);
+    const data=this._woff===0?this._d:this._nd;
+    const now=new Date();now.setHours(0,0,0,0);
+    const md=new Date(now);md.setDate(md.getDate()+(md.getDay()===0?-6:1-md.getDay())+(this._woff*7));
+    const loc=navigator.language||'fr-FR';const fmtDay=new Intl.DateTimeFormat(loc,{weekday:'long'});const fmtMonth=new Intl.DateTimeFormat(loc,{month:'long'});const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+    for(let i=0;i<7;i++){const d=new Date(md);d.setDate(md.getDate()+i);const it=d.getTime()===now.getTime()&&this._woff===0,c=C('div');c.className='mission-day-card'+(it?' today-card':'');c.innerHTML=`<div class="mission-day-label">${cap(fmtDay.format(d))} ${d.getDate()} ${cap(fmtMonth.format(d))} ${d.getFullYear()} ${it?`<span class="today-badge">${T('today_badge')||''}</span>`:''}</div>`;for(let m=0;m<3;m++){const r=C('div');r.className='mission-row';const ta=C('textarea');ta.className='mission-input';ta.rows=1;ta.placeholder=(T('mission_placeholder')||'').replace('{n}',m+1);ta.value=data[i].texts[m]||'';ta.oninput=()=>{ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,80)+'px';data[i].texts[m]=ta.value;this.save()};ta.onfocus=()=>ta.oninput();r.appendChild(ta);c.appendChild(r)}b.appendChild(c)}
+    E('mod-missions').classList.add('open')
+  }
 };
