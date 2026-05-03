@@ -34,7 +34,7 @@ This tool is available as a single-file monolithic HTML download in the [Release
 * **Gold Cards Management**: Click and configure which cards are "Gold" for the current season, and manage a dedicated "Gold Trades" checklist.
 * **Board Sharing & Importing**: Generate a unique, compressed link to share your specific board with friends (via Discord, WhatsApp, etc.), allowing them to import it directly into their own tracker. *Note: The shared link is a snapshot of your board at the moment you share it — it won't update on its own. If you make changes later and want the other person to have the latest version, just share a new link.*
 * **Print-Friendly**: Need a physical copy? Use the built-in print layout to print specific player boards efficiently.
-* **Auto-Translation**: Automatically detects your browser's language and switches seamlessly between English and French.
+* **Auto-Translation**: Automatically matches your browser's language. The online split version (GitHub Pages) supports all languages available in Monopoly Go, while the monolithic release is English and French only.
 
 ## 🚀 How to Use
 
