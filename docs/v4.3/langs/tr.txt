@@ -101,5 +101,7 @@
   "cancel_edit_continue": "✏️ Devam Et",
   "btn_reset_confirm": "🗑️ Sıfırla",
   "date_placeholder": "GG/AA",
-  "app_hdr_title": "Mgo <em>Tracker</em>"
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 Bu hafta",
+  "missions_week_next": "⏭ Sonraki hafta"
 }

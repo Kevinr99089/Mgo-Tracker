@@ -101,5 +101,7 @@
   "cancel_edit_continue": "✏️ متابعة",
   "btn_reset_confirm": "🗑️ إعادة تعيين",
   "date_placeholder": "يي/شش",
-  "app_hdr_title": "Mgo <em>Tracker</em>"
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 الأسبوع الحالي",
+  "missions_week_next": "⏭ الأسبوع القادم"
 }

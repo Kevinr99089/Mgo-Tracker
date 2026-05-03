@@ -101,5 +101,7 @@
   "cancel_edit_continue": "✏️ Weiter",
   "btn_reset_confirm": "🗑️ Zurücksetzen",
   "date_placeholder": "TT/MM",
-  "app_hdr_title": "Mgo <em>Tracker</em>"
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 Aktuelle Woche",
+  "missions_week_next": "⏭ Nächste Woche"
 }

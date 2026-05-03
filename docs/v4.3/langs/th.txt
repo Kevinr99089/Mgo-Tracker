@@ -101,5 +101,7 @@
   "cancel_edit_continue": "✏️ ดำเนินการต่อ",
   "btn_reset_confirm": "🗑️ รีเซ็ต",
   "date_placeholder": "DD/MM",
-  "app_hdr_title": "Mgo <em>Tracker</em>"
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 สัปดาห์นี้",
+  "missions_week_next": "⏭ สัปดาห์หน้า"
 }
