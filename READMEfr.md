@@ -35,6 +35,7 @@ Cet outil est disponible en téléchargement sous forme d'un unique fichier HTML
 * **Partage et Importation de Tableaux** : Générez un lien unique et compressé pour partager votre tableau spécifique avec vos amis (via Discord, WhatsApp, etc.), leur permettant de l'importer directement dans leur propre tracker. *Note : Le lien de partage est une capture de votre tableau au moment où vous le créez — il ne se mettra pas à jour tout seul. Si vous faites des modifications par la suite et souhaitez que l'autre personne ait la dernière version, il vous suffit de partager un nouveau lien.*
 * **Mode Impression** : Besoin d'une copie physique ? Utilisez la mise en page d'impression intégrée pour imprimer efficacement les tableaux des joueurs de votre choix.
 * **Bilingue** : Détecte automatiquement la langue de votre navigateur pour basculer de manière transparente entre le français et l'anglais.
+* **Traduction automatique** : S'adapte automatiquement à la langue de votre navigateur. La version split en ligne (GitHub Pages) prend en charge toutes les langues disponibles dans Monopoly Go, contrairement à la version monolithique qui se limite à l'anglais et au français.
 
 ## 🚀 Comment l'utiliser
 
