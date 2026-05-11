@@ -14,7 +14,7 @@
   "menu": "菜单",
   "undo": "撤销",
   "gold_setup": "黄金卡片",
-  "view": "玩家",
+  "players": "玩家",
   "albums": "专辑：",
   "ambiance": "氛围",
   "manage_players": "👥 管理玩家",
@@ -32,10 +32,8 @@
   "player": "玩家",
   "note_ph": "备注...",
   "undone": "已撤销",
-  "nothing_to_undo": "⚠️ 没有可撤销的内容",
   "reset_done": "重置完成",
   "reset_warn1": "⚠ 确定要重置全部内容吗？\n\n这将清除所有数据并启动新赛季向导。",
-  "reset_warn2": "是否保留当前玩家列表？\n\n[确定] = 保留列表（棋盘清零）\n[取消] = 创建新列表",
   "delete_q": "删除此行？",
   "print_upper": "打印",
   "file_dl": "文件已下载",
@@ -50,8 +48,6 @@
   "amb_4": "✨ 幸运赛季 ✨",
   "amb_static": "⏸ 静态",
   "amb_animated": "动态",
-  "amb_switch_static": "切换到静态",
-  "amb_switch_anim": "切换到动态",
   "reset_player_q": "重置 {name}？",
   "sub": "选择版本",
   "full": "完整版",
@@ -104,5 +100,8 @@
   "cancel_edit_msg": "您要取消更改吗？",
   "cancel_edit_continue": "✏️ 继续",
   "btn_reset_confirm": "🗑️ 重置",
-  "date_placeholder": "DD/MM"
+  "date_placeholder": "DD/MM",
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 本周",
+  "missions_week_next": "⏭ 下周"
 }

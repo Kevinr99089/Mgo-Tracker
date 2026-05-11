@@ -14,7 +14,7 @@
   "menu": "Menu",
   "undo": "Annuler",
   "gold_setup": "Cartes dorées",
-  "view": "Joueurs",
+  "players": "Joueurs",
   "albums": "Albums :",
   "ambiance": "Ambiance",
   "manage_players": "👥 Gérer les joueurs",
@@ -32,10 +32,8 @@
   "player": "Joueur",
   "note_ph": "Note...",
   "undone": "Annulé",
-  "nothing_to_undo": "⚠️ Rien à annuler",
   "reset_done": "Reset effectué",
   "reset_warn1": "⚠ VOULEZ-VOUS VRAIMENT TOUT RÉINITIALISER ?\n\nCela va effacer toutes les données et démarrer l'assistant de nouvelle saison.",
-  "reset_warn2": "Voulez-vous conserver la liste actuelle des joueurs ?\n\n[OK] = Conserver la liste des joueurs (Tableaux remis à zéro)\n[Annuler] = Créer une nouvelle liste",
   "delete_q": "Supprimer cette ligne ?",
   "print_upper": "IMPRIMER",
   "file_dl": "Fichier téléchargé",
@@ -50,8 +48,6 @@
   "amb_4": "✨ Saison Chanceuse ✨",
   "amb_static": "⏸ Statique",
   "amb_animated": "Animé",
-  "amb_switch_static": "Passer en Statique",
-  "amb_switch_anim": "Passer en Animé",
   "reset_player_q": "Réinitialiser {name} ?",
   "sub": "Choisissez la version",
   "full": "Version Complète",
@@ -104,5 +100,8 @@
   "cancel_edit_msg": "Voulez-vous annuler vos modifications ?",
   "cancel_edit_continue": "✏️ Continuer",
   "btn_reset_confirm": "🗑️ Réinitialiser",
-  "date_placeholder": "JJ/MM"
+  "date_placeholder": "JJ/MM",
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 Semaine actuelle",
+  "missions_week_next": "⏭ Semaine suivante"
 }

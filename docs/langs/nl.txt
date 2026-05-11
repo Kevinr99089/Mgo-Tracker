@@ -14,7 +14,7 @@
   "menu": "Menu",
   "undo": "Ongedaan maken",
   "gold_setup": "Gouden kaarten",
-  "view": "Spelers",
+  "players": "Spelers",
   "albums": "Albums:",
   "ambiance": "Sfeer",
   "manage_players": "👥 Spelers beheren",
@@ -32,10 +32,8 @@
   "player": "Speler",
   "note_ph": "Notitie...",
   "undone": "Ongedaan gemaakt",
-  "nothing_to_undo": "⚠️ Niets om ongedaan te maken",
   "reset_done": "Reset uitgevoerd",
   "reset_warn1": "⚠ WEET JE ZEKER DAT JE ALLES WIL RESETTEN?\n\nDit zal alle gegevens wissen en de nieuwe seizoen wizard starten.",
-  "reset_warn2": "Wil je de huidige spelerslijst bewaren?\n\n[OK] = Spelerslijst bewaren (Borden naar nul)\n[Annuleren] = Nieuwe lijst maken",
   "delete_q": "Deze rij verwijderen?",
   "print_upper": "AFDRUKKEN",
   "file_dl": "Bestand gedownload",
@@ -50,8 +48,6 @@
   "amb_4": "✨ Gelukkig Seizoen ✨",
   "amb_static": "⏸ Statisch",
   "amb_animated": "Geanimeerd",
-  "amb_switch_static": "Naar Statisch",
-  "amb_switch_anim": "Naar Geanimeerd",
   "reset_player_q": "{name} resetten?",
   "sub": "Kies versie",
   "full": "Volledige Versie",
@@ -104,5 +100,8 @@
   "cancel_edit_msg": "Wil je je wijzigingen annuleren?",
   "cancel_edit_continue": "✏️ Doorgaan",
   "btn_reset_confirm": "🗑️ Resetten",
-  "date_placeholder": "DD/MM"
+  "date_placeholder": "DD/MM",
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 Huidige week",
+  "missions_week_next": "⏭ Volgende week"
 }

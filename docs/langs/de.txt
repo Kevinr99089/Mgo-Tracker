@@ -14,7 +14,7 @@
   "menu": "Menü",
   "undo": "Rückgängig",
   "gold_setup": "Goldkarten",
-  "view": "Spieler",
+  "players": "Spieler",
   "albums": "Alben:",
   "ambiance": "Ambiente",
   "manage_players": "👥 Spieler verwalten",
@@ -32,10 +32,8 @@
   "player": "Spieler",
   "note_ph": "Notiz...",
   "undone": "Rückgängig gemacht",
-  "nothing_to_undo": "⚠️ Nichts rückgängig zu machen",
   "reset_done": "Zurückgesetzt",
   "reset_warn1": "⚠ BIST DU SICHER, DASS DU ALLES ZURÜCKSETZEN MÖCHTEST?\n\nDies löscht alle Daten und startet den Assistenten für die neue Saison.",
-  "reset_warn2": "Möchtest du die aktuelle Spielerliste behalten?\n\n[OK] = Spielerliste behalten (Tableaux auf null gesetzt)\n[Abbrechen] = Neue Liste erstellen",
   "delete_q": "Diese Zeile löschen?",
   "print_upper": "DRUCKEN",
   "file_dl": "Datei heruntergeladen",
@@ -50,8 +48,6 @@
   "amb_4": "✨ Glückssaison ✨",
   "amb_static": "⏸ Statisch",
   "amb_animated": "Animiert",
-  "amb_switch_static": "Auf Statisch wechseln",
-  "amb_switch_anim": "Auf Animiert wechseln",
   "reset_player_q": "{name} zurücksetzen?",
   "sub": "Version wählen",
   "full": "Vollversion",
@@ -104,5 +100,8 @@
   "cancel_edit_msg": "Möchten Sie Ihre Änderungen verwerfen?",
   "cancel_edit_continue": "✏️ Weiter",
   "btn_reset_confirm": "🗑️ Zurücksetzen",
-  "date_placeholder": "TT/MM"
+  "date_placeholder": "TT/MM",
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 Aktuelle Woche",
+  "missions_week_next": "⏭ Nächste Woche"
 }

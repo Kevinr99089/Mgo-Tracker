@@ -14,7 +14,7 @@
   "menu": "メニュー",
   "undo": "元に戻す",
   "gold_setup": "ゴールドカード",
-  "view": "プレイヤー",
+  "players": "プレイヤー",
   "albums": "アルバム：",
   "ambiance": "アンビアンス",
   "manage_players": "👥 プレイヤー管理",
@@ -32,10 +32,8 @@
   "player": "プレイヤー",
   "note_ph": "メモ...",
   "undone": "元に戻しました",
-  "nothing_to_undo": "⚠️ 元に戻すものがありません",
   "reset_done": "リセット完了",
   "reset_warn1": "⚠ 本当にすべてリセットしますか？\n\nすべてのデータが消去され、新シーズンのウィザードが起動します。",
-  "reset_warn2": "現在のプレイヤーリストを保持しますか？\n\n[OK] = プレイヤーリストを保持（ボードをゼロにリセット）\n[キャンセル] = 新しいリストを作成",
   "delete_q": "この行を削除しますか？",
   "print_upper": "印刷",
   "file_dl": "ファイルをダウンロードしました",
@@ -50,8 +48,6 @@
   "amb_4": "✨ ラッキーシーズン ✨",
   "amb_static": "⏸ 静止",
   "amb_animated": "アニメーション",
-  "amb_switch_static": "静止に切り替え",
-  "amb_switch_anim": "アニメーションに切り替え",
   "reset_player_q": "{name}をリセットしますか？",
   "sub": "バージョンを選択",
   "full": "フルバージョン",
@@ -104,5 +100,8 @@
   "cancel_edit_msg": "変更を破棄しますか？",
   "cancel_edit_continue": "✏️ 続ける",
   "btn_reset_confirm": "🗑️ リセット",
-  "date_placeholder": "DD/MM"
+  "date_placeholder": "DD/MM",
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 今週",
+  "missions_week_next": "⏭ 来週"
 }

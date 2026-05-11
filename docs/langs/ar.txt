@@ -14,7 +14,7 @@
   "menu": "القائمة",
   "undo": "تراجع",
   "gold_setup": "البطاقات الذهبية",
-  "view": "اللاعبون",
+  "players": "اللاعبون",
   "albums": "الألبومات:",
   "ambiance": "الأجواء",
   "manage_players": "👥 إدارة اللاعبين",
@@ -32,10 +32,8 @@
   "player": "لاعب",
   "note_ph": "ملاحظة...",
   "undone": "تم التراجع",
-  "nothing_to_undo": "⚠️ لا شيء للتراجع عنه",
   "reset_done": "تمت إعادة التعيين",
   "reset_warn1": "⚠ هل أنت متأكد من إعادة تعيين كل شيء؟\n\nسيتم حذف جميع البيانات وبدء معالج الموسم الجديد.",
-  "reset_warn2": "هل تريد الاحتفاظ بقائمة اللاعبين الحالية؟\n\n[موافق] = الاحتفاظ بالقائمة (إعادة تعيين اللوحات)\n[إلغاء] = إنشاء قائمة جديدة",
   "delete_q": "حذف هذا السطر؟",
   "print_upper": "طباعة",
   "file_dl": "تم تنزيل الملف",
@@ -50,8 +48,6 @@
   "amb_4": "✨ موسم محظوظ ✨",
   "amb_static": "⏸ ثابت",
   "amb_animated": "متحرك",
-  "amb_switch_static": "التبديل إلى ثابت",
-  "amb_switch_anim": "التبديل إلى متحرك",
   "reset_player_q": "إعادة تعيين {name}؟",
   "sub": "اختر الإصدار",
   "full": "الإصدار الكامل",
@@ -104,5 +100,8 @@
   "cancel_edit_msg": "هل تريد إلغاء تعديلاتك؟",
   "cancel_edit_continue": "✏️ متابعة",
   "btn_reset_confirm": "🗑️ إعادة تعيين",
-  "date_placeholder": "يي/شش"
+  "date_placeholder": "يي/شش",
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 الأسبوع الحالي",
+  "missions_week_next": "⏭ الأسبوع القادم"
 }

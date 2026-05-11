@@ -14,7 +14,7 @@
   "menu": "Menu",
   "undo": "Desfazer",
   "gold_setup": "Cartas Douradas",
-  "view": "Jogadores",
+  "players": "Jogadores",
   "albums": "Álbuns:",
   "ambiance": "Ambiente",
   "manage_players": "👥 Gerenciar jogadores",
@@ -32,10 +32,8 @@
   "player": "Jogador",
   "note_ph": "Nota...",
   "undone": "Desfeito",
-  "nothing_to_undo": "⚠️ Nada para desfazer",
   "reset_done": "Reinicialização concluída",
   "reset_warn1": "⚠ TEM CERTEZA QUE DESEJA REINICIAR TUDO?\n\nIsso apagará todos os dados e iniciará o assistente de nova temporada.",
-  "reset_warn2": "Deseja manter a lista atual de jogadores?\n\n[OK] = Manter lista de jogadores (Tableaux zerados)\n[Cancelar] = Criar nova lista",
   "delete_q": "Excluir esta linha?",
   "print_upper": "IMPRIMIR",
   "file_dl": "Arquivo baixado",
@@ -50,8 +48,6 @@
   "amb_4": "✨ Temporada da Sorte ✨",
   "amb_static": "⏸ Estático",
   "amb_animated": "Animado",
-  "amb_switch_static": "Mudar para Estático",
-  "amb_switch_anim": "Mudar para Animado",
   "reset_player_q": "Reiniciar {name}?",
   "sub": "Escolha a versão",
   "full": "Versão Completa",
@@ -104,5 +100,8 @@
   "cancel_edit_msg": "Deseja cancelar suas alterações?",
   "cancel_edit_continue": "✏️ Continuar",
   "btn_reset_confirm": "🗑️ Redefinir",
-  "date_placeholder": "DD/MM"
+  "date_placeholder": "DD/MM",
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 Semana atual",
+  "missions_week_next": "⏭ Próxima semana"
 }

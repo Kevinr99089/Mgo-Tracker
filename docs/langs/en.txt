@@ -14,7 +14,7 @@
   "menu": "Menu",
   "undo": "Undo",
   "gold_setup": "Gold Cards",
-  "view": "Players",
+  "players": "Players",
   "albums": "Albums:",
   "ambiance": "Ambiance",
   "manage_players": "👥 Manage players",
@@ -32,10 +32,8 @@
   "player": "Player",
   "note_ph": "Note...",
   "undone": "Undone",
-  "nothing_to_undo": "⚠️ Nothing to undo",
   "reset_done": "Reset done",
   "reset_warn1": "⚠ ARE YOU SURE YOU WANT TO RESET EVERYTHING?\n\nThis will erase all data and start the new season wizard.",
-  "reset_warn2": "Do you want to keep the current player list?\n\n[OK] = Keep player list (Boards reset to zero)\n[Cancel] = Create a new list",
   "delete_q": "Delete this row?",
   "print_upper": "PRINT",
   "file_dl": "File downloaded",
@@ -50,8 +48,6 @@
   "amb_4": "✨ Lucky Season ✨",
   "amb_static": "⏸ Static",
   "amb_animated": "Animated",
-  "amb_switch_static": "Switch to Static",
-  "amb_switch_anim": "Switch to Animated",
   "reset_player_q": "Reset {name}?",
   "sub": "Choose version",
   "full": "Full Version",
@@ -104,5 +100,8 @@
   "cancel_edit_msg": "Do you want to cancel your changes?",
   "cancel_edit_continue": "✏️ Continue",
   "btn_reset_confirm": "🗑️ Reset",
-  "date_placeholder": "DD/MM"
+  "date_placeholder": "DD/MM",
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 Current week",
+  "missions_week_next": "⏭ Next week"
 }

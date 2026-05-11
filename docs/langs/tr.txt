@@ -14,7 +14,7 @@
   "menu": "Menü",
   "undo": "Geri al",
   "gold_setup": "Altın kartlar",
-  "view": "Oyuncular",
+  "players": "Oyuncular",
   "albums": "Albümler:",
   "ambiance": "Ambiyans",
   "manage_players": "👥 Oyuncuları yönet",
@@ -32,10 +32,8 @@
   "player": "Oyuncu",
   "note_ph": "Not...",
   "undone": "Geri alındı",
-  "nothing_to_undo": "⚠️ Geri alınacak bir şey yok",
   "reset_done": "Sıfırlama tamamlandı",
   "reset_warn1": "⚠ HER ŞEYİ SIFIRLAMAK İSTEDİĞİNİZDEN EMİN MİSİNİZ?\n\nBu tüm verileri silecek ve yeni sezon sihirbazını başlatacak.",
-  "reset_warn2": "Mevcut oyuncu listesini korumak ister misiniz?\n\n[Tamam] = Listeyi koru (Tahtalar sıfırlansın)\n[İptal] = Yeni liste oluştur",
   "delete_q": "Bu satırı sil?",
   "print_upper": "YAZDIR",
   "file_dl": "Dosya indirildi",
@@ -50,8 +48,6 @@
   "amb_4": "✨ Şanslı Sezon ✨",
   "amb_static": "⏸ Statik",
   "amb_animated": "Animasyonlu",
-  "amb_switch_static": "Statiğe Geç",
-  "amb_switch_anim": "Animasyonluya Geç",
   "reset_player_q": "{name} sıfırlansın mı?",
   "sub": "Sürüm seçin",
   "full": "Tam Sürüm",
@@ -104,5 +100,8 @@
   "cancel_edit_msg": "Değişikliklerinizi iptal etmek istiyor musunuz?",
   "cancel_edit_continue": "✏️ Devam Et",
   "btn_reset_confirm": "🗑️ Sıfırla",
-  "date_placeholder": "GG/AA"
+  "date_placeholder": "GG/AA",
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 Bu hafta",
+  "missions_week_next": "⏭ Sonraki hafta"
 }

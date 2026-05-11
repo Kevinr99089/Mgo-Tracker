@@ -14,7 +14,7 @@
   "menu": "Menu",
   "undo": "Cofnij",
   "gold_setup": "Złote karty",
-  "view": "Gracze",
+  "players": "Gracze",
   "albums": "Albumy:",
   "ambiance": "Klimat",
   "manage_players": "👥 Zarządzaj graczami",
@@ -32,10 +32,8 @@
   "player": "Gracz",
   "note_ph": "Notatka...",
   "undone": "Cofnięto",
-  "nothing_to_undo": "⚠️ Nic do cofnięcia",
   "reset_done": "Reset wykonany",
   "reset_warn1": "⚠ CZY NA PEWNO CHCESZ ZRESETOWAĆ WSZYSTKO?\n\nSpowoduje to usunięcie wszystkich danych i uruchomienie kreatora nowego sezonu.",
-  "reset_warn2": "Czy chcesz zachować aktualną listę graczy?\n\n[OK] = Zachowaj listę graczy (Tablice wyzerowane)\n[Anuluj] = Utwórz nową listę",
   "delete_q": "Usunąć ten wiersz?",
   "print_upper": "DRUKUJ",
   "file_dl": "Plik pobrany",
@@ -50,8 +48,6 @@
   "amb_4": "✨ Szczęśliwy Sezon ✨",
   "amb_static": "⏸ Statyczny",
   "amb_animated": "Animowany",
-  "amb_switch_static": "Przełącz na Statyczny",
-  "amb_switch_anim": "Przełącz na Animowany",
   "reset_player_q": "Zresetować {name}?",
   "sub": "Wybierz wersję",
   "full": "Pełna Wersja",
@@ -104,5 +100,8 @@
   "cancel_edit_msg": "Czy chcesz anulować zmiany?",
   "cancel_edit_continue": "✏️ Kontynuuj",
   "btn_reset_confirm": "🗑️ Resetuj",
-  "date_placeholder": "DD/MM"
+  "date_placeholder": "DD/MM",
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 Bieżący tydzień",
+  "missions_week_next": "⏭ Następny tydzień"
 }

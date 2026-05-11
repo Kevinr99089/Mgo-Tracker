@@ -14,7 +14,7 @@
   "menu": "Menú",
   "undo": "Deshacer",
   "gold_setup": "Cartas Doradas",
-  "view": "Jugadores",
+  "players": "Jugadores",
   "albums": "Álbumes:",
   "ambiance": "Ambiente",
   "manage_players": "👥 Gestionar jugadores",
@@ -32,10 +32,8 @@
   "player": "Jugador",
   "note_ph": "Nota...",
   "undone": "Deshecho",
-  "nothing_to_undo": "⚠️ Nada que deshacer",
   "reset_done": "Reinicio completado",
   "reset_warn1": "⚠ ¿ESTÁS SEGURO DE QUE QUIERES REINICIAR TODO?\n\nEsto borrará todos los datos y abrirá el asistente de nueva temporada.",
-  "reset_warn2": "¿Quieres conservar la lista actual de jugadores?\n\n[OK] = Conservar lista de jugadores (Tableros a cero)\n[Cancelar] = Crear nueva lista",
   "delete_q": "¿Eliminar esta fila?",
   "print_upper": "IMPRIMIR",
   "file_dl": "Archivo descargado",
@@ -50,8 +48,6 @@
   "amb_4": "✨ Temporada de la Suerte ✨",
   "amb_static": "⏸ Estático",
   "amb_animated": "Animado",
-  "amb_switch_static": "Cambiar a Estático",
-  "amb_switch_anim": "Cambiar a Animado",
   "reset_player_q": "¿Reiniciar {name}?",
   "sub": "Elige la versión",
   "full": "Versión Completa",
@@ -104,5 +100,8 @@
   "cancel_edit_msg": "¿Deseas cancelar tus cambios?",
   "cancel_edit_continue": "✏️ Continuar",
   "btn_reset_confirm": "🗑️ Restablecer",
-  "date_placeholder": "DD/MM"
+  "date_placeholder": "DD/MM",
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 Semana actual",
+  "missions_week_next": "⏭ Semana siguiente"
 }

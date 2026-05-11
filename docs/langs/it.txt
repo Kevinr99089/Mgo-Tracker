@@ -14,7 +14,7 @@
   "menu": "Menu",
   "undo": "Annulla",
   "gold_setup": "Carte Dorate",
-  "view": "Giocatori",
+  "players": "Giocatori",
   "albums": "Album:",
   "ambiance": "Atmosfera",
   "manage_players": "👥 Gestisci giocatori",
@@ -32,10 +32,8 @@
   "player": "Giocatore",
   "note_ph": "Nota...",
   "undone": "Annullato",
-  "nothing_to_undo": "⚠️ Niente da annullare",
   "reset_done": "Reset completato",
   "reset_warn1": "⚠ SEI SICURO DI VOLER REIMPOSTARE TUTTO?\n\nQuesto cancellerà tutti i dati e avvierà la procedura guidata per la nuova stagione.",
-  "reset_warn2": "Vuoi conservare la lista attuale dei giocatori?\n\n[OK] = Mantieni la lista giocatori (Tableau azzerati)\n[Annulla] = Crea una nuova lista",
   "delete_q": "Eliminare questa riga?",
   "print_upper": "STAMPA",
   "file_dl": "File scaricato",
@@ -50,8 +48,6 @@
   "amb_4": "✨ Stagione Fortunata ✨",
   "amb_static": "⏸ Statico",
   "amb_animated": "Animato",
-  "amb_switch_static": "Passa a Statico",
-  "amb_switch_anim": "Passa ad Animato",
   "reset_player_q": "Reimposta {name}?",
   "sub": "Scegli la versione",
   "full": "Versione Completa",
@@ -104,5 +100,8 @@
   "cancel_edit_msg": "Vuoi annullare le modifiche?",
   "cancel_edit_continue": "✏️ Continua",
   "btn_reset_confirm": "🗑️ Ripristina",
-  "date_placeholder": "GG/MM"
+  "date_placeholder": "GG/MM",
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 Settimana corrente",
+  "missions_week_next": "⏭ Settimana successiva"
 }

@@ -14,7 +14,7 @@
   "menu": "Menu",
   "undo": "Buat asal",
   "gold_setup": "Kad emas",
-  "view": "Pemain",
+  "players": "Pemain",
   "albums": "Album:",
   "ambiance": "Suasana",
   "manage_players": "👥 Urus pemain",
@@ -32,10 +32,8 @@
   "player": "Pemain",
   "note_ph": "Nota...",
   "undone": "Dibuat asal",
-  "nothing_to_undo": "⚠️ Tiada yang perlu dibuat asal",
   "reset_done": "Set semula selesai",
   "reset_warn1": "⚠ ADAKAH ANDA PASTI MAHU SET SEMULA SEMUA?\n\nIni akan memadam semua data dan memulakan wizard musim baharu.",
-  "reset_warn2": "Adakah anda mahu mengekalkan senarai pemain semasa?\n\n[OK] = Kekalkan senarai (Papan diset semula)\n[Batal] = Buat senarai baharu",
   "delete_q": "Padam baris ini?",
   "print_upper": "CETAK",
   "file_dl": "Fail dimuat turun",
@@ -50,8 +48,6 @@
   "amb_4": "✨ Musim Bertuah ✨",
   "amb_static": "⏸ Statik",
   "amb_animated": "Animasi",
-  "amb_switch_static": "Tukar ke Statik",
-  "amb_switch_anim": "Tukar ke Animasi",
   "reset_player_q": "Set semula {name}?",
   "sub": "Pilih versi",
   "full": "Versi Penuh",
@@ -104,5 +100,8 @@
   "cancel_edit_msg": "Adakah anda mahu membatalkan perubahan?",
   "cancel_edit_continue": "✏️ Teruskan",
   "btn_reset_confirm": "🗑️ Set Semula",
-  "date_placeholder": "HH/BB"
+  "date_placeholder": "HH/BB",
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 Minggu ini",
+  "missions_week_next": "⏭ Minggu depan"
 }

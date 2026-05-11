@@ -14,7 +14,7 @@
   "menu": "메뉴",
   "undo": "실행 취소",
   "gold_setup": "골드 카드",
-  "view": "플레이어",
+  "players": "플레이어",
   "albums": "앨범:",
   "ambiance": "분위기",
   "manage_players": "👥 플레이어 관리",
@@ -32,10 +32,8 @@
   "player": "플레이어",
   "note_ph": "메모...",
   "undone": "실행 취소됨",
-  "nothing_to_undo": "⚠️ 실행 취소할 항목이 없습니다",
   "reset_done": "초기화 완료",
   "reset_warn1": "⚠ 정말 전체 초기화하시겠습니까?\n\n모든 데이터가 삭제되고 새 시즌 마법사가 시작됩니다.",
-  "reset_warn2": "현재 플레이어 목록을 유지하시겠습니까?\n\n[확인] = 플레이어 목록 유지 (보드 초기화)\n[취소] = 새 목록 만들기",
   "delete_q": "이 행을 삭제하시겠습니까?",
   "print_upper": "인쇄",
   "file_dl": "파일 다운로드됨",
@@ -50,8 +48,6 @@
   "amb_4": "✨ 행운의 시즌 ✨",
   "amb_static": "⏸ 정지",
   "amb_animated": "애니메이션",
-  "amb_switch_static": "정지로 전환",
-  "amb_switch_anim": "애니메이션으로 전환",
   "reset_player_q": "{name} 초기화?",
   "sub": "버전 선택",
   "full": "전체 버전",
@@ -104,5 +100,8 @@
   "cancel_edit_msg": "변경 사항을 취소하시겠습니까?",
   "cancel_edit_continue": "✏️ 계속",
   "btn_reset_confirm": "🗑️ 초기화",
-  "date_placeholder": "DD/MM"
+  "date_placeholder": "DD/MM",
+  "app_hdr_title": "Mgo <em>Tracker</em>",
+  "missions_week_current": "📅 이번 주",
+  "missions_week_next": "⏭ 다음 주"
 }
