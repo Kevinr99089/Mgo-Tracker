@@ -3,22 +3,19 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
-<meta content="#0f172a" name="theme-color"/>
+<meta content="#050511" name="theme-color"/>
 <meta content="MGO Tracker" name="description"/>
 <title></title>
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
 <link rel="stylesheet" href="style.css"/>
 <script>
-try{const v=localStorage.getItem('mgo_unified_version');if(v)document.documentElement.classList.add(v+'-mode');const c=JSON.parse(localStorage.getItem('mgo_cfg'));if(c&&c.ambiance===4){const Rnd=(s)=>function(){var t=s+=1831565813;return t=Math.imul(t^t>>>15,1|t),(((t^=t+Math.imul(t^t>>>7,61|t))^t>>>14)>>>0)/4294967296};if(Rnd(c.seed||Date.now())()<0.01)document.documentElement.classList.add('is-shiney');}}catch(e){}
+window.Rnd=(s)=>function(){var t=s+=1831565813;return t=Math.imul(t^t>>>15,1|t),(((t^=t+Math.imul(t^t>>>7,61|t))^t>>>14)>>>0)/4294967296};
+try{const v=localStorage.getItem('mgo_unified_version');if(v)document.documentElement.classList.add(v+'-mode');const c=JSON.parse(localStorage.getItem('mgo_cfg'));if(c&&c.seed&&Rnd(c.seed)()<0.01)document.documentElement.classList.add('is-shiney');}catch(e){}
 </script>
 </head>
 <body>
 <div id="emoji-bank" style="display:none"
-  data-dic="🎲" data-str="★" data-ful="⚡" data-lit="🪶" data-shr="🔗"
-  data-sav="💾" data-usr="👥" data-prt="🖨️" data-lod="📂" data-del="🗑️"
-  data-crn="👑" data-cfg="⚙️" data-ok="✅" data-clp="📋" data-add="➕"
-  data-rfs="🔄" data-inb="📥" data-spk="✨" data-u="👤" data-wrn="⚠️"
-  data-cls="✕" data-bk="←" data-edt="✏️">
+  data-dic="🎲" data-str="★" data-ful="⚡" data-lit="🪶" data-shr="🔗" data-ok="✅" data-spk="✨" data-cls="✕">
 </div>
 <div id="__hub"><div class="hub-orb"></div><div class="hub-orb"></div><div class="hub-orb"></div><div class="hub-orb"></div>
 <div id="__hub-card"><div class="hub-deck"><div class="hub-dc hub-dc1"></div><div class="hub-dc hub-dc2" data-e="dic"></div><div class="hub-dc hub-dc3"></div></div><h2 data-i18n="hub_title"></h2><p id="__hub-sub"></p><button class="hub-btn hub-btn-full" data-pick-version="full"><span class="hub-btn-icon" data-e="ful"></span><span class="hub-btn-texts"><span class="hub-btn-lbl" data-i18n="full" id="__hub-lbl-full"></span><span class="hub-btn-desc" data-i18n="fullDesc" id="__hub-desc-full"></span></span><span class="hub-btn-arr">›</span></button><button class="hub-btn hub-btn-lite" data-pick-version="lite"><span class="hub-btn-icon" data-e="lit"></span><span class="hub-btn-texts"><span class="hub-btn-lbl" data-i18n="lite" id="__hub-lbl-lite"></span><span class="hub-btn-desc" data-i18n="liteDesc" id="__hub-desc-lite"></span></span><span class="hub-btn-arr">›</span></button></div>
@@ -26,26 +23,23 @@ try{const v=localStorage.getItem('mgo_unified_version');if(v)document.documentEl
 <div class="ambient-bg" id="ambient-bg"></div>
 <div id="splash"><div class="sp-deck"><div class="sp-c"></div><div class="sp-c" data-e="str"></div><div class="sp-c"></div></div><div class="sp-title" data-i18n-html="splash_title"></div><div class="sp-hint" data-i18n="splash_loading"></div></div>
 <div data-i18n="toast_default" id="toast"></div>
-<div id="setup-mod"><div class="setup-card"><div class="setup-header"><div class="setup-deck"><div class="setup-dc setup-dc1"></div><div class="setup-dc setup-dc2" data-e="str"></div><div class="setup-dc setup-dc3"></div></div><div class="setup-title" data-i18n="new_season"></div><p class="setup-tagline" data-i18n="setup_board"></p></div><div class="setup-steps"><div class="setup-step"><div class="setup-step-num">1</div><div class="setup-step-body"><div class="setup-step-label"><span data-i18n="manage_players"></span></div><button class="mini-btn setup-manage-btn" data-action="open-players" data-i18n="manage_list"></button></div></div><div class="setup-step"><div class="setup-step-num">2</div><div class="setup-step-body"><div class="setup-step-label" data-i18n="num_albums"></div><div class="setup-alb-row"><span class="setup-alb-val" id="s-alb-val">24</span><input id="s-alb" max="26" min="21" type="range" value="24"/></div></div></div><div class="setup-step"><div class="setup-step-num gold-num" data-e="str"></div><div class="setup-step-body setup-grp-gold"><div class="setup-step-label"><span data-i18n="gold_cards"></span> <span class="setup-subtitle" data-i18n="click_activate"></span></div><div id="setup-gold-grid"></div></div></div></div><div class="setup-footer"><button class="setup-launch" id="btn-start-season" data-i18n="start_season"></button></div></div></div>
+<div id="setup-mod"><div class="setup-card"><div class="setup-header"><div class="setup-deck"><div class="setup-dc setup-dc1"></div><div class="setup-dc setup-dc2" data-e="str"></div><div class="setup-dc setup-dc3"></div></div><div class="setup-title" data-i18n="new_season"></div><p class="setup-tagline" data-i18n="setup_board"></p></div><div class="setup-steps"><div class="setup-step"><div class="setup-step-num">1</div><div class="setup-step-body"><div class="setup-step-label"><span data-i18n="manage_players"></span></div><button class="mini-btn setup-manage-btn" data-action="open-players" data-i18n="manage_list"></button></div></div><div class="setup-step"><div class="setup-step-num">2</div><div class="setup-step-body"><div class="setup-step-label" data-i18n="num_albums"></div><div class="setup-alb-row" id="s-alb-pills"></div></div></div><div class="setup-step"><div class="setup-step-num gold-num" data-e="str"></div><div class="setup-step-body setup-grp-gold"><div class="setup-step-label"><span data-i18n="gold_cards"></span> <span class="setup-subtitle" data-i18n="click_activate"></span></div><div id="setup-gold-grid"></div></div></div></div><div class="setup-footer"><button class="setup-launch" id="btn-start-season" data-i18n="start_season"></button></div></div></div>
 <div class="dock-wrap"><div class="dock">
 <button class="dock-btn" data-action="toggle-menu"><svg viewbox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg><span class="dock-label" data-i18n="menu"></span></button>
 <button class="dock-btn" data-action="undo"><svg viewbox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"></path></svg><span class="dock-label" data-i18n="undo"></span></button>
 <button class="dock-btn" data-action="open-gold-mod"><svg viewbox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><span class="dock-label" data-i18n="gold_setup"></span></button>
 <button class="dock-btn" data-action="open-missions"><svg viewbox="0 0 24 24"><path d="M17 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4V1h2v2h6V1h2v2zm-2 2H9v2H7V5H4v4h16V5h-3v2h-2V5zm5 6H4v8h16v-8zM6 14h2v2H6v-2zm4 0h2v2h-2v-2zm4 0h2v2h-2v-2z"></path></svg><span class="dock-label" data-i18n="dock_missions"></span></button>
-<button class="dock-btn" data-action="toggle-players"><svg viewbox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg><span class="dock-label" data-i18n="view"></span></button>
+<button class="dock-btn" data-action="toggle-players"><svg viewbox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><span class="dock-label" data-i18n="players"></span></button>
 </div></div>
 <div class="popover" id="pop-menu">
-<div class="popover-label" data-i18n="menu"></div>
-<div class="menu-item"><span><span data-i18n="albums"></span> <b id="lbl-alb">24</b></span><input id="sl-alb" max="26" min="21" type="range"/></div>
-<div class="menu-item no-hover" data-full-only="">
-<span data-i18n="ambiance"></span>
-<div id="amb-sel"></div>
-</div>
+<div class="menu-item" data-action="save-file"><span data-i18n="save_file"></span></div>
+<div class="menu-item" data-action="load"><span data-i18n="load_btn"></span></div>
+<hr class="hr-sep"/>
+<div class="menu-item"><span><span data-i18n="albums"></span> <b id="lbl-alb"></b></span><div id="alb-pills" style="display:flex;gap:3px"></div></div>
+<div class="menu-item no-hover" data-full-only=""><span id="amb-tog-btn" class="amb-main-btn"><span data-i18n="ambiance"></span><br><span id="amb-sub-lbl" class="amb-sub"></span></span><div id="amb-sel"></div></div>
 <hr class="hr-sep"/>
 <div class="menu-item" data-action="toggle-print-sub"><span data-i18n="print"></span><span class="print-arrow">▼</span></div>
 <div id="sub-print"></div>
-<div class="menu-item" data-action="save-file"><span data-i18n="save_file"></span></div>
-<div class="menu-item" data-action="load"><span data-i18n="load_btn"></span></div>
 <hr class="hr-sep"/>
 <div class="menu-item" id="btn-version-switch"><span id="__switch-lbl"></span></div>
 <div class="menu-item" data-action="reset-all"><span data-i18n="reset_all"></span></div>
@@ -73,8 +67,50 @@ try{const v=localStorage.getItem('mgo_unified_version');if(v)document.documentEl
 </div>
 </div>
 <div class="modal-overlay" id="mod-gold"><div class="modal-box"><div class="modal-head"><span data-i18n="gold_conf"></span><button class="mini-btn cb danger" data-action="close-gold" data-e="cls"></button></div><div class="modal-body"><p data-i18n="click_gold"></p><div id="gold-grid-ctn"></div></div></div></div>
-<div class="modal-overlay" id="mod-missions"><div class="modal-box"><div class="modal-head"><span data-i18n="missions_modal_title"></span><button class="mini-btn cb danger" data-action="close-missions" data-e="cls"></button></div><div class="missions-scroll" id="missions-body"></div></div></div>
-<div class="app-container" id="main-app"><div id="gen-cards"></div><div class="glass-card gold-area anim-section" data-sec="Gold" id="sec-gold"><div class="card-header"><div class="user-info"><div class="user-avatar gold-ava"></div><div class="user-name" data-i18n="gold_trades"></div></div><button class="mini-btn" data-action="add-gold-row" data-i18n="add_upper"></button></div><div class="gold-content"><div id="gold-list"></div></div></div></div>
+<div class="modal-overlay" id="mod-missions"><div class="modal-box"><div class="modal-head" style="position:relative"><span id="missions-week-toggle-wrap"></span><span data-i18n="missions_modal_title" style="position:absolute;left:50%;transform:translateX(-50%);pointer-events:none;white-space:nowrap"></span><button class="mini-btn cb danger" data-action="close-missions" data-e="cls"></button></div><div class="missions-scroll" id="missions-body"></div></div></div>
+<div class="app-container" id="main-app">
+  <div id="app-header">
+    <div class="app-hdr-left">
+      <div class="app-hdr-deck" id="app-hdr-deck">
+        <div class="ahd-c ahd-c1"></div>
+        <div class="ahd-c ahd-c2" data-e="str"></div>
+        <div class="ahd-c ahd-c3"></div>
+      </div>
+      <div class="app-hdr-brand-info">
+        <span class="app-hdr-title" data-i18n-html="app_hdr_title"></span>
+      </div>
+      <input type="text" id="app-header-note" class="app-hdr-note">
+    </div>
+    <div class="app-hdr-right">
+      <span class="hdr-stat"><svg width="11" height="16" viewBox="0 0 11 16" style="flex-shrink:0"><rect x=".5" y=".5" width="10" height="15" rx="2" fill="rgba(99,102,241,.35)" stroke="rgba(99,102,241,.7)" stroke-width="1"/><text x="5.5" y="11" font-size="7" text-anchor="middle" fill="white" font-family="sans-serif" font-weight="700">★</text></svg><span class="hdr-stat-val" id="hdr-cards"></span></span>
+      <span class="hdr-stat"><svg width="11" height="16" viewBox="0 0 11 16" style="flex-shrink:0"><rect x=".5" y=".5" width="10" height="15" rx="2" fill="rgba(251,191,36,.2)" stroke="rgba(251,191,36,.7)" stroke-width="1"/><text x="5.5" y="11" font-size="7" text-anchor="middle" fill="#fbbf24" font-family="sans-serif" font-weight="700">★</text></svg><span class="hdr-stat-val" id="hdr-gold"></span></span>
+    </div>
+  </div>
+  <div id="gen-cards"></div>
+  <div class="glass-card gold-area anim-section" data-sec="Gold" id="sec-gold">
+    <div class="card-header">
+      <div class="user-info">
+        <div class="user-avatar gold-ava">
+          <div class="ua-inner">
+            <svg width="38" height="20" viewBox="0 0 38 20" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;overflow:visible">
+              <g transform="rotate(-9,6.7,10)"><rect x="1" y="2" width="11" height="16" rx="2.5" fill="#fbbf24"/><text x="6.7" y="10" font-size="7" fill="rgba(255,255,255,0.9)" font-family="sans-serif" text-anchor="middle" dominant-baseline="central">★</text></g>
+              <g transform="rotate(9,30.5,10)"><rect x="25" y="2" width="11" height="16" rx="2.5" fill="#2563eb"/><text x="30.5" y="10" font-size="6" fill="white" font-family="sans-serif" text-anchor="middle" dominant-baseline="central">◆</text></g>
+              <line x1="14.5" y1="7" x2="23" y2="7" stroke="#fbbf24" stroke-width="1" stroke-linecap="round"/>
+              <polyline points="21,5 23,7 21,9" fill="none" stroke="#fbbf24" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="23" y1="13" x2="14.5" y2="13" stroke="#93c5fd" stroke-width="1" stroke-linecap="round"/>
+              <polyline points="16.5,11 14.5,13 16.5,15" fill="none" stroke="#93c5fd" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="ua-vsep"></div>
+            <span class="ua-gold-label" data-i18n="gold_trades"></span>
+          </div>
+        </div>
+        <div class="user-name" data-i18n="gold_trades"></div>
+      </div>
+      <button class="mini-btn" data-action="add-gold-row" data-i18n="add_upper"></button>
+    </div>
+    <div class="gold-content"><div id="gold-list"></div></div>
+  </div>
+</div>
 <div class="modal-overlay" id="mod-dialog"><div class="modal-box"><div class="modal-head"><span id="dialog-title"></span><button class="mini-btn cb danger" id="dialog-close-btn" data-e="cls"></button></div><div class="modal-body"><p id="dialog-msg"></p></div><div id="dialog-chk-wrap"></div><div id="dialog-btns"></div></div></div><div class="modal-overlay" id="mod-import"><div class="modal-box"><div class="modal-head"><span data-i18n="share_import_title"></span></div><div class="modal-body"><p data-i18n="share_import_msg"></p><div id="import-preview"><div id="import-name"></div><div id="import-stats"></div></div><div id="import-step-1"><button class="big-btn" id="btn-import-quick"></button><div class="import-btn-row"><button class="big-btn" data-i18n="import_add_btn" id="btn-import-confirm"></button><button class="mini-btn" data-i18n="import_replace_btn" id="btn-import-replace"></button></div><button class="mini-btn" data-i18n="share_import_cancel" id="btn-import-cancel"></button></div><div id="import-step-2"><p data-i18n="import_replace_who"></p><div class="import-confirm-row" id="import-player-select"></div><div class="import-confirm-row"><button class="mini-btn" data-i18n="import_back_btn" id="btn-import-replace-back"></button><button class="mini-btn" data-i18n="import_confirm_btn" disabled="" id="btn-import-replace-confirm"></button></div></div></div></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.3.2/pixi.min.js"></script>
 <script src="script.js"></script>
