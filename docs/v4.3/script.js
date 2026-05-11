@@ -217,9 +217,9 @@ const UI={
   mns(){
     const v=E("players-list"),p=E("sub-print");
     v.innerHTML="";p.innerHTML="";
-    [...State.cfg.usersList].forEach(s=>{
-      const id=s.replace(/\s/g,""),h=State.cfg.hidden.includes(id);
-      const shareBtn=`<button class="mini-btn" style="padding:4px 8px;margin-right:10px;font-size:0.8rem;background:rgba(99,102,241,0.15);border-color:var(--p);color:#fff" onclick="Share.quick('${esc(s)}','${esc(id)}',this)">${EMOJIS.shr}</button>`;
+    [...State.cfg.usersList,"Gold"].forEach(s=>{
+      const id=s==="Gold"?"Gold":s.replace(/\s/g,""),h=State.cfg.hidden.includes(id);
+      const shareBtn=s!=="Gold"?`<button class="mini-btn" style="padding:4px 8px;margin-right:10px;font-size:0.8rem;background:rgba(99,102,241,0.15);border-color:var(--p);color:#fff" onclick="Share.quick('${esc(s)}','${esc(id)}',this)">${EMOJIS.shr}</button>`:"";
       v.insertAdjacentHTML("beforeend",`<div class="menu-item" style="padding:8px 12px">
         <div style="display:flex;align-items:center">${shareBtn}<span>${esc(s)}</span></div>
         <label style="cursor:pointer;display:flex">
@@ -270,7 +270,6 @@ const Actions={
     'reset-all':()=>{UI.dialog({title:T("reset_all"),msg:T("reset_warn1"),checkbox:{label:T("keep_players_lbl"),checked:true},buttons:[{label:T("btn_cancel"),cls:"",cb:null},{label:T("btn_reset_confirm"),cls:"danger",cb:()=>{const kp=document.getElementById("dialog-chk")?.checked!==false;const ul=kp?[...State.cfg.usersList]:[`${T('player')} 1`];LS.clear();LS.setItem("mgo_cfg",JSON.stringify({albums:24,mode:"cross",gold_ids:[],gold_ex:[],hidden:[],setup_done:!1,ambiance:0,ambStatic:!1,seed:Date.now(),usersList:ul}));location.reload()}}]})},
     'open-gold-mod':()=>{Q(".popover").forEach(p=>p.classList.remove("show"));PlayerManager.close();UI.gGrid("gold-grid-ctn");E("mod-gold").classList.add("open")},'close-gold':()=>{E("mod-gold").classList.remove("open");UI.hyd()},
     'open-missions':()=>{Q(".popover").forEach(p=>p.classList.remove("show"));PlayerManager.close();Missions.open()},'close-missions':()=>E("mod-missions").classList.remove("open"),
-    'open-gold-trades':()=>{Q(".popover").forEach(p=>p.classList.remove("show"));PlayerManager.close();UI.gEx();E("mod-gold-trades").classList.add("open")},'close-gold-trades':()=>{E("mod-gold-trades").classList.remove("open")},
     'add-gold-row':()=>{State.cfg.gold_ex.push({alb:"",card:"",date:""});State.saveC();UI.gEx()},'del-gold':()=>{UI.confirm(T("delete_q"),()=>{State.cfg.gold_ex.splice(+a.dataset.idx,1);State.saveC();UI.gEx()})},
     'toggle-print-sub':()=>{const p=E("sub-print");p.style.display=p.style.display==="none"?"flex":"none"},
     'do-print':()=>{const s=new Set(Array.from(Q(".print-chk:checked")).map(el=>el.value));Q(".glass-card").forEach(c=>c.classList.toggle("print-hidden",!s.has(c.dataset.sec)));window.print()},
@@ -297,11 +296,11 @@ function __initApp(fromHub=false){
   if(!LITE_MODE){UI.ambSel();}
   const ah=Actions.handle.bind(Actions);D.body.addEventListener("click",ah);D.body.addEventListener("dblclick",ah);
   const _sap=E("s-alb-pills");_sap.innerHTML="";UI.gGrid("setup-gold-grid");for(let v=21;v<=26;v++){const b=C("button");b.className="alb-pill"+(State.cfg.albums===v?" active":"");b.textContent=v;b.onclick=()=>{State.cfg.albums=v;State.saveC();_sap.querySelectorAll(".alb-pill").forEach(p=>p.classList.toggle("active",+p.textContent===v));UI.gGrid("setup-gold-grid")};_sap.appendChild(b)}
-  E("btn-start-season").onclick=()=>{State.cfg.setup_done=!0;State.saveC();E("setup-mod").classList.remove("open");UI.mns();UI.renderMain();UI.toast(T("good_season"))};
+  E("btn-start-season").onclick=()=>{State.cfg.setup_done=!0;State.saveC();E("setup-mod").classList.remove("open");UI.mns();UI.renderMain();UI.gEx();UI.toast(T("good_season"))};
   const isShiney = cnt === 5;
   const delay = isShiney ? (LITE_MODE ? 1000 : 1800) : 500;
   if(!fromHub && isShiney) __playShineySplash(LITE_MODE);
-  setTimeout(()=>{UI.renderMain();UI.mns();},300);
+  setTimeout(()=>{UI.renderMain();UI.gEx();UI.mns();},300);
   const sp=E("splash");
   if(LITE_MODE){
     requestAnimationFrame(()=>setTimeout(()=>{
@@ -362,10 +361,9 @@ const Missions={
   save(){LS.setItem('mgo_missions_data_'+this.wkd(this._woff),JSON.stringify(this._woff===0?this._d:this._nd))},
   open(){
     if(!this._d)this.init();
+    const tw=E('missions-week-toggle-wrap');const _day=new Date().getDay();const _showTog=_day===0||_day===6;
+    if(tw){tw.innerHTML='';if(_showTog){const tbtn=C('button');tbtn.className='mini-btn';tbtn.style.cssText='font-size:.75rem;padding:5px 12px;';tbtn.textContent=this._woff===0?T('missions_week_next'):T('missions_week_current');tbtn.onclick=()=>{this._woff=this._woff===0?1:0;this.open()};tw.appendChild(tbtn)}else{this._woff=0}}
     const b=E('missions-body');b.innerHTML='';
-    const nav=C('div');nav.style.cssText='display:flex;gap:8px;margin-bottom:8px';
-    const mkBtn=(lbl,off)=>{const btn=C('button');btn.className='mini-btn';btn.style.cssText='flex:1;padding:8px 4px;font-size:.8rem;'+(this._woff===off?'background:var(--p);color:#fff;border-color:var(--p)':'');btn.textContent=lbl;btn.onclick=()=>{this._woff=off;this.open()};return btn};
-    nav.appendChild(mkBtn(T('missions_week_current'),0));nav.appendChild(mkBtn(T('missions_week_next'),1));b.appendChild(nav);
     const data=this._woff===0?this._d:this._nd;
     const now=new Date();now.setHours(0,0,0,0);
     const md=new Date(now);md.setDate(md.getDate()+(md.getDay()===0?-6:1-md.getDay())+(this._woff*7));
