@@ -273,7 +273,7 @@ const Actions={
     'add-gold-row':()=>{State.cfg.gold_ex.push({alb:"",card:"",date:""});State.saveC();UI.gEx()},'del-gold':()=>{UI.confirm(T("delete_q"),()=>{State.cfg.gold_ex.splice(+a.dataset.idx,1);State.saveC();UI.gEx()})},
     'toggle-print-sub':()=>{const p=E("sub-print");p.style.display=p.style.display==="none"?"flex":"none"},
     'do-print':()=>{const s=new Set(Array.from(Q(".print-chk:checked")).map(el=>el.value));Q(".glass-card").forEach(c=>c.classList.toggle("print-hidden",!s.has(c.dataset.sec)));window.print()},
-    'save-file':()=>{const v="4.3.0 (Web)",b=new Blob([JSON.stringify({version:v,config:State.cfg,users:State.usr})],{type:"application/json"}),u=URL.createObjectURL(b),lk=C("a");lk.href=u;lk.download=`Mgo_Backup_V${v}.json`;D.body.appendChild(lk);lk.click();D.body.removeChild(lk);setTimeout(()=>URL.revokeObjectURL(u),5e3);UI.toast(T("file_dl"))},
+    'save-file':()=>{const v="4.3.1 (Web)",b=new Blob([JSON.stringify({version:v,config:State.cfg,users:State.usr})],{type:"application/json"}),u=URL.createObjectURL(b),lk=C("a");lk.href=u;lk.download=`Mgo_Backup_V${v}.json`;D.body.appendChild(lk);lk.click();D.body.removeChild(lk);setTimeout(()=>URL.revokeObjectURL(u),5e3);UI.toast(T("file_dl"))},
     'load':()=>{const i=C("input");i.type="file";i.accept=".json";i.onchange=e=>{const r=new FileReader;r.onload=ev=>{try{const o=JSON.parse(ev.target.result);if(o.config&&o.users){State.cfg=o.config;if(!State.cfg.usersList)State.cfg.usersList=Object.keys(o.users);State.cfg.gold_ids=State.cfg.gold_ids||[];State.cfg.gold_ex=State.cfg.gold_ex||[];State.cfg.hidden=State.cfg.hidden||[];Object.keys(o.users).forEach(u=>{o.users[u].state=o.users[u].state||{};o.users[u].nums=o.users[u].nums||{}});State.usr=o.users;State.cfg.setup_done=!0;State.saveC();Object.keys(o.users).forEach(u=>State.saveU(u));location.reload()}else UI.alert(T("file_invalid"))}catch(er){UI.alert(T("file_err"))}};r.readAsText(e.target.files[0])};i.click()}
   };if(m[act])m[act]()}
 };
@@ -300,13 +300,14 @@ function __initApp(fromHub=false){
   const isShiney = cnt === 5;
   const delay = isShiney ? (LITE_MODE ? 1000 : 1800) : 500;
   if(!fromHub && isShiney) __playShineySplash(LITE_MODE);
-  setTimeout(()=>{UI.renderMain();UI.gEx();UI.mns();},300);
+  setTimeout(()=>{UI.renderMain();UI.gEx();UI.mns();if(!LITE_MODE){Q(".anim-section").forEach(e=>{e.style.opacity="0";e.style.transform="translateY(22px)";e.style.transition="none"});}},300);
   const sp=E("splash");
   if(LITE_MODE){
     requestAnimationFrame(()=>setTimeout(()=>{
         if(!sp) return;
         E('app-hdr-deck').classList.add('visible');
         sp.style.transition="opacity 0.25s ease";sp.style.opacity="0";
+        const dw=D.querySelector(".dock-wrap");if(dw){dw.style.transition="transform 0.4s cubic-bezier(0.34,1.42,0.64,1)";dw.style.transform="translateY(0)"}
         setTimeout(()=>{sp.remove();if(!State.cfg.setup_done)E("setup-mod").classList.add("open");Share.show()},250);
     }, delay));
   } else {
@@ -322,6 +323,7 @@ function __initApp(fromHub=false){
         setTimeout(()=>{
           sp.style.transition="opacity 0.55s ease, visibility 0.55s ease";
           sp.style.opacity="0";sp.style.visibility="hidden";sp.style.pointerEvents="none";
+          const dw=D.querySelector(".dock-wrap");if(dw){dw.style.transition="transform 0.5s cubic-bezier(0.34,1.42,0.64,1)";dw.style.transform="translateY(0)"}
           setTimeout(()=>{
             UI.amb();requestAnimationFrame(()=>requestAnimationFrame(()=>bg.style.opacity="1"));
             setTimeout(()=>{Q(".anim-section").forEach(e=>{e.style.cssText=""});sp.remove();if(!State.cfg.setup_done)E("setup-mod").classList.add("open");Share.show()},75*s.length+450+80);
