@@ -21,7 +21,7 @@ function __playShineySplash(isFast = false) {
       setTimeout(() => {
           if(spt) { spt.innerHTML = T('shiney_title'); spt.style.opacity = "1"; }
           if(sph) { sph.textContent = T('shiney_hint'); sph.style.opacity = "1"; }
-      }, 300);
+      }, 150);
   }, isFast ? 150 : 1050);
 }
 function __flyDeckToHeader(sp){
