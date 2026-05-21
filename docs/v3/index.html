@@ -4,6 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>MGO Tracker - V3.17 (Moteur V4)</title>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
 <style>
 :root{--primary:#818cf8;--bg:#0f172a;--card:#1e293b;--txt:#f1f5f9;--mut:#94a3b8;--bd:#334155;--g-bg:#854d0e;--g-txt:#fcd34d;--x1:#f8f9fa;--x2:#f87171;--sep:#475569;--shd:0 10px 15px -3px rgba(0,0,0,0.5);--rad:8px;--ok:#22c55e;}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -173,7 +174,7 @@ table.trk{border-collapse:collapse;border-spacing:0;border:1px solid #000!import
 </div>
 <div class="modal" id="m-missions">
     <div class="m-cont" style="max-width:800px">
-        <div class="m-head"><div class="m-tit">📋 Missions de la semaine</div><button class="act close-m">FERMER ✖</button></div>
+        <div class="m-head"><div style="display:flex;align-items:center;gap:10px;"><span id="missions-week-toggle-wrap"></span><div class="m-tit">📋 Missions de la semaine</div></div><button class="act close-m">FERMER ✖</button></div>
         <div class="m-body" id="missions-body" style="display:flex;flex-direction:column;gap:10px;"></div>
     </div>
 </div>
@@ -313,39 +314,64 @@ const ctn = document.getElementById("gen-ctn");
 let albC = 24;
 App.init();
 const Missions = {
-    _d: null,
+    _d: null, _nd: null, _woff: 0,
     gk: function(d) {
         const nd = new Date(d); nd.setHours(0,0,0,0);
         const dy = nd.getDay(); nd.setDate(nd.getDate() + (dy === 0 ? -6 : 1 - dy));
         return nd.getFullYear() + '-' + String(nd.getMonth()+1).padStart(2,'0') + '-' + String(nd.getDate()).padStart(2,'0');
     },
+    wkd: function(off) {
+        const d = new Date(); d.setDate(d.getDate() + (off || 0) * 7);
+        return this.gk(d);
+    },
+    df: function() { return Array.from({length: 7}, () => ({texts: ['','','']})); },
+    load: function(wk) {
+        try { return JSON.parse(localStorage.getItem('mgo_missions_data_' + wk)) || this.df(); } catch(e) { return this.df(); }
+    },
     init: function() {
-        const k = this.gk(new Date()), sk = localStorage.getItem('mgo_missions_week');
-        if(sk !== k) {
+        const ok = localStorage.getItem('mgo_missions_week'), od = localStorage.getItem('mgo_missions_data');
+        if (ok && od) {
+            const ck = this.gk(new Date());
+            if (ok === ck) localStorage.setItem('mgo_missions_data_' + ok, od);
+            localStorage.removeItem('mgo_missions_week');
             localStorage.removeItem('mgo_missions_data');
-            localStorage.setItem('mgo_missions_week', k);
-            this._d = Array.from({length: 7}, () => ({texts: ['','','']}));
-        } else {
-            try {
-                this._d = JSON.parse(localStorage.getItem('mgo_missions_data')) || Array.from({length: 7}, () => ({texts: ['','','']}));
-            } catch(e) {
-                this._d = Array.from({length: 7}, () => ({texts: ['','','']}));
+        }
+        this._d = this.load(this.wkd(0));
+        this._nd = this.load(this.wkd(1));
+    },
+    save: function() {
+        localStorage.setItem('mgo_missions_data_' + this.wkd(this._woff), JSON.stringify(this._woff === 0 ? this._d : this._nd));
+    },
+    render: function() {
+        if (!this._d) this.init();
+        const tw = document.getElementById('missions-week-toggle-wrap');
+        const _day = new Date().getDay();
+        const _showTog = _day === 0 || _day === 6;
+        if (tw) {
+            tw.innerHTML = '';
+            if (_showTog) {
+                const tbtn = document.createElement('button');
+                tbtn.className = 'act';
+                tbtn.style.cssText = 'padding:4px 8px;font-size:11px;font-weight:700;';
+                tbtn.textContent = this._woff === 0 ? '⏭ Suivante' : '📅 Actuelle';
+                tbtn.onclick = () => { this._woff = this._woff === 0 ? 1 : 0; this.render(); };
+                tw.appendChild(tbtn);
+            } else {
+                this._woff = 0;
             }
         }
-    },
-    save: function() { localStorage.setItem('mgo_missions_data', JSON.stringify(this._d)); },
-    render: function() {
         const b = document.getElementById('missions-body');
         b.innerHTML = '';
+        const data = this._woff === 0 ? this._d : this._nd;
         const now = new Date(); now.setHours(0,0,0,0);
-        const md = new Date(now); md.setDate(md.getDate() + (md.getDay() === 0 ? -6 : 1 - md.getDay()));
+        const md = new Date(now); md.setDate(md.getDate() + (md.getDay() === 0 ? -6 : 1 - md.getDay()) + (this._woff * 7));
         const loc = navigator.language || 'fr-FR';
         const fmtDay = new Intl.DateTimeFormat(loc, {weekday: 'long'});
         const fmtMonth = new Intl.DateTimeFormat(loc, {month: 'long'});
         const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
         for(let i=0; i<7; i++) {
             const d = new Date(md); d.setDate(md.getDate() + i);
-            const it = d.getTime() === now.getTime();
+            const it = d.getTime() === now.getTime() && this._woff === 0;
             const c = document.createElement('div');
             c.className = 'm-day' + (it ? ' today' : '');
             c.innerHTML = `<div class="m-day-lbl">${cap(fmtDay.format(d))} ${d.getDate()} ${cap(fmtMonth.format(d))} ${it ? `<span class="today-badge">Aujourd'hui</span>` : ''}</div>`;
@@ -354,11 +380,12 @@ const Missions = {
                 ta.className = 'm-input';
                 ta.rows = 1;
                 ta.placeholder = `Mission ${m+1}...`;
-                ta.value = this._d[i].texts[m] || '';
+                ta.value = data[i].texts[m] || '';
+                const idx_m = m;
                 ta.oninput = () => {
                     ta.style.height = 'auto';
                     ta.style.height = Math.min(ta.scrollHeight, 80) + 'px';
-                    this._d[i].texts[m] = ta.value;
+                    data[i].texts[idx_m] = ta.value;
                     this.save();
                 };
                 ta.onfocus = () => ta.oninput();
