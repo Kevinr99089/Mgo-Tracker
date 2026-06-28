@@ -2617,7 +2617,7 @@ const Actions = {
           window.print();
         },
         'save-file': () => {
-          const payload = JSON.stringify({ version: APP_VER, config: State.cfg, users: State.usr });
+          const payload = JSON.stringify({ version: APP_VER, config: State.cfg, users: State.usr, note: GoldNote.loadData() });
           const url = URL.createObjectURL(new Blob([payload], { type: 'application/json' }));
           Object.assign(C('a'), { href: url, download: `Mgo_Backup_V${APP_VER}.json` }).click();
           setTimeout(() => URL.revokeObjectURL(url), 5000);
@@ -2649,6 +2649,7 @@ const Actions = {
                 State.usr = o.users;
                 State.saveCfg();
                 Object.keys(o.users).forEach((u) => State.saveUser(u));
+                if (o.note) GoldNote.saveData(o.note);
                 location.reload();
               } catch { UI.alert(T('f_err')); }
             };
@@ -3301,11 +3302,9 @@ const GoldNote = {
     const ancestor  = range.commonAncestorContainer;
     const allSpans  = [...ed.querySelectorAll('.gn-enc,.gn-ul,.gn-col')];
     const intersecting = allSpans.filter((span) => {
-      // Case 1 : sélection entièrement dans le span
+      // Cas 1 : la sélection est entièrement DANS le span
       if (span === ancestor || span.contains(ancestor)) return true;
-      // Case 2 : span entièrement dans la sélection
-      if (ancestor.contains && ancestor.contains(span)) return true;
-      // Case 3 : chevauchement partiel
+      // Cas 2 : chevauchement partiel OU span entièrement dans la sélection
       try { return range.intersectsNode(span); } catch { return false; }
     });
     if (intersecting.length > 0) {
