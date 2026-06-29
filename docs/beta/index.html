@@ -2749,8 +2749,30 @@ function __initApp(fromHub = false) {
         e.preventDefault();
         const sel = window.getSelection();
         if (!sel || !sel.rangeCount) return;
-        const range = sel.getRangeAt(0);
+        let range = sel.getRangeAt(0);
         range.deleteContents();
+        const exited = GoldNote._exitSpan(range);
+        if (exited) range = exited;
+        const br = D.createElement('br');
+        range.insertNode(br);
+        range.setStartAfter(br);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        GoldNote._save();
+      }
+    });
+    noteEditor.addEventListener('beforeinput', function (e) {
+      if (e.inputType === 'insertText' || e.inputType === 'insertCompositionText') {
+        GoldNote._escapeSpanBeforeInput(e);
+      } else if (e.inputType === 'insertLineBreak' || e.inputType === 'insertParagraph') {
+        e.preventDefault();
+        const sel = window.getSelection();
+        if (!sel || !sel.rangeCount) return;
+        let range = sel.getRangeAt(0);
+        range.deleteContents();
+        const exited = GoldNote._exitSpan(range);
+        if (exited) range = exited;
         const br = D.createElement('br');
         range.insertNode(br);
         range.setStartAfter(br);
@@ -3476,6 +3498,52 @@ const GoldNote = {
       row.appendChild(inp);
       list.appendChild(row);
     });
+  },
+  _exitSpan(range) {
+    const ed = E('gn-editor');
+    let node = range.startContainer;
+    while (node && node !== ed) {
+      if (node.nodeType === 1 && node.classList &&
+          (node.classList.contains('gn-enc') || node.classList.contains('gn-ul') || node.classList.contains('gn-col'))) {
+        const afterR = D.createRange();
+        afterR.setStart(range.startContainer, range.startOffset);
+        afterR.setEnd(node, node.childNodes.length);
+        const afterTxt = afterR.toString();
+        afterR.deleteContents();
+        if (!node.textContent) node.remove();
+        const nr = D.createRange();
+        if (node.parentNode) nr.setStartAfter(node); else { nr.setStart(range.startContainer, range.startOffset); }
+        nr.collapse(true);
+        if (afterTxt) {
+          const tn = D.createTextNode(afterTxt);
+          nr.insertNode(tn);
+          if (node.parentNode) nr.setStartAfter(node); else nr.setStartBefore(tn);
+          nr.collapse(true);
+        }
+        return nr;
+      }
+      node = node.parentNode;
+    }
+    return null;
+  },
+  _escapeSpanBeforeInput(e) {
+    const sel = window.getSelection();
+    if (!sel || !sel.isCollapsed || !sel.rangeCount) return;
+    const range = sel.getRangeAt(0);
+    const cont = range.startContainer;
+    if (cont.nodeType !== 3) return;
+    const par = cont.parentNode;
+    if (!par || par === E('gn-editor')) return;
+    if (!par.classList || !(par.classList.contains('gn-enc') || par.classList.contains('gn-ul') || par.classList.contains('gn-col'))) return;
+    if (cont !== par.lastChild || range.startOffset !== cont.nodeValue.length) return;
+    e.preventDefault();
+    const nr = D.createRange();
+    nr.setStartAfter(par);
+    nr.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(nr);
+    if (e.data) D.execCommand('insertText', false, e.data);
+    GoldNote._save();
   },
   _charOffset(ed, container, offset) {
     let total = 0;
