@@ -126,8 +126,7 @@ html.is-shiney .sp-title span{font-size:.6em;vertical-align:middle}
 .cell-wrap[data-st="2"]{background:rgba(244,63,94,.55);border-color:rgba(244,63,94,.88)}
 .cell-wrap[data-bg="1"]::after{
   content:'';position:absolute;inset:-2px;border:2px solid var(--gold);
-  pointer-events:none;z-index:4;border-radius:5px;transition:inset .4s;
-  box-shadow:0 0 6px rgba(245,158,11,.5)
+  pointer-events:none;z-index:4;border-radius:5px;transition:inset .4s
 }
 .glass-card.expanded .cell-wrap[data-bg="1"]::after{inset:-3px;border:2px solid var(--gold);border-radius:calc(var(--r-s) + 3px);box-shadow:0 0 12px rgba(245,158,11,.8),0 0 28px rgba(245,158,11,.3)}
 .cell-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:8px;color:rgba(255,255,255,.75);opacity:0;transition:.2s;font-family:var(--font-mono)}
@@ -324,7 +323,7 @@ input:checked+.switch::after{transform:translateX(18px)}
 .hdr-stat{display:flex;align-items:center;gap:4px;font-size:.72rem;font-weight:700;color:var(--txt-dim)}
 .hdr-stat-val{color:var(--txt);font-weight:800;font-family:var(--font-mono)}
 .expand-hint{position:absolute;bottom:2px;left:0;right:0;text-align:center;font-size:.58rem;color:rgba(255,255,255,.15);letter-spacing:.5px;user-select:none;pointer-events:none}
-.glass-card.expanded .expand-hint{display:none}
+.glass-card.expanded .expand-hint{display:block}
 .legend-bar{display:flex;gap:10px;padding:5px 10px 7px;justify-content:flex-end;align-items:center;border-top:1px solid rgba(255,255,255,.05);flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:5px;font-size:.68rem;color:var(--txt-dim);font-weight:600;white-space:nowrap}
 .legend-swatch{width:11px;height:11px;border-radius:3px;flex-shrink:0}
@@ -1196,7 +1195,7 @@ const UI = {
   alert(msg, cb) {
     this.dialog({ msg, buttons: [{ label: T('btn_ok'), cls: 'primary', cb: cb }] });
   },
-  toast(m) {
+  toast(m, err = false) {
     const t = E('toast');
     const dur = Math.min(6500, Math.max(2500, 1800 + m.replace(/[^\x00-\x7F]/g, 'xx').length * 45));
     clearTimeout(this.toastTimer);
@@ -1220,6 +1219,14 @@ const UI = {
         svg.innerHTML =
           '<defs><linearGradient id="tpg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#f472b6"/></linearGradient></defs><rect fill="none" stroke="url(#tpg)" stroke-width="2.5"/>';
         t.toastSvg = svg;
+      }
+      const stops = svg.querySelectorAll('stop');
+      if (err) {
+        stops[0].setAttribute('stop-color', '#ef4444');
+        stops[1].setAttribute('stop-color', '#f43f5e');
+      } else {
+        stops[0].setAttribute('stop-color', '#6366f1');
+        stops[1].setAttribute('stop-color', '#f472b6');
       }
       if (!svg.isConnected) t.appendChild(svg);
       const rc = svg.querySelector('rect');
@@ -1256,7 +1263,7 @@ const UI = {
     if (m < 4) {
       if (typeof PIXI === 'undefined') {
         if (!pixiErr) {
-          UI.toast(T('amb_err'));
+          UI.toast(T('amb_err'), true);
           pixiErr = true;
         }
         bg.style.backgroundImage = 'var(--lite-bg)';
@@ -2487,11 +2494,14 @@ const Actions = {
     if (cd && e.type === 'dblclick' && !a && !c) {
       const ch = cd.offsetHeight,
         isExp = cd.classList.contains('expanded');
+      const hint = cd.querySelector('.expand-hint');
       if (isExp) {
         cd.classList.remove('blur-active', 'expanded');
         cd.classList.add('blur-out', 'transitioning');
+        if (hint) hint.textContent = T('exp_hint');
       } else {
         cd.classList.add('transitioning', 'expanded');
+        if (hint) hint.textContent = T('col_hint');
       }
       requestAnimationFrame(() => {
         const ch2 = cd.offsetHeight,
@@ -3713,6 +3723,7 @@ LANGS['french.txt'] = {
   dcard: 'Doublon',
   gcard: 'Carte dorée',
   exp_hint: '⇕ Double-tap pour agrandir ⇕',
+  col_hint: '⇕ Double-tap pour réduire ⇕',
   keep_ply: 'Conserver la liste des joueurs actuelle',
   dlg_ttl: '⚠️ Attention',
   btn_cancel: '✕ Annuler',
@@ -3834,6 +3845,7 @@ LANGS['english.txt'] = {
   dcard: 'Duplicate',
   gcard: 'Gold card',
   exp_hint: '⇕ Double-tap to expand ⇕',
+  col_hint: '⇕ Double-tap to collapse ⇕',
   keep_ply: 'Keep the current player list',
   dlg_ttl: '⚠️ Warning',
   btn_cancel: '✕ Cancel',
