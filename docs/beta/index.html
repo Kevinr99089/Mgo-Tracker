@@ -218,7 +218,7 @@ input:checked+.switch::after{transform:translateX(18px)}
 .modal-overlay.open .modal-box{transform:scale(1) translateY(0);opacity:1}
 .modal-overlay:not(.open) .modal-box{transform:scale(.92) translateY(10px);opacity:0;transition:transform .2s ease-in,opacity .18s ease-in}
 .modal-head{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;position:relative}
-.modal-head>[data-i18n],.modal-head>#dialog-title{position:absolute;left:50%;transform:translateX(-50%);pointer-events:none;white-space:nowrap;font-weight:800;font-size:.95rem}
+.modal-head>span[data-i18n],.modal-head>#dialog-title{position:absolute;left:50%;transform:translateX(-50%);pointer-events:none;white-space:nowrap;font-weight:800;font-size:.95rem}
 .modal-head>.mini-btn{margin-left:auto}
 .modal-body{padding:20px;overflow-y:auto}
 .gold-row{display:grid;grid-template-columns:52px 1fr 68px auto;gap:8px;background:rgba(0,0,0,.22);padding:9px;border-radius:9px;margin-bottom:8px;border:2px dashed rgba(245,158,11,.22)}
@@ -438,6 +438,9 @@ output#toast{display:block}
 .gn-color-btn.active{border-color:#fff;box-shadow:0 0 8px rgba(255,255,255,.3);transform:scale(1.1)}
 .gn-color-btn:active{transform:scale(.9)!important}
 .gn-sep{width:1px;height:20px;background:rgba(255,255,255,.15);flex-shrink:0}
+.gn-color-lbl{font-size:.72rem;font-weight:700;color:var(--txt-dim);white-space:nowrap;user-select:none}
+#gold-note-panel.color-g .gn-color-lbl{color:var(--ok)}
+#gold-note-panel.color-r .gn-color-lbl{color:var(--err)}
 .gn-fmt-btns{display:flex;gap:6px;flex-wrap:wrap}
 .gn-fmt-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:5px 11px;cursor:pointer;font-size:.8rem;font-family:var(--font);transition:background .15s,border-color .15s;color:var(--txt)}
 .gn-fmt-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
@@ -453,7 +456,7 @@ output#toast{display:block}
 #gold-note-panel.color-r .gn-col-preview{color:var(--err);font-weight:700}
 .gn-editor{min-height:160px;max-height:44vh;overflow-y:auto;background:rgba(0,0,0,.32);border:1px solid rgba(255,255,255,.08);border-radius:11px;padding:13px;color:var(--txt);font-family:var(--font-mono);font-size:.86rem;line-height:1.9;outline:none;word-break:break-word;white-space:pre-wrap;transition:border-color .2s;caret-color:var(--p);cursor:text}
 .gn-editor:focus{border-color:rgba(139,92,246,.45);background:rgba(0,0,0,.42)}
-.gn-editor:empty::before{content:"Écrivez votre note ici…";color:var(--txt-dim);pointer-events:none}
+.gn-editor:empty::before{content:attr(data-placeholder);color:var(--txt-dim);pointer-events:none}
 .gn-editor .gn-enc[data-color="g"]{border:1.5px solid var(--ok);border-radius:3px;color:var(--txt);padding:0 3px}
 .gn-editor .gn-enc[data-color="r"]{border:1.5px solid var(--err);border-radius:3px;color:var(--txt);padding:0 3px}
 .gn-editor .gn-ul[data-color="g"]{text-decoration:underline;text-decoration-color:var(--ok);text-underline-offset:2px;color:var(--txt)}
@@ -596,7 +599,7 @@ try{const v=localStorage.getItem('mgo_unified_version');if(v)document.documentEl
 <button class="mini-btn btn-save-players" data-action="save-players" data-i18n="save_ply"></button>
 </footer>
 </section>
-<div class="modal-overlay" id="mod-gold"><article class="modal-box"><header class="modal-head"><button class="mini-btn" data-action="toggle-gold-note" id="btn-gold-note" style="margin-left:0">📝 Note</button><span data-i18n="gold_mgr"></span><button class="mini-btn cb danger" data-action="close-gold" data-e="cls"></button></header><section class="modal-body"><p data-i18n="gold_hint" id="gold-click-hint"></p><div id="gold-grid-ctn"></div><div id="gold-note-panel"><div class="gn-toolbar"><button id="btn-gn-green" class="gn-color-btn active" onclick="GoldNote.setColor('g')" title="Couleur verte">🟢</button><button id="btn-gn-red" class="gn-color-btn" onclick="GoldNote.setColor('r')" title="Couleur rouge">🔴</button><span class="gn-sep"></span><div class="gn-fmt-btns"><button class="gn-fmt-btn" onmousedown="GoldNote.saveSelection(event)" ontouchstart="GoldNote.saveSelection(event)" onclick="GoldNote.applyFormat('enc')"><span class="gn-enc-preview">Entouré</span></button><button class="gn-fmt-btn" onmousedown="GoldNote.saveSelection(event)" ontouchstart="GoldNote.saveSelection(event)" onclick="GoldNote.applyFormat('ul')"><span class="gn-ul-preview">Souligné</span></button><button class="gn-fmt-btn" onmousedown="GoldNote.saveSelection(event)" ontouchstart="GoldNote.saveSelection(event)" onclick="GoldNote.applyFormat('col')"><span class="gn-col-preview">Colorié</span></button></div></div><div id="gn-editor" class="gn-editor" contenteditable="true" spellcheck="false"></div><div class="gn-gen-section"><button class="mini-btn gn-drawer-toggle" id="btn-gn-drawer" onclick="GoldNote.toggleDrawer()"><i class="gn-arrow">▶</i> Liste &amp; Noms des cartes</button><div id="gn-drawer" class="gn-drawer"><div id="gn-names-wrap" class="gn-names-wrap"><div class="gn-names-lbl">Noms des cartes dorées (optionnel)</div><div id="gn-names-list" class="gn-names-list"></div></div><button class="mini-btn gn-gen-btn" onclick="GoldNote.genStructure()">🔄 Générer la liste ↓</button></div></div></div></section></article></div>
+<div class="modal-overlay" id="mod-gold"><article class="modal-box"><header class="modal-head"><button class="mini-btn" data-action="toggle-gold-note" id="btn-gold-note" style="margin-left:0" data-i18n="gn_note_btn"></button><span data-i18n="gold_mgr"></span><button class="mini-btn cb danger" data-action="close-gold" data-e="cls"></button></header><section class="modal-body"><p data-i18n="gold_hint" id="gold-click-hint"></p><div id="gold-grid-ctn"></div><div id="gold-note-panel"><div class="gn-toolbar"><button id="btn-gn-green" class="gn-color-btn active" onclick="GoldNote.setColor('g')" data-i18n-aria="gn_col_g">🟢</button><button id="btn-gn-red" class="gn-color-btn" onclick="GoldNote.setColor('r')" data-i18n-aria="gn_col_r">🔴</button><span id="gn-color-lbl" class="gn-color-lbl" data-i18n="gn_col_g"></span><span class="gn-sep"></span><div class="gn-fmt-btns"><button class="gn-fmt-btn" onmousedown="GoldNote.saveSelection(event)" ontouchstart="GoldNote.saveSelection(event)" onclick="GoldNote.applyFormat('enc')"><span class="gn-enc-preview" data-i18n="gn_entourer"></span></button><button class="gn-fmt-btn" onmousedown="GoldNote.saveSelection(event)" ontouchstart="GoldNote.saveSelection(event)" onclick="GoldNote.applyFormat('ul')"><span class="gn-ul-preview" data-i18n="gn_surligner"></span></button><button class="gn-fmt-btn" onmousedown="GoldNote.saveSelection(event)" ontouchstart="GoldNote.saveSelection(event)" onclick="GoldNote.applyFormat('col')"><span class="gn-col-preview" data-i18n="gn_colorer"></span></button></div></div><div id="gn-editor" class="gn-editor" contenteditable="true" spellcheck="false" data-i18n-ph="gn_ph"></div><div class="gn-gen-section"><button class="mini-btn gn-drawer-toggle" id="btn-gn-drawer" onclick="GoldNote.toggleDrawer()"><i class="gn-arrow">▶</i> <span data-i18n="gn_drawer_lbl"></span></button><div id="gn-drawer" class="gn-drawer"><div id="gn-names-wrap" class="gn-names-wrap"><div class="gn-names-lbl" data-i18n="gn_names_lbl"></div><div id="gn-names-list" class="gn-names-list"></div></div><button class="mini-btn gn-gen-btn" onclick="GoldNote.genStructure()" data-i18n="gn_gen_btn"></button></div></div></div></section></article></div>
 <div class="modal-overlay" id="mod-missions"><article class="modal-box"><header class="modal-head"><span id="missions-week-toggle-wrap"></span><span data-i18n="miss_ttl"></span><button class="mini-btn cb danger" data-action="close-missions" data-e="cls"></button></header><div class="missions-scroll" id="missions-body"></div></article></div>
 <main class="app-container" id="main-app">
   <header id="app-header">
@@ -687,6 +690,12 @@ function tr() {
   });
   Q('[data-i18n-html]').forEach((e) => {
     e.innerHTML = T(e.dataset.i18nHtml) || '';
+  });
+  Q('[data-i18n-aria]').forEach((e) => {
+    e.setAttribute('aria-label', T(e.dataset.i18nAria));
+  });
+  Q('[data-i18n-ph]').forEach((e) => {
+    e.setAttribute('data-placeholder', T(e.dataset.i18nPh));
   });
   document.title = T('pg_ttl');
 }
@@ -2828,6 +2837,8 @@ function __initApp(fromHub = false) {
         E('app-hdr-deck').classList.add('visible');
         sp.style.transition = 'opacity 0.25s ease';
         sp.style.opacity = '0';
+        sp.style.pointerEvents = 'none';
+        sp.style.visibility = 'hidden';
         const dw = D.querySelector('.dock-wrap');
         if (dw) {
           dw.style.transition = 'transform 0.4s cubic-bezier(0.34,1.42,0.64,1)';
@@ -3293,18 +3304,15 @@ const GoldNote = {
       }
     }
     if (!range || range.collapsed) {
-      UI.toast('Sélectionnez du texte à formater');
+      UI.toast(T('gn_no_sel'));
       return;
     }
-    // Mémoriser les positions char avant toute modification DOM
     const startChar = this._charOffset(ed, range.startContainer, range.startOffset);
     const endChar   = this._charOffset(ed, range.endContainer,   range.endOffset);
     const ancestor  = range.commonAncestorContainer;
     const allSpans  = [...ed.querySelectorAll('.gn-enc,.gn-ul,.gn-col')];
     const intersecting = allSpans.filter((span) => {
-      // Cas 1 : la sélection est entièrement DANS le span
       if (span === ancestor || span.contains(ancestor)) return true;
-      // Cas 2 : chevauchement partiel OU span entièrement dans la sélection
       try { return range.intersectsNode(span); } catch { return false; }
     });
     if (intersecting.length > 0) {
@@ -3317,7 +3325,7 @@ const GoldNote = {
       ed.normalize();
     } else {
       const text = range.toString();
-      if (!text) { UI.toast('Sélectionnez du texte à formater'); return; }
+      if (!text) { UI.toast(T('gn_no_sel')); return; }
       range.deleteContents();
       const span = D.createElement('span');
       span.className = type === 'enc' ? 'gn-enc' : type === 'ul' ? 'gn-ul' : 'gn-col';
@@ -3325,7 +3333,6 @@ const GoldNote = {
       span.textContent = text;
       range.insertNode(span);
     }
-    // Restaurer la sélection sur le même texte après modification
     try {
       const restored = this._rangeFromCharOffsets(ed, startChar, endChar);
       if (!restored.collapsed) {
@@ -3368,9 +3375,10 @@ const GoldNote = {
   toggle() { this.panelOpen ? this.close() : this.open(); },
   setColor(col) {
     this.noteColor = col;
-    const g = E('btn-gn-green'), r = E('btn-gn-red');
+    const g = E('btn-gn-green'), r = E('btn-gn-red'), lbl = E('gn-color-lbl');
     if (g) g.classList.toggle('active', col === 'g');
     if (r) r.classList.toggle('active', col === 'r');
+    if (lbl) lbl.textContent = T(col === 'g' ? 'gn_col_g' : 'gn_col_r');
     const p = E('gold-note-panel');
     if (p) {
       p.className = p.className.replace(/\bcolor-[gr]\b/g, '').trim();
@@ -3390,11 +3398,11 @@ const GoldNote = {
       row.className = 'gn-name-row';
       const lbl = C('span');
       lbl.className = 'gn-alb-badge';
-      lbl.textContent = `Alb ${alb}`;
+      lbl.textContent = `${T('gn_alb')} ${alb}`;
       const inp = C('input');
       inp.className = 'gn-name-inp';
       inp.type = 'text';
-      inp.placeholder = 'Nom de la carte…';
+      inp.placeholder = T('gn_name_ph');
       inp.value = d.names[idx] || '';
       inp.oninput = () => {
         const nd = this.loadData();
@@ -3446,11 +3454,11 @@ const GoldNote = {
   },
   genStructure() {
     const gl = this.getGoldList(), d = this.loadData(), ed = E('gn-editor');
-    if (!gl.length) { UI.toast('Aucune carte dorée définie'); return; }
+    if (!gl.length) { UI.toast(T('gn_no_gold')); return; }
     while (d.names.length < gl.length) d.names.push('');
     const hasNames = d.names.some((n) => n && n.trim());
     const newLines = gl.map((alb, idx) => {
-      let l = `Album ${alb}`;
+      let l = `${T('gn_alb_full')} ${alb}`;
       if (hasNames && d.names[idx] && d.names[idx].trim()) l += `. ${d.names[idx].trim()}`;
       return l;
     }).join('\n');
@@ -3491,6 +3499,21 @@ LANGS['french.txt'] = {
   gold_mgr: '👑 Gérer les cartes dorées',
   gold_hint: 'Cliquez sur une case pour définir une carte dorée.',
   gold_exhdr: 'Échanges Gold',
+  gn_note_btn: '📝 Note',
+  gn_entourer: 'Entourer',
+  gn_surligner: 'Surligner',
+  gn_colorer: 'Colorer',
+  gn_col_g: '🟢 Vert',
+  gn_col_r: '🔴 Rouge',
+  gn_drawer_lbl: 'Liste & Noms des cartes',
+  gn_names_lbl: 'Noms des cartes dorées (optionnel)',
+  gn_gen_btn: '🔄 Générer la liste ↓',
+  gn_no_sel: 'Sélectionnez du texte à formater',
+  gn_no_gold: 'Aucune carte dorée définie',
+  gn_ph: 'Écrivez votre note ici…',
+  gn_alb: 'Alb',
+  gn_alb_full: 'Album',
+  gn_name_ph: 'Nom de la carte…',
   add_btn: '<b>+</b> AJOUTER',
   alb_lbl: 'Album',
   crd_lbl: 'Carte',
@@ -3597,6 +3620,21 @@ LANGS['english.txt'] = {
   gold_mgr: '👑 Manage gold cards',
   gold_hint: 'Click a cell to set a gold card.',
   gold_exhdr: 'Gold Trades',
+  gn_note_btn: '📝 Note',
+  gn_entourer: 'Surround',
+  gn_surligner: 'Underline',
+  gn_colorer: 'Color',
+  gn_col_g: '🟢 Green',
+  gn_col_r: '🔴 Red',
+  gn_drawer_lbl: 'List & Card Names',
+  gn_names_lbl: 'Gold card names (optional)',
+  gn_gen_btn: '🔄 Generate list ↓',
+  gn_no_sel: 'Select text to format',
+  gn_no_gold: 'No gold cards defined',
+  gn_ph: 'Write your note here…',
+  gn_alb: 'Alb',
+  gn_alb_full: 'Album',
+  gn_name_ph: 'Card name…',
   add_btn: '<b>+</b> ADD',
   alb_lbl: 'Album',
   crd_lbl: 'Card',
