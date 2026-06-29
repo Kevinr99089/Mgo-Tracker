@@ -351,6 +351,10 @@ output#toast{display:block}
 .mode-toggle-btn{height:20px;font-size:.6rem;padding:1px 5px;flex-shrink:0}
 .g-del-btn{background:none;border:none;color:var(--err);font-weight:700;cursor:pointer;transition:transform .15s}
 .g-del-btn:hover{transform:scale(1.2)}
+.gx-suggest{position:fixed;background:#16162a;border:1px solid rgba(139,92,246,.45);border-radius:9px;box-shadow:0 6px 24px rgba(0,0,0,.65);z-index:10001;overflow:hidden;max-height:220px;overflow-y:auto}
+.gx-suggest-item{padding:9px 13px;cursor:pointer;font-size:.82rem;color:var(--txt);border-bottom:1px solid rgba(255,255,255,.05);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gx-suggest-item:last-child{border-bottom:none}
+.gx-suggest-item:active{background:rgba(139,92,246,.28)}
 .hr-sep{border:0;border-top:1px solid rgba(255,255,255,.07);margin:5px 0}
 .hr-sep-flush{border:0;border-top:1px solid rgba(255,255,255,.07);margin:0}
 .pv-head-actions{padding:0 4px 8px}
@@ -2270,6 +2274,43 @@ const UI = {
   renderGoldEx() {
     const c = E('gold-list');
     c.innerHTML = '';
+    let sBox = E('gx-suggest-box');
+    if (!sBox) {
+      sBox = C('div');
+      sBox.id = 'gx-suggest-box';
+      sBox.className = 'gx-suggest';
+      sBox.style.display = 'none';
+      D.body.appendChild(sBox);
+      D.addEventListener('pointerdown', (e) => {
+        if (!sBox.contains(e.target) && e.target.dataset?.f !== 'card')
+          hideSuggest();
+      }, true);
+    }
+    const hideSuggest = () => { sBox.style.display = 'none'; sBox.innerHTML = ''; };
+    const showSuggest = (cardInp, alb, query) => {
+      hideSuggest();
+      if (!query) return;
+      const matches = GoldNote.namesForAlbum(alb).filter((n) =>
+        n.toLowerCase().startsWith(query.toLowerCase())
+      );
+      if (!matches.length) return;
+      const rect = cardInp.getBoundingClientRect();
+      sBox.style.cssText = `display:block;left:${rect.left}px;top:${rect.bottom + 3}px;width:${Math.max(rect.width, 150)}px`;
+      matches.forEach((name) => {
+        const it = C('div');
+        it.className = 'gx-suggest-item';
+        it.textContent = name;
+        it.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          cardInp.value = name;
+          State.cfg.gold_ex[idx].card = name;
+          State.saveCfg();
+          hideSuggest();
+          cardInp.focus();
+        });
+        sBox.appendChild(it);
+      });
+    };
     if (State.cfg.gold_ex.length > 0)
       c.insertAdjacentHTML(
         'beforeend',
@@ -2279,10 +2320,19 @@ const UI = {
       const r = C('li');
       r.className = 'gold-row';
       r.innerHTML = `<input class="g-inp" data-f="alb" maxlength="2" inputmode="numeric" placeholder="--" value="${esc(item.alb || item.album || '')}"><input class="g-inp" data-f="card" placeholder="${esc(T('crd_lbl'))}" value="${esc(item.card || '')}"><input class="g-inp" data-f="date" maxlength="5" inputmode="numeric" placeholder="${T('date_ph')}" value="${esc(item.date || '')}"><button class="g-del-btn" data-action="del-gold" data-idx="${idx}">${EMOJIS.cls}</button>`;
+      const albInp  = r.querySelector('[data-f="alb"]');
+      const cardInp = r.querySelector('[data-f="card"]');
       r.addEventListener('input', (ev) => {
         const inp = ev.target, f = inp.dataset.f;
-        if (f === 'alb')  { inp.value = inp.value.replace(/\D/g, '').slice(0, 2); State.cfg.gold_ex[idx].alb  = inp.value; }
-        if (f === 'card') { State.cfg.gold_ex[idx].card = inp.value; }
+        if (f === 'alb') {
+          inp.value = inp.value.replace(/\D/g, '').slice(0, 2);
+          State.cfg.gold_ex[idx].alb = inp.value;
+          hideSuggest();
+        }
+        if (f === 'card') {
+          State.cfg.gold_ex[idx].card = inp.value;
+          showSuggest(inp, albInp.value, inp.value);
+        }
         if (f === 'date') {
           let raw = inp.value.replace(/\D/g, '').slice(0, 4);
           inp.value = raw.length > 2 ? `${raw.slice(0, 2)}/${raw.slice(2)}` : raw;
@@ -2294,6 +2344,7 @@ const UI = {
         if (ev.target.dataset.f === 'date' && ev.key === 'Backspace' && ev.target.value.endsWith('/'))
           ev.target.value = ev.target.value.slice(0, -1);
       });
+      cardInp.addEventListener('blur', () => setTimeout(hideSuggest, 180));
       c.appendChild(r);
     });
   },
@@ -3230,6 +3281,17 @@ const GoldNote = {
     const G = State.getGoldSet(), a = State.cfg.albums, l = [];
     for (let i = 1; i <= a; i++) for (let k = 0; k < 9; k++) if (G.has(9 * (i - 1) + k)) l.push(i);
     return l;
+  },
+  namesForAlbum(alb) {
+    const num = parseInt(alb);
+    if (!num) return [];
+    try {
+      const gl = this.getGoldList(), d = this.loadData();
+      if (!d.names || !d.names.some((n) => n && n.trim())) return [];
+      return gl
+        .map((a, i) => (a === num && d.names[i] && d.names[i].trim() ? d.names[i].trim() : null))
+        .filter(Boolean);
+    } catch { return []; }
   },
   rawToHtml(raw) {
     return (raw || '').split('\n').map((line) => {
