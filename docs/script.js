@@ -1671,6 +1671,7 @@ const UI = {
           cardInp.value = name;
           State.cfg.gold_ex[idx].card = name;
           State.saveCfg();
+          cardInp._skipNextSuggest = true;
           hideSuggest();
           cardInp.focus();
         });
@@ -1697,7 +1698,12 @@ const UI = {
         }
         if (f === 'card') {
           State.cfg.gold_ex[idx].card = inp.value;
-          showSuggest(inp, albInp.value, inp.value);
+          if (inp._skipNextSuggest) {
+            inp._skipNextSuggest = false;
+            hideSuggest();
+          } else {
+            showSuggest(inp, albInp.value, inp.value);
+          }
         }
         if (f === 'date') {
           let raw = inp.value.replace(/\D/g, '').slice(0, 4);
