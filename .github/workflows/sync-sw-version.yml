@@ -1,0 +1,42 @@
+name: Sync Service Worker version
+
+on:
+  push:
+    paths:
+      - 'docs/**'
+
+permissions:
+  contents: write
+
+jobs:
+  sync-version:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract version from docs/script.js
+        id: version
+        run: |
+          VER=$(grep -oP "APP_VER\s*=\s*'\K[^']+" docs/script.js)
+          if [ -z "$VER" ]; then
+            echo "Version not found in docs/script.js" >&2
+            exit 1
+          fi
+          echo "version=$VER" >> "$GITHUB_OUTPUT"
+
+      - name: Update CACHE_NAME in docs/sw.js
+        run: |
+          sed -i "s|const CACHE_NAME = '.*';|const CACHE_NAME = 'mgo-tracker-${{ steps.version.outputs.version }}';|" docs/sw.js
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/sw.js
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: sync SW cache version (${{ steps.version.outputs.version }})"
+            git push
+          else
+            echo "No changes to commit"
+          fi
