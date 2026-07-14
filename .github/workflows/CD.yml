@@ -3,7 +3,7 @@ name: Cleanup
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["sync-sw-version"]
+    workflows: ["Sync Service Worker version", "pages build and deployment"]
     types:
       - completed
 
