@@ -12,7 +12,7 @@ let undoStack  = [],
   noteTimer  = null,
   dockTimer  = null;
 const EMOJIS = D.getElementById('emoji-bank').dataset;
-const APP_VER = '4.4.0 (Web)';
+const APP_VER = '4.5.0 (Web)';
 const SHARE_URL   = 'https://kevinr99089.github.io/Mgo-Tracker/?share=';
 const ALBUM_MIN   = 21;
 const ALBUM_MAX   = 26;
