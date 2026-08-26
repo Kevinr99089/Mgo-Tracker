@@ -16,6 +16,56 @@ const APP_VER = '4.4.0 (Web)';
 const SHARE_URL   = 'https://kevinr99089.github.io/Mgo-Tracker/?share=';
 const ALBUM_MIN   = 21;
 const ALBUM_MAX   = 26;
+const AMB_MAX     = 6;
+const Season = {
+  off: null,
+  ok() {
+    return this.off !== null;
+  },
+  now() {
+    return new Date(Date.now() + (this.off || 0));
+  },
+  async verify() {
+    try {
+      const o = await (window.__NT || Promise.resolve(null));
+      if (Number.isFinite(o)) this.off = o;
+    } catch {  }
+    return this.ok();
+  },
+  isHalloween(d) {
+    if (!this.ok()) return false;
+    d = d || this.now();
+    return d.getMonth() === 9 && d.getDate() === 31;
+  },
+  isXmas(d) {
+    if (!this.ok()) return false;
+    d = d || this.now();
+    const mo = d.getMonth(),
+      dy = d.getDate();
+    return (mo === 11 && dy >= 10) || (mo === 0 && dy === 1);
+  },
+  allowed(i) {
+    if (!Number.isInteger(i) || i < 0 || i > AMB_MAX) return false;
+    if (i === 4) return shineyMode;
+    if (i === 5) return this.isHalloween();
+    if (i === 6) return this.isXmas();
+    return true;
+  },
+  event(d) {
+    d = d || this.now();
+    if (this.isHalloween(d)) return { id: 'hw' + d.getFullYear(), amb: 5 };
+    if (this.isXmas(d))
+      return { id: 'xm' + (d.getMonth() === 0 ? d.getFullYear() - 1 : d.getFullYear()), amb: 6 };
+    return null;
+  },
+  list() {
+    const a = [0, 1, 2, 3];
+    if (shineyMode) a.push(4);
+    if (this.isHalloween()) a.push(5);
+    if (this.isXmas()) a.push(6);
+    return a;
+  },
+};
 const STORAGE = {
   CFG:       'mgo_cfg',
   USER:      'mgo_u_',
@@ -113,12 +163,9 @@ function __flyDeckToHeader(sp) {
   }, 200);
 }
 D.addEventListener('DOMContentLoaded', () => {
-  // Language files now live externally under /langs/<code>.txt (JSON content).
-  // Lookup order: exact browser locale -> base language -> English -> {} (raw keys shown).
   const loadJson = (code) =>
     fetch(`langs/${code}.txt`).then((r) => (r.ok ? r.json() : Promise.reject()));
   const rawLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-  // Chinese needs Simplified/Traditional disambiguation since both share the "zh" base.
   const base = rawLang.startsWith('zh')
     ? (/hant|-tw|-hk|-mo/.test(rawLang) ? 'zh-hant' : 'zh')
     : rawLang.split('-')[0];
@@ -218,6 +265,8 @@ const DEFAULT_CFG = {
   hidden:     [],
   setup_done: false,
   ambiance:   0,
+  ambPrev:    null,
+  ambSeas:    '',
   ambStatic:  false,
   seed:       0,
   usersList:  [],
@@ -616,10 +665,12 @@ const UI = {
     }
     bg.innerHTML = '';
     bg.style.background = '';
-    const m = State.cfg.ambiance || 0,
+    const m = State.cfg.ambiance || 0;
+    bg.classList.toggle('hw-tint', m !== 5 && Season.isHalloween());
+    const
       c = ['79,70,229', '192,38,211', '6,182,212', '244,114,182', '251,191,36'],
       r = Rnd(State.cfg.seed);
-    if (m < 4) {
+    if (m !== 4) {
       if (typeof PIXI === 'undefined') {
         if (!pixiErr) {
           UI.toast(T('amb_err'), true);
@@ -631,7 +682,7 @@ const UI = {
       const a = new PIXI.Application({
         resizeTo: bg,
         backgroundAlpha: 0,
-        antialias: m === 1,
+        antialias: m === 1 || m >= 5,
         resolution: 1,
         autoDensity: true,
       });
@@ -1048,6 +1099,674 @@ const UI = {
             );
           });
         });
+      } else if (m === 5) {
+        bg.style.background =
+          'radial-gradient(circle at 50% 64%,#3d1707 0%,#200b02 38%,#0d0400 68%,#020100 100%)';
+        const gW5 = () => a.screen.width || bg.offsetWidth || window.innerWidth;
+        const gH5 = () => a.screen.height || bg.offsetHeight || window.innerHeight;
+        const vT5 = () => gH5() * 0.0625;
+        const vH5 = () => gH5() * 0.625;
+        const radTex5 = (rgb, a0, mid) => {
+          const oc = C('canvas');
+          oc.width = oc.height = 256;
+          const g2 = oc.getContext('2d'),
+            gr = g2.createRadialGradient(128, 128, 0, 128, 128, 128);
+          gr.addColorStop(0, `rgba(${rgb},${a0})`);
+          gr.addColorStop(0.5, `rgba(${rgb},${mid})`);
+          gr.addColorStop(1, `rgba(${rgb},0)`);
+          g2.fillStyle = gr;
+          g2.fillRect(0, 0, 256, 256);
+          return new PIXI.Texture(new PIXI.BaseTexture(oc));
+        };
+        const fogTex5 = radTex5('154,52,18', 0.85, 0.14);
+        const emberTex5 = radTex5('251,146,60', 1, 0.32);
+        const haloTex5 = radTex5('249,115,22', 0.6, 0.11);
+        const moonOc5 = C('canvas');
+        moonOc5.width = moonOc5.height = 256;
+        const mg5 = moonOc5.getContext('2d');
+        const mgr5 = mg5.createRadialGradient(128, 128, 44, 128, 128, 128);
+        mgr5.addColorStop(0, 'rgba(255,170,90,0.40)');
+        mgr5.addColorStop(0.45, 'rgba(214,110,40,0.13)');
+        mgr5.addColorStop(1, 'rgba(160,60,10,0)');
+        mg5.fillStyle = mgr5;
+        mg5.fillRect(0, 0, 256, 256);
+        const mdisc5 = mg5.createRadialGradient(106, 104, 8, 128, 128, 68);
+        mdisc5.addColorStop(0, '#ffe3b8');
+        mdisc5.addColorStop(0.55, '#f2a24a');
+        mdisc5.addColorStop(1, '#c2670f');
+        mg5.beginPath();
+        mg5.arc(128, 128, 66, 0, Math.PI * 2);
+        mg5.fillStyle = mdisc5;
+        mg5.fill();
+        mg5.fillStyle = 'rgba(146,70,18,0.22)';
+        [
+          [104, 110, 13],
+          [150, 143, 17],
+          [117, 159, 9],
+          [157, 101, 7],
+        ].forEach(([mx, my, mr]) => {
+          mg5.beginPath();
+          mg5.arc(mx, my, mr, 0, Math.PI * 2);
+          mg5.fill();
+        });
+        const moonSpr5 = new PIXI.Sprite(new PIXI.Texture(new PIXI.BaseTexture(moonOc5)));
+        moonSpr5.anchor.set(0.5);
+        moonSpr5.alpha = 0.9;
+        a.stage.addChild(moonSpr5);
+        const fogs5 = [];
+        for (let i = 0; i < 6; i++) {
+          const spr = new PIXI.Sprite(fogTex5);
+          spr.anchor.set(0.5);
+          spr.alpha = 0.28 + 0.22 * r();
+          a.stage.addChild(spr);
+          fogs5.push({
+            spr,
+            cx: 0.12 + 0.76 * r(),
+            cy: 0.3 + 0.55 * r(),
+            tx: (26 * r() - 13) / 100,
+            ty: (14 * r() - 7) / 100,
+            sz: 55 + 45 * r(),
+            d: (17 + 14 * r()) * 1e3,
+            ph: r() * Math.PI * 2,
+          });
+        }
+        const PKW = 460,
+          PKH = 380,
+          pkX = PKW / 2,
+          pkY = PKH * 0.6,
+          pkRX = PKW * 0.46,
+          pkRY = PKH * 0.4;
+        const facePath5 = (g2) => {
+          const ew = pkRX * 0.2,
+            eh = pkRY * 0.19,
+            eox = pkRX * 0.42,
+            eoy = pkY - pkRY * 0.3;
+          [-1, 1].forEach((s) => {
+            const ex = pkX + s * eox;
+            g2.moveTo(ex - s * ew, eoy - eh);
+            g2.lineTo(ex + s * ew, eoy + eh * 0.12);
+            g2.lineTo(ex - s * ew * 0.45, eoy + eh);
+            g2.closePath();
+          });
+          const nw = pkRX * 0.09,
+            nh = pkRY * 0.12,
+            ny = pkY + pkRY * 0.02;
+          g2.moveTo(pkX, ny - nh);
+          g2.lineTo(pkX + nw, ny + nh * 0.75);
+          g2.lineTo(pkX - nw, ny + nh * 0.75);
+          g2.closePath();
+          const mw = pkRX * 0.6,
+            my = pkY + pkRY * 0.36,
+            mh = pkRY * 0.17,
+            seg = 6,
+            sw = (2 * mw) / seg,
+            pts = [];
+          for (let i = 0; i <= seg; i++) {
+            const t = i / seg,
+              x = pkX - mw + 2 * mw * t,
+              cv = Math.cos((t - 0.5) * Math.PI);
+            pts.push({ x, yt: my - mh * 0.2 - cv * mh * 0.3, yb: my + cv * mh * 0.95 });
+          }
+          g2.moveTo(pts[0].x, pts[0].yt);
+          for (let i = 1; i <= seg; i++) {
+            if (i === 2 || i === 5) {
+              g2.lineTo(pts[i].x - sw * 0.42, pts[i].yt);
+              g2.lineTo(pts[i].x, pts[i].yt + mh * 0.72);
+              g2.lineTo(pts[i].x + sw * 0.42, pts[i].yt);
+            } else g2.lineTo(pts[i].x, pts[i].yt);
+          }
+          g2.lineTo(pts[seg].x, pts[seg].yb);
+          for (let i = seg - 1; i >= 0; i--) {
+            if (i === 3) {
+              g2.lineTo(pts[i].x + sw * 0.42, pts[i].yb);
+              g2.lineTo(pts[i].x, pts[i].yb - mh * 0.8);
+              g2.lineTo(pts[i].x - sw * 0.42, pts[i].yb);
+            } else g2.lineTo(pts[i].x, pts[i].yb);
+          }
+          g2.closePath();
+        };
+        const bodyOc5 = C('canvas');
+        bodyOc5.width = PKW;
+        bodyOc5.height = PKH;
+        const bg5 = bodyOc5.getContext('2d');
+        bg5.fillStyle = '#46330f';
+        bg5.beginPath();
+        bg5.moveTo(pkX - 17, pkY - pkRY + 10);
+        bg5.quadraticCurveTo(pkX - 10, pkY - pkRY - 44, pkX + 20, pkY - pkRY - 56);
+        bg5.lineTo(pkX + 33, pkY - pkRY - 40);
+        bg5.quadraticCurveTo(pkX + 7, pkY - pkRY - 28, pkX + 16, pkY - pkRY + 8);
+        bg5.closePath();
+        bg5.fill();
+        [
+          [-0.62, 0.44, 0.86, '#8f3208', '#431303'],
+          [0.62, 0.44, 0.86, '#8f3208', '#431303'],
+          [-0.34, 0.56, 0.95, '#b8440a', '#5f1e05'],
+          [0.34, 0.56, 0.95, '#b8440a', '#5f1e05'],
+          [0, 0.63, 1, '#d95f0e', '#712604'],
+        ].forEach(([dx, lrx, lry, c1, c2]) => {
+          const cx5 = pkX + dx * pkRX;
+          const g3 = bg5.createLinearGradient(cx5 - pkRX * lrx, pkY - pkRY * lry, cx5 + pkRX * lrx, pkY + pkRY * lry);
+          g3.addColorStop(0, c1);
+          g3.addColorStop(1, c2);
+          bg5.beginPath();
+          bg5.ellipse(cx5, pkY, pkRX * lrx, pkRY * lry, 0, 0, Math.PI * 2);
+          bg5.fillStyle = g3;
+          bg5.fill();
+        });
+        bg5.strokeStyle = 'rgba(48,12,1,0.5)';
+        bg5.lineWidth = 2.6;
+        [
+          [-0.34, 0.56, 0.95],
+          [0.34, 0.56, 0.95],
+          [-0.62, 0.44, 0.86],
+          [0.62, 0.44, 0.86],
+        ].forEach(([dx, lrx, lry]) => {
+          const a0 = dx < 0 ? Math.PI * 0.5 + 0.45 : -Math.PI * 0.5 + 0.45,
+            a1 = dx < 0 ? Math.PI * 1.5 - 0.45 : Math.PI * 0.5 - 0.45;
+          bg5.beginPath();
+          bg5.ellipse(pkX + dx * pkRX, pkY, pkRX * lrx, pkRY * lry, 0, a0, a1);
+          bg5.stroke();
+        });
+        bg5.globalCompositeOperation = 'destination-out';
+        bg5.beginPath();
+        facePath5(bg5);
+        bg5.fill();
+        bg5.globalCompositeOperation = 'source-over';
+        bg5.strokeStyle = 'rgba(22,5,0,0.9)';
+        bg5.lineWidth = 4.5;
+        bg5.beginPath();
+        facePath5(bg5);
+        bg5.stroke();
+        const glowOc5 = C('canvas');
+        glowOc5.width = PKW;
+        glowOc5.height = PKH;
+        const gg5 = glowOc5.getContext('2d');
+        gg5.fillStyle = '#ffffff';
+        gg5.beginPath();
+        facePath5(gg5);
+        gg5.fill();
+        gg5.globalCompositeOperation = 'source-atop';
+        const fgr5 = gg5.createRadialGradient(pkX, pkY + pkRY * 0.3, 8, pkX, pkY, pkRX * 1.15);
+        fgr5.addColorStop(0, 'rgba(255,248,214,1)');
+        fgr5.addColorStop(0.45, 'rgba(255,240,170,0.96)');
+        fgr5.addColorStop(1, 'rgba(255,168,36,0.8)');
+        gg5.fillStyle = fgr5;
+        gg5.fillRect(0, 0, PKW, PKH);
+        gg5.globalCompositeOperation = 'source-over';
+        const glowTex5 = new PIXI.Texture(new PIXI.BaseTexture(glowOc5));
+        const pk5 = new PIXI.Container();
+        pk5.pivot.set(PKW / 2, PKH / 2);
+        const halo5 = new PIXI.Sprite(haloTex5);
+        halo5.anchor.set(0.5);
+        halo5.x = pkX;
+        halo5.y = pkY - pkRY * 0.1;
+        halo5.width = halo5.height = PKW * 2.1;
+        halo5.blendMode = PIXI.BLEND_MODES.ADD;
+        pk5.addChild(halo5);
+        const core5 = new PIXI.Sprite(glowTex5);
+        const coreBlur5 = new PIXI.BlurFilter(9, 3);
+        coreBlur5.padding = 60;
+        core5.filters = [coreBlur5];
+        pk5.addChild(core5);
+        const body5 = new PIXI.Sprite(new PIXI.Texture(new PIXI.BaseTexture(bodyOc5)));
+        pk5.addChild(body5);
+        const spill5 = new PIXI.Sprite(glowTex5);
+        const spillBlur5 = new PIXI.BlurFilter(34, 3);
+        spillBlur5.padding = 150;
+        spill5.filters = [spillBlur5];
+        spill5.blendMode = PIXI.BLEND_MODES.ADD;
+        pk5.addChild(spill5);
+        a.stage.addChild(pk5);
+        const embers5 = [];
+        for (let i = 0; i < 26; i++) {
+          const spr = new PIXI.Sprite(emberTex5);
+          spr.anchor.set(0.5);
+          spr.blendMode = PIXI.BLEND_MODES.ADD;
+          a.stage.addChild(spr);
+          embers5.push({
+            spr,
+            x: r(),
+            y: r(),
+            sz: 3 + 7 * r(),
+            spd: 0.12 + 0.3 * r(),
+            drift: 0.4 * (r() - 0.5),
+            ph: r() * Math.PI * 2,
+            wsp: 0.012 + 0.02 * r(),
+          });
+        }
+        const lerpC5 = (c1, c2, t) => {
+          const r1 = (c1 >> 16) & 255,
+            g1 = (c1 >> 8) & 255,
+            b1 = c1 & 255,
+            r2 = (c2 >> 16) & 255,
+            g2b = (c2 >> 8) & 255,
+            b2 = c2 & 255;
+          return (
+            ((r1 + (r2 - r1) * t) << 16) | ((g1 + (g2b - g1) * t) << 8) | (b1 + (b2 - b1) * t)
+          );
+        };
+        let fl5 = 1,
+          flT5 = 1,
+          flNext5 = 0;
+        a.ticker.add(() => {
+          const n = performance.now(),
+            W = gW5(),
+            H = gH5(),
+            vT = vT5(),
+            vH = vH5();
+          if (n > flNext5) {
+            flT5 = 0.44 + 0.66 * Math.random();
+            flNext5 = n + 50 + Math.random() * 150;
+          }
+          fl5 += (flT5 - fl5) * 0.14;
+          const s =
+            fl5 * (0.82 + 0.15 * Math.sin(n * 0.0062) + 0.08 * Math.sin(n * 0.0173 + 1.1));
+          const sc5 = Math.max(0.28, Math.min(1.22, s));
+          const tint5 = lerpC5(0xf59517, 0xffe36e, Math.min(1, Math.max(0, (sc5 - 0.35) / 0.65)));
+          core5.alpha = 0.42 + 0.58 * Math.min(1, sc5);
+          core5.scale.set(0.995 + 0.012 * sc5);
+          core5.tint = tint5;
+          spill5.alpha = 0.06 + 0.26 * sc5;
+          spill5.tint = lerpC5(0xf59e0b, 0xfff0a8, Math.min(1, Math.max(0, (sc5 - 0.35) / 0.65)));
+          halo5.alpha = 0.1 + 0.28 * sc5;
+          halo5.scale.set((PKW * 2.1 * (0.97 + 0.05 * sc5)) / 256);
+          moonSpr5.x = W * 0.76;
+          moonSpr5.y = vT + vH * 0.13;
+          moonSpr5.width = moonSpr5.height = Math.min(W * 0.42, vH * 0.42);
+          fogs5.forEach((f) => {
+            const p = Math.sin((n / f.d) * Math.PI * 2 + f.ph);
+            f.spr.x = f.cx * W + f.tx * W * p;
+            f.spr.y = vT + f.cy * vH + f.ty * vH * p;
+            f.spr.width = f.spr.height = (f.sz / 100) * W * 0.9;
+          });
+          const pkScale = Math.min(((W / 1.1) * 0.68) / PKW, (vH * 0.48) / PKH);
+          pk5.scale.set(pkScale);
+          pk5.x = W / 2;
+          pk5.y = vT + vH * 0.7 + Math.sin(n * 0.0007) * vH * 0.006;
+          embers5.forEach((e) => {
+            e.ph += e.wsp;
+            e.y -= e.spd / (vH || 1);
+            e.x += (e.drift + Math.sin(e.ph) * 0.6) / (W || 1);
+            if (e.y < -0.05) {
+              e.y = 1.05;
+              e.x = r();
+            }
+            if (e.x < -0.05) e.x = 1.05;
+            if (e.x > 1.05) e.x = -0.05;
+            e.spr.x = e.x * W;
+            e.spr.y = vT + e.y * vH;
+            e.spr.width = e.spr.height = e.sz * 2.6;
+            e.spr.alpha = (0.25 + 0.45 * Math.abs(Math.sin(e.ph * 1.7))) * (0.5 + 0.5 * sc5);
+          });
+        });
+      } else if (m === 6) {
+        bg.style.background =
+          'linear-gradient(180deg,#03081a 0%,#081130 32%,#0e1b42 56%,#0a1330 78%,#050a1c 100%)';
+        const gW6 = () => a.screen.width || bg.offsetWidth || window.innerWidth;
+        const gH6 = () => a.screen.height || bg.offsetHeight || window.innerHeight;
+        const vT6 = () => gH6() * 0.0625;
+        const vH6 = () => gH6() * 0.625;
+        const dotOc6 = C('canvas');
+        dotOc6.width = dotOc6.height = 32;
+        const dg6 = dotOc6.getContext('2d'),
+          dgr6 = dg6.createRadialGradient(16, 16, 0, 16, 16, 16);
+        dgr6.addColorStop(0, 'rgba(255,255,255,1)');
+        dgr6.addColorStop(0.42, 'rgba(255,255,255,0.7)');
+        dgr6.addColorStop(1, 'rgba(255,255,255,0)');
+        dg6.fillStyle = dgr6;
+        dg6.fillRect(0, 0, 32, 32);
+        const dotTex6 = new PIXI.Texture(new PIXI.BaseTexture(dotOc6));
+        const moonOc6 = C('canvas');
+        moonOc6.width = moonOc6.height = 256;
+        const mg6 = moonOc6.getContext('2d'),
+          mgr6 = mg6.createRadialGradient(128, 128, 40, 128, 128, 128);
+        mgr6.addColorStop(0, 'rgba(200,225,255,0.34)');
+        mgr6.addColorStop(0.45, 'rgba(140,180,240,0.11)');
+        mgr6.addColorStop(1, 'rgba(90,130,200,0)');
+        mg6.fillStyle = mgr6;
+        mg6.fillRect(0, 0, 256, 256);
+        const md6 = mg6.createRadialGradient(112, 108, 6, 128, 128, 58);
+        md6.addColorStop(0, '#ffffff');
+        md6.addColorStop(0.6, '#e2edff');
+        md6.addColorStop(1, '#b9cbe8');
+        mg6.beginPath();
+        mg6.arc(128, 128, 56, 0, Math.PI * 2);
+        mg6.fillStyle = md6;
+        mg6.fill();
+        mg6.fillStyle = 'rgba(150,175,210,0.28)';
+        [
+          [110, 112, 11],
+          [148, 140, 14],
+          [122, 156, 7],
+        ].forEach(([mx, my, mr]) => {
+          mg6.beginPath();
+          mg6.arc(mx, my, mr, 0, Math.PI * 2);
+          mg6.fill();
+        });
+        const moon6 = new PIXI.Sprite(new PIXI.Texture(new PIXI.BaseTexture(moonOc6)));
+        moon6.anchor.set(0.5);
+        a.stage.addChild(moon6);
+        const stars6 = [];
+        for (let i = 0; i < 34; i++) {
+          const spr = new PIXI.Sprite(dotTex6);
+          spr.anchor.set(0.5);
+          a.stage.addChild(spr);
+          stars6.push({
+            spr,
+            x: r(),
+            y: 0.02 + 0.42 * r(),
+            sz: 2 + 3 * r(),
+            ph: r() * Math.PI * 2,
+            sp: 0.001 + 0.0022 * r(),
+          });
+        }
+        const hills6 = new PIXI.Graphics();
+        a.stage.addChild(hills6);
+        const deerTex6 = (lead) => {
+          const oc = C('canvas');
+          oc.width = 140;
+          oc.height = 120;
+          const g2 = oc.getContext('2d');
+          g2.lineCap = 'round';
+          g2.strokeStyle = '#6b421d';
+          g2.lineWidth = 6;
+          [
+            [46, 74, 24, 102],
+            [56, 76, 46, 108],
+            [92, 72, 114, 98],
+            [86, 74, 74, 108],
+          ].forEach(([x1, y1, x2, y2]) => {
+            g2.beginPath();
+            g2.moveTo(x1, y1);
+            g2.lineTo(x2, y2);
+            g2.stroke();
+          });
+          g2.fillStyle = '#8b5a2b';
+          g2.beginPath();
+          g2.ellipse(70, 62, 35, 20, 0, 0, Math.PI * 2);
+          g2.fill();
+          g2.beginPath();
+          g2.moveTo(92, 54);
+          g2.lineTo(104, 24);
+          g2.lineTo(118, 30);
+          g2.lineTo(102, 64);
+          g2.closePath();
+          g2.fill();
+          g2.beginPath();
+          g2.ellipse(115, 26, 16, 10, -0.34, 0, Math.PI * 2);
+          g2.fill();
+          g2.strokeStyle = '#8b5a2b';
+          g2.lineWidth = 5;
+          g2.beginPath();
+          g2.moveTo(38, 58);
+          g2.lineTo(26, 46);
+          g2.stroke();
+          g2.fillStyle = '#a97142';
+          g2.beginPath();
+          g2.ellipse(128, 21, 8, 5.5, -0.3, 0, Math.PI * 2);
+          g2.fill();
+          g2.fillStyle = lead ? '#ef4444' : '#3b2412';
+          g2.beginPath();
+          g2.arc(133, 18, 4.4, 0, Math.PI * 2);
+          g2.fill();
+          if (lead) {
+            const ng = g2.createRadialGradient(133, 18, 1, 133, 18, 15);
+            ng.addColorStop(0, 'rgba(248,113,113,0.55)');
+            ng.addColorStop(1, 'rgba(239,68,68,0)');
+            g2.fillStyle = ng;
+            g2.beginPath();
+            g2.arc(133, 18, 15, 0, Math.PI * 2);
+            g2.fill();
+          }
+          g2.fillStyle = '#1b1108';
+          g2.beginPath();
+          g2.arc(117, 22, 2.1, 0, Math.PI * 2);
+          g2.fill();
+          g2.strokeStyle = '#d9b382';
+          g2.lineWidth = 3.2;
+          [
+            [110, 17, 100, 2],
+            [104, 9, 93, 5],
+            [107, 8, 112, 0],
+            [116, 15, 124, 3],
+            [121, 8, 130, 4],
+            [122, 7, 126, -2],
+          ].forEach(([x1, y1, x2, y2]) => {
+            g2.beginPath();
+            g2.moveTo(x1, y1);
+            g2.lineTo(x2, y2);
+            g2.stroke();
+          });
+          return new PIXI.Texture(new PIXI.BaseTexture(oc));
+        };
+        const sleighOc6 = C('canvas');
+        sleighOc6.width = 210;
+        sleighOc6.height = 150;
+        const sg6 = sleighOc6.getContext('2d');
+        sg6.lineCap = 'round';
+        sg6.strokeStyle = '#fbbf24';
+        sg6.lineWidth = 6;
+        sg6.beginPath();
+        sg6.moveTo(20, 124);
+        sg6.lineTo(158, 124);
+        sg6.quadraticCurveTo(190, 124, 186, 96);
+        sg6.stroke();
+        sg6.lineWidth = 4;
+        [
+          [44, 124, 48, 104],
+          [126, 124, 124, 104],
+        ].forEach(([x1, y1, x2, y2]) => {
+          sg6.beginPath();
+          sg6.moveTo(x1, y1);
+          sg6.lineTo(x2, y2);
+          sg6.stroke();
+        });
+        const bodyPath6 = () => {
+          sg6.beginPath();
+          sg6.moveTo(36, 106);
+          sg6.lineTo(150, 106);
+          sg6.quadraticCurveTo(174, 104, 176, 82);
+          sg6.lineTo(150, 78);
+          sg6.lineTo(72, 78);
+          sg6.lineTo(70, 44);
+          sg6.quadraticCurveTo(68, 26, 44, 24);
+          sg6.quadraticCurveTo(56, 40, 52, 62);
+          sg6.quadraticCurveTo(38, 78, 36, 106);
+          sg6.closePath();
+        };
+        const sgr6 = sg6.createLinearGradient(36, 24, 176, 106);
+        sgr6.addColorStop(0, '#dc2626');
+        sgr6.addColorStop(1, '#7f1d1d');
+        bodyPath6();
+        sg6.fillStyle = sgr6;
+        sg6.fill();
+        sg6.strokeStyle = '#fbbf24';
+        sg6.lineWidth = 3;
+        bodyPath6();
+        sg6.stroke();
+        sg6.fillStyle = '#166534';
+        sg6.beginPath();
+        sg6.ellipse(88, 62, 22, 17, 0, 0, Math.PI * 2);
+        sg6.fill();
+        [
+          ['#b91c1c', 74, 46, 15, 13],
+          ['#1d4ed8', 94, 44, 13, 12],
+        ].forEach(([col, x, y, w, h]) => {
+          sg6.fillStyle = col;
+          sg6.fillRect(x, y, w, h);
+          sg6.strokeStyle = '#fde68a';
+          sg6.lineWidth = 2;
+          sg6.beginPath();
+          sg6.moveTo(x + w / 2, y);
+          sg6.lineTo(x + w / 2, y + h);
+          sg6.moveTo(x, y + h / 2);
+          sg6.lineTo(x + w, y + h / 2);
+          sg6.stroke();
+        });
+        sg6.fillStyle = '#dc2626';
+        sg6.beginPath();
+        sg6.ellipse(140, 62, 20, 23, 0, 0, Math.PI * 2);
+        sg6.fill();
+        sg6.fillStyle = '#f8fafc';
+        sg6.fillRect(122, 74, 38, 7);
+        sg6.fillStyle = '#f5c9a6';
+        sg6.beginPath();
+        sg6.arc(148, 32, 12, 0, Math.PI * 2);
+        sg6.fill();
+        sg6.fillStyle = '#f8fafc';
+        sg6.beginPath();
+        sg6.ellipse(147, 44, 13, 11, 0, 0, Math.PI * 2);
+        sg6.fill();
+        sg6.beginPath();
+        sg6.ellipse(158, 34, 5, 4, 0, 0, Math.PI * 2);
+        sg6.fill();
+        sg6.fillStyle = '#1b1108';
+        sg6.beginPath();
+        sg6.arc(153, 29, 1.8, 0, Math.PI * 2);
+        sg6.fill();
+        sg6.fillStyle = '#dc2626';
+        sg6.beginPath();
+        sg6.moveTo(136, 24);
+        sg6.quadraticCurveTo(140, 2, 122, 4);
+        sg6.quadraticCurveTo(134, 12, 134, 24);
+        sg6.closePath();
+        sg6.fill();
+        sg6.fillStyle = '#f8fafc';
+        sg6.fillRect(133, 22, 26, 6);
+        sg6.beginPath();
+        sg6.arc(120, 5, 5, 0, Math.PI * 2);
+        sg6.fill();
+        sg6.strokeStyle = '#dc2626';
+        sg6.lineWidth = 7;
+        sg6.beginPath();
+        sg6.moveTo(150, 56);
+        sg6.lineTo(172, 44);
+        sg6.stroke();
+        sg6.fillStyle = '#f8fafc';
+        sg6.beginPath();
+        sg6.arc(174, 42, 5, 0, Math.PI * 2);
+        sg6.fill();
+        const sleighSpr6 = new PIXI.Sprite(new PIXI.Texture(new PIXI.BaseTexture(sleighOc6)));
+        sleighSpr6.anchor.set(0.5);
+        const grp6 = new PIXI.Container();
+        grp6.rotation = -0.07;
+        const reins6 = new PIXI.Graphics();
+        const deers6 = [];
+        const leadT6 = deerTex6(true),
+          normT6 = deerTex6(false);
+        sleighSpr6.x = -290;
+        sleighSpr6.y = 4;
+        grp6.addChild(sleighSpr6);
+        grp6.addChild(reins6);
+        for (let i = 0; i < 4; i++) {
+          const spr = new PIXI.Sprite(i === 3 ? leadT6 : normT6);
+          spr.anchor.set(0.5);
+          spr.x = -110 + i * 118;
+          grp6.addChild(spr);
+          deers6.push({ spr, ph: i * 0.8, bx: spr.x });
+        }
+        a.stage.addChild(grp6);
+        const flakes6 = [];
+        for (let i = 0; i < 110; i++) {
+          const spr = new PIXI.Sprite(dotTex6);
+          spr.anchor.set(0.5);
+          a.stage.addChild(spr);
+          flakes6.push({
+            spr,
+            x: r(),
+            y: r(),
+            sz: 2 + 5 * r(),
+            spd: 0.22 + 0.7 * r(),
+            drift: 0.3 * (r() - 0.5),
+            ph: r() * Math.PI * 2,
+            wsp: 0.008 + 0.022 * r(),
+            al: 0.4 + 0.55 * r(),
+          });
+        }
+        let lw6 = 0,
+          lh6 = 0;
+        a.ticker.add(() => {
+          const n = performance.now(),
+            W = gW6(),
+            H = gH6(),
+            vT = vT6(),
+            vH = vH6(),
+            vB = vT + vH;
+          if (W !== lw6 || H !== lh6) {
+            lw6 = W;
+            lh6 = H;
+            hills6.clear();
+            hills6.beginFill(0xdce9ff, 0.07);
+            hills6.moveTo(0, vB - vH * 0.04);
+            hills6.bezierCurveTo(
+              W * 0.22,
+              vB - vH * 0.15,
+              W * 0.4,
+              vB - vH * 0.02,
+              W * 0.6,
+              vB - vH * 0.09
+            );
+            hills6.bezierCurveTo(W * 0.8, vB - vH * 0.16, W * 0.9, vB - vH * 0.02, W, vB - vH * 0.07);
+            hills6.lineTo(W, H);
+            hills6.lineTo(0, H);
+            hills6.closePath();
+            hills6.endFill();
+            hills6.beginFill(0xffffff, 0.06);
+            hills6.moveTo(0, vB + vH * 0.02);
+            hills6.bezierCurveTo(
+              W * 0.3,
+              vB - vH * 0.06,
+              W * 0.55,
+              vB + vH * 0.04,
+              W * 0.78,
+              vB - vH * 0.03
+            );
+            hills6.bezierCurveTo(W * 0.9, vB - vH * 0.07, W * 0.96, vB + vH * 0.02, W, vB);
+            hills6.lineTo(W, H);
+            hills6.lineTo(0, H);
+            hills6.closePath();
+            hills6.endFill();
+          }
+          moon6.x = W * 0.78;
+          moon6.y = vT + vH * 0.11;
+          moon6.width = moon6.height = Math.min(W * 0.36, vH * 0.36);
+          stars6.forEach((st) => {
+            st.ph += st.sp;
+            st.spr.x = st.x * W;
+            st.spr.y = vT + st.y * vH;
+            st.spr.width = st.spr.height = st.sz * 2.4;
+            st.spr.alpha = 0.25 + 0.55 * Math.abs(Math.sin(st.ph));
+          });
+          const sc6 = Math.min(((W / 1.1) * 0.86) / 780, (vH * 0.3) / 150);
+          grp6.scale.set(sc6);
+          grp6.x = W / 2 + 30 * sc6;
+          grp6.y = vT + vH * 0.3 + Math.sin(n * 0.0011) * vH * 0.022;
+          deers6.forEach((d, i) => {
+            d.spr.y = Math.sin(n * 0.0042 + d.ph) * 6;
+            d.spr.rotation = Math.sin(n * 0.0042 + d.ph) * 0.05;
+          });
+          sleighSpr6.y = 4 + Math.sin(n * 0.0042 + 3.4) * 4;
+          sleighSpr6.rotation = Math.sin(n * 0.0042 + 3.4) * 0.03;
+          reins6.clear();
+          reins6.lineStyle(3, 0x8b5a2b, 0.85);
+          reins6.moveTo(sleighSpr6.x + 78, sleighSpr6.y - 42);
+          deers6.forEach((d) => reins6.lineTo(d.bx + 10, d.spr.y - 14));
+          flakes6.forEach((f) => {
+            f.ph += f.wsp;
+            f.y += f.spd / (vH || 1);
+            f.x += (f.drift + Math.sin(f.ph) * 0.7) / (W || 1);
+            if (f.y > 1.04) {
+              f.y = -0.06 * Math.random();
+              f.x = r();
+            }
+            if (f.x < -0.04) f.x = 1.04;
+            if (f.x > 1.04) f.x = -0.04;
+            f.spr.x = f.x * W;
+            f.spr.y = vT + f.y * vH;
+            f.spr.width = f.spr.height = f.sz * 2.2;
+            f.spr.alpha = f.al;
+          });
+        });
       }
       if (m === 0 || m === 1) {
         a.ticker.add(() => {
@@ -1071,7 +1790,8 @@ const UI = {
         });
       }
       pixiApp = () => a.destroy(true, { children: true, texture: true, baseTexture: true });
-      if (State.cfg.ambStatic) setTimeout(() => a.ticker.stop(), m === 2 || m === 3 ? 350 : 50);
+      if (State.cfg.ambStatic)
+        setTimeout(() => a.ticker.stop(), m === 2 || m === 3 || m >= 5 ? 350 : 50);
     } else {
       bg.style.background = '#0a1228';
       const PW = 128,
@@ -1409,6 +2129,13 @@ const UI = {
       }
     };
     if (!c) return;
+    if (!Season.allowed(State.cfg.ambiance)) {
+      State.cfg.ambiance = Season.allowed(State.cfg.ambPrev) ? State.cfg.ambPrev : 0;
+      State.cfg.ambPrev = null;
+      State.saveCfg();
+      _fade();
+      this.toast(T('cheat_3'));
+    }
     c.innerHTML = '';
     const I = [
         `<svg width='22' height='14' viewBox='0 0 22 14' xmlns='http://www.w3.org/2000/svg'><ellipse cx='5' cy='8' rx='4.5' ry='3.5' fill='#818cf8' opacity='.7'/><ellipse cx='12' cy='6' rx='5.5' ry='4.5' fill='#6366f1' opacity='.6'/><ellipse cx='18' cy='9' rx='4' ry='3' fill='#c084fc' opacity='.65'/><circle cx='9' cy='4' r='2' fill='#f472b6' opacity='.5'/><circle cx='4' cy='5' r='1.5' fill='#fbbf24' opacity='.4'/></svg>`,
@@ -1416,9 +2143,11 @@ const UI = {
         `<svg width='22' height='14' viewBox='0 0 22 14' xmlns='http://www.w3.org/2000/svg'><path d='M0,5 C3,2 6,8 9,5 C12,2 15,8 18,5 L22,4' stroke='#38bdf8' stroke-width='1.5' fill='none' opacity='.9'/><circle cx='4' cy='11' r='1.5' stroke='#7dd3fc' stroke-width='1' fill='none'/><circle cx='10' cy='12' r='1' stroke='#7dd3fc' stroke-width='.8' fill='none' opacity='.7'/><circle cx='16' cy='10' r='2' stroke='#38bdf8' stroke-width='1' fill='none'/><circle cx='7' cy='9' r='.8' fill='#38bdf8' opacity='.4'/></svg>`,
         `<svg width='22' height='14' viewBox='0 0 22 14' xmlns='http://www.w3.org/2000/svg'><ellipse cx='6' cy='10' rx='4.5' ry='3.5' fill='#6366f1' opacity='.75'/><ellipse cx='13' cy='7' rx='5' ry='4' fill='#c77b10' opacity='.7'/><ellipse cx='18' cy='10' rx='4' ry='3' fill='#b8223b' opacity='.7'/><ellipse cx='10' cy='10' rx='3' ry='2.5' fill='#c084fc' opacity='.55'/></svg>`,
         `<svg width='22' height='14' viewBox='0 0 24 14' xmlns='http://www.w3.org/2000/svg'><line x1='0' y1='11' x2='24' y2='11' stroke='#38bdf8' stroke-width='2' opacity='.7'/><polygon points='12,3 9,8 15,8' fill='#fbbf24'/><rect x='10' y='8' width='4' height='3' fill='#fbbf24'/><rect x='11.5' y='9' width='1' height='2' fill='#0ea5e9'/><text x='0' y='6' font-size='5' fill='#fbbf24' opacity='.9'>✦</text><text x='17' y='7' font-size='4' fill='#fbbf24' opacity='.8'>✦</text><text x='21' y='5' font-size='3.5' fill='#fbbf24' opacity='.7'>✦</text></svg>`,
+        `<svg width='22' height='14' viewBox='0 0 22 14' xmlns='http://www.w3.org/2000/svg'><rect x='10.2' y='.8' width='1.7' height='3.2' rx='.8' fill='#4a3a16'/><ellipse cx='11' cy='8.6' rx='8' ry='5.2' fill='#c2410c'/><ellipse cx='11' cy='8.6' rx='4.4' ry='5.2' fill='#f97316'/><polygon points='7.2,6.4 9.6,7.3 7.8,8.5' fill='#fde047'/><polygon points='14.8,6.4 12.4,7.3 14.2,8.5' fill='#fde047'/><path d='M7.8 10.2 L9.4 11.5 L11 10.4 L12.6 11.5 L14.2 10.2' stroke='#fde047' stroke-width='1.3' fill='none' stroke-linejoin='round'/></svg>`,
+        `<svg width='22' height='14' viewBox='0 0 22 14' xmlns='http://www.w3.org/2000/svg'><circle cx='3.2' cy='2.6' r='1' fill='#e2e8f0'/><circle cx='9' cy='1.6' r='.7' fill='#cbd5e1'/><circle cx='20' cy='4' r='.8' fill='#e2e8f0'/><path d='M4 11.4h9.2c1.9 0 2.7-1.2 2.2-2.6' stroke='#fbbf24' stroke-width='1.3' fill='none' stroke-linecap='round'/><path d='M5.2 9h7.4l1-3.4H7.4C5.6 5.6 5.2 7.2 5.2 9z' fill='#dc2626'/><circle cx='18.2' cy='7.4' r='1.7' fill='#8b5a2b'/><path d='M17.6 5.6 16.6 3.8M18.8 5.5 20 4.1' stroke='#d9b382' stroke-width='.9' stroke-linecap='round'/><circle cx='19.8' cy='7.6' r='.8' fill='#ef4444'/></svg>`,
       ],
-      L = [T('amb_0'), T('amb_1'), T('amb_2'), T('amb_3'), T('amb_4')],
-      cnt = shineyMode ? 5 : 4;
+      L = [T('amb_0'), T('amb_1'), T('amb_2'), T('amb_3'), T('amb_4'), T('amb_5'), T('amb_6')],
+      avail = Season.list();
     const _sub = () => (State.cfg.ambStatic ? T('amb_stop').replace(/\S+ /, '') : T('amb_ani'));
     const subEl = E('initAmbiance-sub-lbl'),
       togBtn = E('initAmbiance-tog-btn');
@@ -1433,9 +2162,12 @@ const UI = {
         _fade();
         this.renderAmbiaSel();
       };
-    for (let i = 0; i < cnt; i++) {
+    for (const i of avail) {
       const b = C('button');
-      b.className = 'initAmbiance-pill' + (State.cfg.ambiance === i ? ' active' : '');
+      b.className =
+        'initAmbiance-pill' +
+        (State.cfg.ambiance === i ? ' active' : '') +
+        (i >= 5 ? ' is-season' : '');
       b.dataset.v = i;
       b.innerHTML = I[i];
       b.title = L[i];
@@ -2096,6 +2828,30 @@ const Actions = {
     if (m[act]) m[act]();
   },
 };
+function __applySeason(hold, shown) {
+  const ev = Season.event(),
+    root = D.documentElement,
+    bg = E('ambient-bg');
+  root.classList.toggle('is-halloween', ev !== null && ev.amb === 5);
+  root.classList.toggle('is-xmas', ev !== null && ev.amb === 6);
+  if (State.cfg.ambiance === shown) {
+    const keep = hold !== null && ev !== null && ev.amb === hold;
+    let amb = keep ? hold : shown;
+    if (hold !== null && !keep) State.cfg.ambPrev = null;
+    if (ev !== null && State.cfg.ambSeas !== ev.id) {
+      if (amb !== ev.amb) State.cfg.ambPrev = amb;
+      State.cfg.ambSeas = ev.id;
+      amb = ev.amb;
+    }
+    if (hold !== null || amb !== State.cfg.ambiance) {
+      State.cfg.ambiance = amb;
+      State.saveCfg();
+    }
+    if (hold !== null && !keep && ev === null) setTimeout(() => UI.toast(T('cheat_3')), 900);
+    if (amb !== shown) UI.initAmbiance();
+  }
+  if (bg) bg.classList.toggle('hw-tint', State.cfg.ambiance !== 5 && Season.isHalloween());
+}
 function __initApp(fromHub = false) {
   E('__switch-lbl').textContent = LITE_MODE ? T('sw_full') : T('sw_lite');
   E('btn-version-switch').onclick = () => {
@@ -2103,15 +2859,23 @@ function __initApp(fromHub = false) {
     location.reload();
   };
   tr();
-  if (State.cfg.ambiance === 4 && !shineyMode) {
+  const _amb = State.cfg.ambiance;
+  if (!Number.isInteger(_amb) || _amb < 0 || _amb > AMB_MAX) {
     State.cfg.ambiance = 0;
-    State.saveCfg();
-    setTimeout(() => UI.toast(T('cheat_1')), 2500);
-  } else if (State.cfg.ambiance > 4 || State.cfg.ambiance < 0) {
-    State.cfg.ambiance = 0;
+    State.cfg.ambPrev = null;
     State.saveCfg();
     setTimeout(() => UI.toast(T('cheat_2')), 2500);
+  } else if (_amb === 4 && !shineyMode) {
+    State.cfg.ambiance = 0;
+    State.cfg.ambPrev = null;
+    State.saveCfg();
+    setTimeout(() => UI.toast(T('cheat_1')), 2500);
   }
+  const _hold = State.cfg.ambiance >= 5 ? State.cfg.ambiance : null;
+  if (_hold !== null)
+    State.cfg.ambiance = Season.allowed(State.cfg.ambPrev) ? State.cfg.ambPrev : 0;
+  const _shown = State.cfg.ambiance;
+  Season.verify().then(() => __applySeason(_hold, _shown));
   Missions.init();
   Share.checkUrl();
   const noteEditor = E('gn-editor');
