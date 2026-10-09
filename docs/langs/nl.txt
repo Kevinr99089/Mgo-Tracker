@@ -103,6 +103,8 @@
   "shy_ttl": "Gelukkig <em>Seizoen</em><span>✦</span>",
   "shy_hint": "Veel geluk!",
   "amb_err": "⚠️ Kan sfeer niet laden (verbindingsprobleem)",
+  "fluid_lbl": "Vloeistofeffect",
+  "fluid_err": "⚠️ Vloeistofeffect niet beschikbaar op dit apparaat",
   "today": "Vandaag",
   "miss_ph": "Missie {n}…",
   "miss_cur": "📅 Huidige week",

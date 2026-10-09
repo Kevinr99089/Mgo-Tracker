@@ -103,6 +103,8 @@
   "shy_ttl": "Stagione <em>Fortunata</em><span>✦</span>",
   "shy_hint": "Buona fortuna!",
   "amb_err": "⚠️ Impossibile caricare l'atmosfera (problema di connessione)",
+  "fluid_lbl": "Effetto fluido",
+  "fluid_err": "⚠️ Effetto fluido non disponibile su questo dispositivo",
   "today": "Oggi",
   "miss_ph": "Missione {n}…",
   "miss_cur": "📅 Settimana corrente",

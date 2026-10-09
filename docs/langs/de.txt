@@ -103,6 +103,8 @@
   "shy_ttl": "Glücks-<em>Saison</em><span>✦</span>",
   "shy_hint": "Viel Glück!",
   "amb_err": "⚠️ Ambiente konnte nicht geladen werden (Verbindungsproblem)",
+  "fluid_lbl": "Flüssigkeitseffekt",
+  "fluid_err": "⚠️ Flüssigkeitseffekt auf diesem Gerät nicht verfügbar",
   "today": "Heute",
   "miss_ph": "Mission {n}…",
   "miss_cur": "📅 Aktuelle Woche",

@@ -103,6 +103,8 @@
   "shy_ttl": "Saison <em>Chanceuse</em><span>✦</span>",
   "shy_hint": "Bonne Chance !",
   "amb_err": "⚠️ Impossible de charger l'ambiance (problème de connexion)",
+  "fluid_lbl": "Effet fluide",
+  "fluid_err": "⚠️ Effet fluide indisponible sur cet appareil",
   "today": "Aujourd'hui",
   "miss_ph": "Mission {n}…",
   "miss_cur": "📅 Semaine actuelle",

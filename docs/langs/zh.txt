@@ -103,6 +103,8 @@
   "shy_ttl": "幸运<em>赛季</em><span>✦</span>",
   "shy_hint": "祝你好运！",
   "amb_err": "⚠️ 无法加载氛围（连接问题）",
+  "fluid_lbl": "流体效果",
+  "fluid_err": "⚠️ 此设备不支持流体效果",
   "today": "今天",
   "miss_ph": "任务 {n}…",
   "miss_cur": "📅 本周",

@@ -103,6 +103,8 @@
   "shy_ttl": "Lucky <em>Season</em><span>✦</span>",
   "shy_hint": "Good Luck!",
   "amb_err": "⚠️ Unable to load ambiance (connection issue)",
+  "fluid_lbl": "Fluid effect",
+  "fluid_err": "⚠️ Fluid effect unavailable on this device",
   "today": "Today",
   "miss_ph": "Mission {n}…",
   "miss_cur": "📅 Current week",

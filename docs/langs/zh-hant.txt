@@ -103,6 +103,8 @@
   "shy_ttl": "幸運<em>賽季</em><span>✦</span>",
   "shy_hint": "祝你好運！",
   "amb_err": "⚠️ 無法載入氛圍（連線問題）",
+  "fluid_lbl": "流體效果",
+  "fluid_err": "⚠️ 此裝置不支援流體效果",
   "today": "今天",
   "miss_ph": "任務 {n}…",
   "miss_cur": "📅 本週",

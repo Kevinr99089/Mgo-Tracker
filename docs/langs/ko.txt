@@ -103,6 +103,8 @@
   "shy_ttl": "행운의 <em>시즌</em><span>✦</span>",
   "shy_hint": "행운을 빕니다!",
   "amb_err": "⚠️ 분위기를 불러올 수 없습니다 (연결 문제)",
+  "fluid_lbl": "유체 효과",
+  "fluid_err": "⚠️ 이 기기에서는 유체 효과를 사용할 수 없습니다",
   "today": "오늘",
   "miss_ph": "미션 {n}…",
   "miss_cur": "📅 이번 주",

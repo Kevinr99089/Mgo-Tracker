@@ -103,6 +103,8 @@
   "shy_ttl": "Szczęśliwy <em>Sezon</em><span>✦</span>",
   "shy_hint": "Powodzenia!",
   "amb_err": "⚠️ Nie można załadować klimatu (problem z połączeniem)",
+  "fluid_lbl": "Efekt płynu",
+  "fluid_err": "⚠️ Efekt płynu niedostępny na tym urządzeniu",
   "today": "Dziś",
   "miss_ph": "Misja {n}…",
   "miss_cur": "📅 Bieżący tydzień",

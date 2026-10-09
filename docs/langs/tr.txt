@@ -103,6 +103,8 @@
   "shy_ttl": "Şanslı <em>Sezon</em><span>✦</span>",
   "shy_hint": "İyi şanslar!",
   "amb_err": "⚠️ Ambiyans yüklenemedi (bağlantı sorunu)",
+  "fluid_lbl": "Akışkan efekti",
+  "fluid_err": "⚠️ Akışkan efekti bu cihazda kullanılamıyor",
   "today": "Bugün",
   "miss_ph": "Görev {n}…",
   "miss_cur": "📅 Bu hafta",

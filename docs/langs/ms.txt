@@ -103,6 +103,8 @@
   "shy_ttl": "Musim <em>Bertuah</em><span>✦</span>",
   "shy_hint": "Semoga bernasib baik!",
   "amb_err": "⚠️ Tidak dapat memuatkan suasana (masalah sambungan)",
+  "fluid_lbl": "Kesan bendalir",
+  "fluid_err": "⚠️ Kesan bendalir tidak tersedia pada peranti ini",
   "today": "Hari ini",
   "miss_ph": "Misi {n}…",
   "miss_cur": "📅 Minggu ini",

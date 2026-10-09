@@ -103,6 +103,8 @@
   "shy_ttl": "Temporada <em>de la Suerte</em><span>✦</span>",
   "shy_hint": "¡Buena Suerte!",
   "amb_err": "⚠️ No se pudo cargar el ambiente (problema de conexión)",
+  "fluid_lbl": "Efecto fluido",
+  "fluid_err": "⚠️ Efecto fluido no disponible en este dispositivo",
   "today": "Hoy",
   "miss_ph": "Misión {n}…",
   "miss_cur": "📅 Semana actual",
