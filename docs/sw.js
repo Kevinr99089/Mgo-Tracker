@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mgo-tracker-4.5.2 (Web)-3c1a3b97';
+const CACHE_NAME = 'mgo-tracker-4.5.2 (Web)-fba8458d';
 const CORE_ASSETS = ['./', './index.html', './style.css', './script.js', './manifest.json'];
 
 self.addEventListener('install', (event) => {
