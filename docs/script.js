@@ -12,7 +12,7 @@ let undoStack  = [],
   noteTimer  = null,
   dockTimer  = null;
 const EMOJIS = D.getElementById('emoji-bank').dataset;
-const APP_VER = '4.5.1 (Web)';
+const APP_VER = '4.5.2 (Web)';
 const SHARE_URL   = 'https://kevinr99089.github.io/Mgo-Tracker/?share=';
 const ALBUM_MIN   = 21;
 const ALBUM_MAX   = 26;
@@ -44,13 +44,6 @@ const Season = {
       dy = d.getDate();
     return (mo === 11 && dy >= 10) || (mo === 0 && dy === 1);
   },
-  allowed(i) {
-    if (!Number.isInteger(i) || i < 0 || i > AMB_MAX) return false;
-    if (i === 4) return shineyMode;
-    if (i === 5) return this.isHalloween();
-    if (i === 6) return this.isXmas();
-    return true;
-  },
   event(d) {
     d = d || this.now();
     if (this.isHalloween(d)) return { id: 'hw' + d.getFullYear(), amb: 5 };
@@ -58,11 +51,18 @@ const Season = {
       return { id: 'xm' + (d.getMonth() === 0 ? d.getFullYear() - 1 : d.getFullYear()), amb: 6 };
     return null;
   },
+  allowed(i) {
+    if (!Number.isInteger(i) || i < 0 || i > AMB_MAX) return false;
+    if (i === 4) return shineyMode;
+    if (i === 5) return this.isHalloween();
+    if (i === 6) return this.isXmas();
+    return true;
+  },
   list() {
     const a = [0, 1, 2, 3];
     if (shineyMode) a.push(4);
-    if (this.isHalloween()) a.push(5);
-    if (this.isXmas()) a.push(6);
+    if (this.allowed(5)) a.push(5);
+    if (this.allowed(6)) a.push(6);
     return a;
   },
 };
@@ -4852,6 +4852,7 @@ function createFluidEngine (canvas, hooks) {
     }
 
     const IDLE_MS = 4500;
+    const SPLAT_STEP_PX = 28;
     let lastUpdateTime = performance.now();
     let lastActive = 0;
     let colorUpdateTimer = 0.0;
@@ -5051,9 +5052,20 @@ function createFluidEngine (canvas, hooks) {
     }
 
     function splatPointer (pointer) {
-        let dx = pointer.deltaX * config.SPLAT_FORCE;
-        let dy = pointer.deltaY * config.SPLAT_FORCE;
-        splat(pointer.texcoordX, pointer.texcoordY, dx, dy, pointer.color);
+        const rawDx = pointer.texcoordX - pointer.prevTexcoordX;
+        const rawDy = pointer.texcoordY - pointer.prevTexcoordY;
+        const dx = correctDeltaX(rawDx);
+        const dy = correctDeltaY(rawDy);
+        const distPx = Math.hypot(rawDx * canvas.width, rawDy * canvas.height);
+        const steps = Math.min(Math.max(Math.ceil(distPx / SPLAT_STEP_PX), 1), 48);
+        const fx = dx / steps * config.SPLAT_FORCE;
+        const fy = dy / steps * config.SPLAT_FORCE;
+        for (let i = 1; i <= steps; i++) {
+            const t = i / steps;
+            splat(pointer.prevTexcoordX + rawDx * t, pointer.prevTexcoordY + rawDy * t, fx, fy, pointer.color);
+        }
+        pointer.prevTexcoordX = pointer.texcoordX;
+        pointer.prevTexcoordY = pointer.texcoordY;
     }
 
     function multipleSplats (amount) {
@@ -5107,13 +5119,9 @@ function createFluidEngine (canvas, hooks) {
     }
 
     function updatePointerMoveData (pointer, posX, posY) {
-        pointer.prevTexcoordX = pointer.texcoordX;
-        pointer.prevTexcoordY = pointer.texcoordY;
         pointer.texcoordX = posX / canvas.width;
         pointer.texcoordY = 1.0 - posY / canvas.height;
-        pointer.deltaX = correctDeltaX(pointer.texcoordX - pointer.prevTexcoordX);
-        pointer.deltaY = correctDeltaY(pointer.texcoordY - pointer.prevTexcoordY);
-        pointer.moved = Math.abs(pointer.deltaX) > 0 || Math.abs(pointer.deltaY) > 0;
+        pointer.moved = pointer.texcoordX !== pointer.prevTexcoordX || pointer.texcoordY !== pointer.prevTexcoordY;
     }
 
     function updatePointerUpData (pointer) {
@@ -5253,12 +5261,80 @@ const FluidFX = (() => {
   };
   const live = () => (wanted() ? ensure() : null);
   const opts = { passive: true };
+  const SCROLL_HOLD_MS = 90;
+  const SYNC_GAIN = 0.3;
+  const TAU_MIN = 12;
+  const TAU_MAX = 110;
+  const TAU_RATIO = 0.4;
+  let touch = null,
+    anchorEl = null,
+    anchorY = 0,
+    anchorScroll = 0,
+    lastScrollAt = 0,
+    rafId = 0,
+    lastTick = 0,
+    lastMoveAt = 0,
+    interval = 16,
+    tau = TAU_MIN,
+    tx = 0,
+    ty = 0,
+    vx = 0,
+    vy = 0;
+  const scrollPos = new WeakMap();
+  const clampY = (y) => Math.max(0, Math.min(window.innerHeight, y));
+  const scrolling = () => performance.now() - lastScrollAt < SCROLL_HOLD_MS;
+  const estimateY = () => {
+    const cur = scrollPos.get(anchorEl);
+    return clampY(anchorY - (cur - anchorScroll));
+  };
+  const tick = (now) => {
+    rafId = 0;
+    if (!touch || !engine || D.hidden) return;
+    const dt = Math.min(now - lastTick, 50);
+    lastTick = now;
+    const k = 1 - Math.exp(-dt / tau);
+    const dx = (tx - vx) * k,
+      dy = (ty - vy) * k;
+    vx += dx;
+    vy += dy;
+    if (Math.abs(dx) + Math.abs(dy) > 0.05) engine.move(touch.id, vx, vy);
+    rafId = requestAnimationFrame(tick);
+  };
+  const startLoop = () => {
+    if (rafId) return;
+    lastTick = performance.now();
+    rafId = requestAnimationFrame(tick);
+  };
+  const stopLoop = () => {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = 0;
+  };
+  const feed = (x, y) => {
+    tx = x;
+    ty = y;
+    startLoop();
+  };
   window.addEventListener(
     'touchstart',
     (e) => {
       const g = live();
       if (!g) return;
-      for (const t of e.changedTouches) g.down(t.identifier, t.clientX, t.clientY);
+      for (const t of e.changedTouches) {
+        g.down(t.identifier, t.clientX, t.clientY);
+        if (!touch) {
+          touch = { id: t.identifier, x: t.clientX, y: t.clientY };
+          vx = tx = t.clientX;
+          vy = ty = t.clientY;
+          interval = 16;
+          tau = TAU_MIN;
+          lastMoveAt = performance.now();
+          startLoop();
+        }
+      }
+      anchorEl = null;
+      lastScrollAt = 0;
+      const root = D.scrollingElement;
+      if (root) scrollPos.set(root, root.scrollTop);
     },
     opts
   );
@@ -5267,16 +5343,60 @@ const FluidFX = (() => {
     (e) => {
       const g = live();
       if (!g) return;
-      for (const t of e.changedTouches) g.move(t.identifier, t.clientX, t.clientY);
+      for (const t of e.changedTouches) {
+        if (!touch || touch.id !== t.identifier) {
+          g.move(t.identifier, t.clientX, t.clientY);
+          continue;
+        }
+        const now = performance.now();
+        interval += (Math.min(now - lastMoveAt, 300) - interval) * 0.3;
+        lastMoveAt = now;
+        tau = Math.max(TAU_MIN, Math.min(TAU_MAX, interval * TAU_RATIO));
+        touch.x = t.clientX;
+        if (anchorEl && scrolling()) {
+          const est = estimateY();
+          anchorY += (t.clientY - est) * SYNC_GAIN;
+          feed(touch.x, estimateY());
+        } else {
+          anchorEl = null;
+          touch.y = t.clientY;
+          feed(touch.x, touch.y);
+        }
+      }
     },
     opts
   );
   const touchEnd = (e) => {
-    if (!engine) return;
-    for (const t of e.changedTouches) engine.up(t.identifier);
+    for (const t of e.changedTouches) {
+      if (engine) engine.up(t.identifier);
+      if (touch && touch.id === t.identifier) {
+        touch = null;
+        anchorEl = null;
+        stopLoop();
+      }
+    }
   };
   window.addEventListener('touchend', touchEnd, opts);
   window.addEventListener('touchcancel', touchEnd, opts);
+  window.addEventListener(
+    'scroll',
+    (e) => {
+      const el = e.target === D ? D.scrollingElement : e.target;
+      if (!el || typeof el.scrollTop !== 'number') return;
+      const v = el.scrollTop,
+        prev = scrollPos.get(el);
+      scrollPos.set(el, v);
+      if (!touch || !engine) return;
+      if (anchorEl !== el) {
+        anchorEl = el;
+        anchorScroll = prev === undefined ? v : prev;
+        anchorY = touch.y;
+      }
+      lastScrollAt = performance.now();
+      feed(touch.x, estimateY());
+    },
+    { capture: true, passive: true }
+  );
   window.addEventListener(
     'pointerdown',
     (e) => {
