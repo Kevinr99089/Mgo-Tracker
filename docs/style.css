@@ -130,7 +130,7 @@ html.is-shiney .sp-title span{font-size:.6em;vertical-align:middle}
 .glass-card.expanded .cell-inner{font-size:14px;transform:scale(.5);color:#fff}
 .cell-wrap[data-st="1"] .cell-inner,.cell-wrap[data-st="2"] .cell-inner,.glass-card.is-primary.mode-num .cell-inner{opacity:1;transform:scale(1)}
 .i-dot{position:absolute;border-radius:50%;display:none;z-index:10;width:5px;height:5px;top:1px;box-shadow:0 1px 2px rgba(0,0,0,.5)}
-.i-gold{background:var(--gold);right:1px;box-shadow:0 0 4px rgba(245,158,11,.7),0 1px 2px rgba(0,0,0,.5)}
+.i-gold{background:var(--gold);right:1px}
 .i-dupe{background:var(--err);left:1px}
 .glass-card.expanded .i-dot{width:7px;height:7px;top:3px}
 .glass-card.expanded .i-gold{right:4px}
