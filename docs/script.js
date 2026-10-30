@@ -12,7 +12,7 @@ let undoStack  = [],
   noteTimer  = null,
   dockTimer  = null;
 const EMOJIS = D.getElementById('emoji-bank').dataset;
-const APP_VER = '4.5.3 (Web)';
+const APP_VER = '4.5.4 (Web)';
 const SHARE_URL   = 'https://kevinr99089.github.io/Mgo-Tracker/?share=';
 const ALBUM_MIN   = 21;
 const ALBUM_MAX   = 26;
@@ -2852,6 +2852,7 @@ function __applySeason(hold, shown) {
     if (amb !== shown) UI.initAmbiance();
   }
   if (bg) bg.classList.toggle('hw-tint', State.cfg.ambiance !== 5 && Season.isHalloween());
+  if (!LITE_MODE) UI.renderAmbiaSel();
 }
 function __initApp(fromHub = false) {
   E('__switch-lbl').textContent = LITE_MODE ? T('sw_full') : T('sw_lite');
